@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   getUsername()
   {
-    return localStorage.getItem("username");
+    return localStorage.getItem("email");
   }
 
   public logOut = () => {
