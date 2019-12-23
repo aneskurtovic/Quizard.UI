@@ -15,15 +15,14 @@
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item" *ngIf="!isUserAuthenticated()"><a class="nav-link" routerLink="/login"><span
             class="fas fa-sign-in-alt"></span> Login</a></li>
-      <div *ngIf="isUserAuthenticated()" class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Welcome {{getUsername()}}!
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a *ngIf="isUserAuthenticated()" class="dropdown-item" href="" (click)="logOut()"> Logout</a>
-        </div>
-      </div>
+            <li class="nav-item dropdown" *ngIf="isUserAuthenticated()">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Welcome <b>{{getUsername()}}</b>!
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="" (click)="logOut()">Log Out</a>
+              </div>
+            </li>
 
     </ul>
   </div>
