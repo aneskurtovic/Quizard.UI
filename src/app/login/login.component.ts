@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
       })
     }).subscribe(response => {
       let token = (<any>response).token;
+      let username = (<any>response).username;
       localStorage.setItem("jwt", token);
+      localStorage.setItem("username", username);
       this.invalidLogin = false;
       this.router.navigate(["/"]);
     }, err => {
