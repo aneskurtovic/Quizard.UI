@@ -1,9 +1,9 @@
-import { TestComponent } from './test/test.component';
+import { TestComponent } from './components/test/test.component';
 import { NgModule } from '@angular/core';  
 import { Routes, RouterModule } from '@angular/router';  
-import { HomeComponent } from './home/home.component';  
-import { AuthGuard } from './guards/auth-guard.service';
-import { LoginComponent } from './login/login.component';  
+import { HomeComponent } from './components/home/home.component';  
+import { AuthGuard } from './services/guards/auth-guard.service';
+import { LoginComponent } from './components/login/login.component';  
 
 const routes: Routes = [  
   {  
