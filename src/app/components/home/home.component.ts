@@ -22,8 +22,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  public getUsername = () => {
+   return localStorage.getItem("email");
+  }
+
   public logOut = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("email");
   }
  
   ngOnInit() {
