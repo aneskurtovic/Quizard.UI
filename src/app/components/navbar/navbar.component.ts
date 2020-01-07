@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class HomeComponent implements OnInit {
+export class NavbarComponent implements OnInit {
 
   constructor(private jwtHelper: JwtHelperService, private router: Router) { }
 
@@ -21,8 +21,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getUsername()
-  {
+  get username(): string {
     return localStorage.getItem("email");
   }
 
@@ -30,7 +29,7 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem("jwt");
     localStorage.removeItem("email");
   }
- 
+
   ngOnInit() {
   }
 

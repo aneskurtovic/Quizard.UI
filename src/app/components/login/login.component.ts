@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
-import {HttpClient, HttpHeaders} from '@angular/common/http'
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { LoginService } from '../../services/loginService/login.service';
 
 @Component({
   selector: 'app-login',
@@ -11,18 +12,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
   }
 
   login(form: NgForm) {
     let credentials = JSON.stringify(form.value);
-    this.http.post("http://localhost:58365/api/account/login", credentials, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json"
-      })
-    }).subscribe(response => {
+    this.loginService.checkAuth(credentials).subscribe(response => {
       let token = (<any>response).token;
       let email = (<any>response).email;
       localStorage.setItem("jwt", token);
