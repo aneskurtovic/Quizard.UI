@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -14,7 +15,7 @@ const httpOptions = {
 
 export class LoginService {
 
-loginUrl: string = "http://localhost:58365/api/account/login";
+loginUrl: string = environment.api + "/api/account/login";
 
 constructor(private http: HttpClient) { }
 

@@ -1,4 +1,4 @@
-import { TestComponent } from './components/test/test.component';
+import { QuestionsComponent } from './components/questions/questions.component';
 import { NgModule } from '@angular/core';  
 import { Routes, RouterModule } from '@angular/router';  
 import { HomeComponent } from './components/home/home.component';  
@@ -21,10 +21,10 @@ const routes: Routes = [
     }  
   },  
   {  
-    path: 'test',  
-    component: TestComponent,  
+    path: 'questions',  
+    component: QuestionsComponent,  
     data: {  
-      title: 'Test'  
+      title: 'Questions'  
     },
     canActivate: [AuthGuard] 
   }  
