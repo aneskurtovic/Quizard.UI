@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -14,14 +13,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 
-export class LoginService {
+export class QuestionService {
 
-loginUrl: string = environment.api + "/api/account/login";
+questionUrl: string = environment.api + "/api/questions";
 
 constructor(private http: HttpClient) { }
 
 checkAuth(creditentials: string) : Observable<any> {
-  return this.http.post(this.loginUrl, creditentials, httpOptions);
+  return this.http.post(this.questionUrl, creditentials, httpOptions);
 }
 
 }
