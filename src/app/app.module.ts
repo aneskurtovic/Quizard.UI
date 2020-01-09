@@ -8,6 +8,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TypeaheadModule } from 'ngx-type-ahead';
+
+
+
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,6 +23,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
+ 
 export function tokenGetter() {
    return localStorage.getItem("jwt");
  }
@@ -38,6 +44,9 @@ export function tokenGetter() {
       NgbModule,
       AppRoutingModule,
       ReactiveFormsModule,
+      AppRoutingModule,
+      ReactiveFormsModule,
+      TypeaheadModule,
       BrowserAnimationsModule,
       ToastrModule.forRoot(),
        JwtModule.forRoot({
