@@ -48,6 +48,7 @@ export class QuestionsComponent implements OnInit {
     let credentials = JSON.stringify(form.value);
     this.questionService.checkAuth(credentials).subscribe(response => {
       this.toastr.success('Inserted to database!', 'Success');
+      this.form.reset();
 
     }, err => {
       this.toastr.error('Couldn\'t insert to database', 'Error', {
