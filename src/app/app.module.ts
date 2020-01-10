@@ -27,7 +27,7 @@ export function tokenGetter() {
       LoginComponent,
       HomeComponent,
       QuestionsComponent,
-      NavbarComponent,
+      NavbarComponent
    ],
    imports: [
       BrowserModule,
