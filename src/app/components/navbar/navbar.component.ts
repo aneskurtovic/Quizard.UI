@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  get username(): string {
+  get username() {
     return localStorage.getItem("email");
   }
 

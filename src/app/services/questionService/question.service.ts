@@ -15,7 +15,7 @@ const httpOptions = {
 
 export class QuestionService {
 
-questionUrl: string = environment.api + "/api/questions";
+private questionUrl: string = environment.api + "/api/questions";
 
 constructor(private http: HttpClient) { }
 
