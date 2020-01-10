@@ -3,7 +3,7 @@ export class CustomValidators {
    static minLengthOfValidAnswers(numberOfAnswers: number) {
        return(a: FormArray) => {
            const isValidArray = a.controls
-           .map((c: FormGroup) => c.get('correct').value as boolean)
+           .map((c: FormGroup) => c.get('IsCorrect').value as boolean)
            .filter(x => x === true);
 
            if(isValidArray.length !== numberOfAnswers) {

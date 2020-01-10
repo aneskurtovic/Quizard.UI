@@ -5,7 +5,7 @@
       <label>
         Question:
       </label>
-      <input type="text" formControlName="questionText"  class="form-control" />     
+      <input type="text" formControlName="Text"  class="form-control" />     
     </div>
     <hr>
     <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
@@ -13,11 +13,11 @@
         <div class="form-group col-md-9">
           <label>
           {{i+1}}. Answer:</label>
-            <input type="text" formControlName="answerText" class="form-control" />
+            <input type="text" formControlName="Text" class="form-control" />
           
         </div>
         <div class="form-group custom-control custom-checkbox col-md-2 pl-4 align-self-end d-flex justify-content-center">
-          <input type="checkbox" formControlName="correct" class="form-control custom-control-input" id="correct-{{i}}" [checked]=""/>
+          <input type="checkbox" formControlName="IsCorrect" class="form-control custom-control-input" id="correct-{{i}}" [checked]=""/>
           <label class="custom-control-label" for="correct-{{i}}" >Valid</label>
           
         </div>

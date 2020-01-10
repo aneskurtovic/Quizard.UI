@@ -19,7 +19,7 @@ export class QuestionsComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      questionText: this.fb.control('', Validators.required),
+      Text: this.fb.control('', Validators.required),
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
@@ -28,8 +28,8 @@ export class QuestionsComponent implements OnInit {
   }
   answerGroup() : FormGroup {
     return this.fb.group({
-      answerText: this.fb.control('', Validators.required),
-      correct: false
+      Text: this.fb.control('', Validators.required),
+      IsCorrect: false
     })
   }
   get answersArray(): FormArray {
