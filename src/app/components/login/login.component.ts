@@ -10,7 +10,7 @@ import { LoginService } from '../../services/loginService/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  invalidLogin: boolean;
+  invalidLogin: boolean = true;
   
   constructor(private router: Router, private loginService: LoginService) { }
 
