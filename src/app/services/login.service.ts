@@ -1,8 +1,7 @@
-import { environment } from './../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,13 +14,11 @@ const httpOptions = {
 })
 
 export class LoginService {
+  loginUrl: string = environment.api + "/api/account/login";
 
-loginUrl: string = environment.api + "/api/account/login";
+  constructor(private http: HttpClient) { }
 
-constructor(private http: HttpClient) { }
-
-checkAuth(creditentials: string) : Observable<any> {
-  return this.http.post(this.loginUrl, creditentials, httpOptions);
-}
-
+  checkAuth(creditentials: string) : Observable<any> {
+    return this.http.post(this.loginUrl, creditentials, httpOptions);
+  }
 }

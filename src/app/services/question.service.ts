@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -15,12 +15,12 @@ const httpOptions = {
 
 export class QuestionService {
 
-private questionUrl: string = environment.api + "/api/questions";
+  private questionUrl: string = environment.api + "/api/questions";
 
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-checkAuth(creditentials: string) : Observable<any> {
-  return this.http.post(this.questionUrl, creditentials, httpOptions);
-}
+  checkAuth(creditentials: string) : Observable<any> {
+    return this.http.post(this.questionUrl, creditentials, httpOptions);
+  }
 
 }

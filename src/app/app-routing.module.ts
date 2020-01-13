@@ -1,3 +1,4 @@
+import { QuestionsOverviewComponent } from './components/questions-overview/questions-overview.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { NgModule } from '@angular/core';  
 import { Routes, RouterModule } from '@angular/router';  
@@ -19,9 +20,17 @@ const routes: Routes = [
     data: {  
       title: 'Login'  
     }  
+  },
+  {
+    path: 'questions-overview',
+    component: QuestionsOverviewComponent,
+    data: {
+      title: 'Questions Overview'
+    },
+    canActivate: [AuthGuard]
   },  
   {  
-    path: 'questions',  
+    path: 'add-question',  
     component: QuestionsComponent,  
     data: {  
       title: 'Questions'  

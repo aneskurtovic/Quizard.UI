@@ -1,4 +1,4 @@
-import { QuestionService } from './../../services/questionService/question.service';
+import { QuestionService } from '../../services/question.service';
 import { CustomValidators } from './../../validators/custom-validators';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
@@ -12,19 +12,22 @@ import { ToastrService } from 'ngx-toastr';
 ]
 })
 export class QuestionsComponent implements OnInit {
-
   form: FormGroup;
   formattedMessage: string;
+  submited = false;
   constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      Text: this.fb.control('', Validators.required),
+      Text: this.fb.control('', [Validators.required]),
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
       )
     });
+  }
+  get Text() {
+    return this.form.get('Text');
   }
   answerGroup() : FormGroup {
     return this.fb.group({
@@ -45,22 +48,35 @@ export class QuestionsComponent implements OnInit {
     this.answersArray.removeAt(i);
   }
   addQuestion(form) {
-    let credentials = JSON.stringify(form.value);
-    this.questionService.checkAuth(credentials).subscribe(response => {
-      this.toastr.success('Inserted to database!', 'Success');
-      this.form.reset();
-
-    }, err => {
-      this.toastr.error('Couldn\'t insert to database', 'Error', {
-        timeOut: 3000
+    this.submited = true
+    if(this.form.invalid) {
+      return;
+    } else {
+      let credentials = JSON.stringify(form.value);
+      this.questionService.checkAuth(credentials).subscribe(response => {
+        this.toastr.success('Inserted to database!', 'Success');
+        this.submited = false;
+        this.form.reset();
+      }, err => {
+        this.toastr.error('Couldn\'t insert to database', 'Error', {
+          timeOut: 3000
+        });
       });
-    });
+    } 
   }
-
   get addQuestionButtonDisable(): boolean {
     return !this.form.valid;
   }
-  get formStatus() {
+  findDuplicate(Text): boolean {
+    let myArray = this.answersArray.controls;
+    let test = myArray.filter(data => data.value.Text === Text && Text !== "")
+    if (test.length > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+   get formStatus() {
     return {
       valid: this.form.valid,
       dirty: this.form.dirty,
@@ -68,7 +84,4 @@ export class QuestionsComponent implements OnInit {
       value: this.form.value
     };
   }
-
-
-
 }
