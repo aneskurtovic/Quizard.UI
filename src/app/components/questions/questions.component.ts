@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { QuestionService } from '../../services/question.service';
 import { CustomValidators } from './../../validators/custom-validators';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,8 @@ export class QuestionsComponent implements OnInit {
   form: FormGroup;
   formattedMessage: string;
   submited = false;
-  constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService) { }
+  duplicated = true;
+  constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -48,15 +50,16 @@ export class QuestionsComponent implements OnInit {
     this.answersArray.removeAt(i);
   }
   addQuestion(form) {
-    this.submited = true
-    if(this.form.invalid) {
+    this.submited = true;
+    if(this.form.invalid || this.duplicated) {
       return;
     } else {
       let credentials = JSON.stringify(form.value);
       this.questionService.checkAuth(credentials).subscribe(response => {
         this.toastr.success('Inserted to database!', 'Success');
         this.submited = false;
-        this.form.reset();
+        this.duplicated = true;
+        this.router.navigate(["/questions-overview"]);
       }, err => {
         this.toastr.error('Couldn\'t insert to database', 'Error', {
           timeOut: 3000
@@ -64,15 +67,14 @@ export class QuestionsComponent implements OnInit {
       });
     } 
   }
-  get addQuestionButtonDisable(): boolean {
-    return !this.form.valid;
-  }
-  findDuplicate(Text): boolean {
-    let myArray = this.answersArray.controls;
-    let test = myArray.filter(data => data.value.Text === Text && Text !== "")
-    if (test.length > 1) {
+  findDuplicate(Text: string) {
+    let myArray = this.answersArray.controls
+      .filter(data => data.value.Text === Text && Text !== "")
+    if (myArray.length > 1) {
+      this.duplicated = true;
       return true;
     } else {
+      this.duplicated = false;
       return false;
     }
   }
@@ -83,5 +85,5 @@ export class QuestionsComponent implements OnInit {
       touched: this.form.touched,
       value: this.form.value
     };
-  }
+  }  
 }
