@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { QuestionService } from '../../services/question.service';
 import { CustomValidators } from './../../validators/custom-validators';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,6 +22,7 @@ export class QuestionsComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       Text: this.fb.control('', [Validators.required]),
+      Categories: [],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
@@ -46,6 +47,7 @@ export class QuestionsComponent implements OnInit {
   get removeButtonDisabled(): boolean {
     return this.answersArray.length === 2;
   }
+  
   removeAnswer(i: number) {
     this.answersArray.removeAt(i);
   }
