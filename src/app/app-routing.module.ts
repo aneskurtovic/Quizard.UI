@@ -1,10 +1,12 @@
-import { QuestionsOverviewComponent } from './components/questions-overview/questions-overview.component';
-import { QuestionsComponent } from './components/questions/questions.component';
+import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
+
+import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { NgModule } from '@angular/core';  
 import { Routes, RouterModule } from '@angular/router';  
 import { HomeComponent } from './components/home/home.component';  
 import { AuthGuard } from './services/guards/auth-guard.service';
 import { LoginComponent } from './components/login/login.component';  
+import { QuestionOverviewResolver } from './_resolver/question-overview.resolver';
 
 const routes: Routes = [  
   {  
@@ -27,6 +29,7 @@ const routes: Routes = [
     data: {
       title: 'Questions Overview'
     },
+    resolve: {questions: QuestionOverviewResolver},
     canActivate: [AuthGuard]
   },  
   {  
