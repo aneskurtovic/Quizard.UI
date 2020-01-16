@@ -9,6 +9,8 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginationModule } from 'ngx-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -37,6 +39,7 @@ export function tokenGetter() {
       AppRoutingModule,
       ReactiveFormsModule,
       BrowserAnimationsModule,
+      NgbModule,
       PaginationModule.forRoot(),
       ToastrModule.forRoot(),
        JwtModule.forRoot({

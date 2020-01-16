@@ -1,35 +1,23 @@
 <app-navbar></app-navbar>
-<div class="container mt-3">
+<div class="container mt-5">
   <button routerLink='/add-question' class="btn btn-primary">Add Question</button>
 </div>
 
-
-<div class="table-responsive">
-
-  <!--Table-->
-  <table class="table">
-
-    <!--Table head-->
+<div class="container mt-3 mx-auto">
+  <table class="table table-striped">
     <thead>
-      <tr>
-        <th class="th-lg">Questions</th>
-        <th class="th-lg">Answers</th>
-      </tr>
+    <tr>
+      <th scope="col">Question</th>
+      <th scope="col">Answers</th>
+    </tr>
     </thead>
-    <!--Table head-->
-
-    <!--Table body-->
     <tbody>
-      <tr *ngFor="let question of questions">
-        <td>{{question.text}}</td>
-      <td *ngFor='let answer of question.answers'><span>{{answer.text}}</span></td>
-      </tr>
-    
+    <tr *ngFor="let question of questions">
+      <td>{{ question.text}}</td>
+      <td><span class="badge badge-info" *ngFor="let answer of question.answers">{{ answer.text }}</span></td>
+    </tr>
     </tbody>
-    <!--Table body-->
-
   </table>
-  <!--Table-->
 
 </div>
 
