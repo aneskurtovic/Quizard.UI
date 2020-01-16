@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { QuestionService } from '../../services/question.service';
-import { CustomValidators } from './../../validators/custom-validators';
+import { CustomValidators } from '../../validators/custom-validators';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
