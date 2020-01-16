@@ -1,3 +1,4 @@
+import { CategoryComponent } from './components/category/category.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
