@@ -58,8 +58,9 @@ export class QuestionsComponent implements OnInit {
     this.answersArray.removeAt(i);
   }
   addQuestion(form) {
+    this.submited = true;
     this.form.value.Categories = this.categoryComponent.categoryIds;
-    if (this.form.invalid || this.categoryComponent.categoryIds.length === 0 ) {
+    if (this.form.invalid || this.duplicated || this.categoryComponent.categoryIds.length === 0 ) {
       return;
     } else {
       let credentials = JSON.stringify(form.value);
