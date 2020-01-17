@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <button routerLink='/add-question' class="btn btn-primary">Add Question</button>
+</div>
+
+<div class="container mt-3 mx-auto">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Question</th>
+      <th scope="col">Answers</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let question of questions">
+      <td>{{ question.text}}</td>
+      <td><span class="badge badge-info" *ngFor="let answer of question.answers">{{ answer.text }}</span></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true" 
+              [totalItems]="pagination.totalItems"
+              [itemsPerPage] = "pagination.itemsPerPage"
+              [(ngModel)]="pagination.currentPage"
+              (pageChanged) ="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+ 
+</pagination>
+</div>
