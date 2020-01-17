@@ -36,7 +36,8 @@ export function tokenGetter() {
       HomeComponent,
       QuestionsComponent,
       NavbarComponent,
-      QuestionsOverviewComponent
+      QuestionsOverviewComponent,
+      CategoryComponent
    ],
    imports: [
       BrowserModule,
