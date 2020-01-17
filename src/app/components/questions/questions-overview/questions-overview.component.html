@@ -7,14 +7,14 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th scope="col">Question</th>
-      <th scope="col">Answers</th>
+      <th scope="col">Questions</th>
+      <th scope="col">Categories</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let question of questions">
       <td>{{ question.text}}</td>
-      <td><span class="badge badge-info" *ngFor="let answer of question.answers">{{ answer.text }}</span></td>
+      <td><span class="badge badge-info" *ngFor="let categorie of question.categories">{{ categorie }}</span></td>
     </tr>
     </tbody>
   </table>
