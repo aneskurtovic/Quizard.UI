@@ -1,13 +1,11 @@
 import { Router } from '@angular/router';
-import { QuestionService } from '../../services/question.service';
-import { CustomValidators } from '../../validators/custom-validators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
-
-
-
+import { CategoryService } from '../../services/categoryService/category.service';
+import { QuestionService } from './../../services/questionService/question.service';
+import { CustomValidators } from './../../validators/custom-validators';
+import { CategoryComponent } from '../category/category.component';
 
 @Component({
   selector: 'app-questions',
@@ -21,8 +19,12 @@ export class QuestionsComponent implements OnInit {
   formattedMessage: string;
   submited = false;
   duplicated = true;
-  constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private router: Router) { }
 
+  
+  @ViewChild(CategoryComponent, {static:false})
+  private categoryComponent: CategoryComponent;
+  constructor(private fb: FormBuilder, private questionService: QuestionService,
+    private toastr: ToastrService, private categoryService: CategoryService, private router: Router) { }
   ngOnInit() {
     this.form = this.fb.group({
       Text: this.fb.control('', [Validators.required]),
@@ -56,8 +58,8 @@ export class QuestionsComponent implements OnInit {
     this.answersArray.removeAt(i);
   }
   addQuestion(form) {
-    this.submited = true;
-    if(this.form.invalid || this.duplicated) {
+    this.form.value.Categories = this.categoryComponent.categoryIds;
+    if (this.form.invalid || this.categoryComponent.categoryIds.length === 0 ) {
       return;
     } else {
       let credentials = JSON.stringify(form.value);
