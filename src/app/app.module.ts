@@ -4,13 +4,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
+import { QuestionsOverviewComponent } from './components/questions-overview/questions-overview.component';
  
 export function tokenGetter() {
    return localStorage.getItem("jwt");
@@ -22,13 +25,17 @@ export function tokenGetter() {
       LoginComponent,
       HomeComponent,
       QuestionsComponent,
-      NavbarComponent
+      NavbarComponent,
+      QuestionsOverviewComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       AppRoutingModule,
+      ReactiveFormsModule,
+      BrowserAnimationsModule,
+      ToastrModule.forRoot(),
        JwtModule.forRoot({
          config: {
            tokenGetter: tokenGetter,

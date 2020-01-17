@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -9,7 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private jwtHelper: JwtHelperService, private router: Router) { }
+  constructor(private jwtHelper: JwtHelperService) { }
 
   isUserAuthenticated() {
     let token: string = localStorage.getItem("jwt");
@@ -21,7 +20,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  get username(): string {
+  get username() {
     return localStorage.getItem("email");
   }
 
@@ -30,7 +29,5 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem("email");
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
