@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable() 
 export class QuestionOverviewResolver implements Resolve<Question[]>{
     pageNumber = 1;
-    pageSize = 5;
+    pageSize = 7;
 
     constructor(private questionService: QuestionService, private router: Router, private toastr: ToastrService){}
 
