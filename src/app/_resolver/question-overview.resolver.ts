@@ -17,7 +17,7 @@ export class QuestionOverviewResolver implements Resolve<Question[]>{
         return this.questionService.getQuestions(this.pageNumber, this.pageSize).pipe(
             catchError(error => {
                 this.toastr.error('Problem retieveing data', 'Error');
-                this.router.navigate(['']);
+                this.router.navigate(['/questions-overview']);
                 return of(null);
             })
         )
