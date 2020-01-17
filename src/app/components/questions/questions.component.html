@@ -10,6 +10,15 @@
         <div class="invalid" *ngIf="submited && Text.errors.required">Question is required</div>
       </div>
     </div>
+    <div class="form-group">
+      <select formControlName="DifficultyLevelId" (change)=selectChangeHandler($event)>
+        <option disabled [value]="null" [selected]=true>Difficulty Level</option>
+        <option *ngFor="let level of DifficultyLevels" [value]="level.id"> {{level.name}} </option>
+      </select>
+      <div *ngIf="Level==0">
+        <div class="invalid" *ngIf="submited && Level==0">Difficulty Level is required</div>
+      </div>
+    </div>
     <hr>
     <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
       <div [formGroupName]="i" class="form-row">
@@ -45,3 +54,5 @@
     <button class="btn btn-success" (click)=addQuestion(form)>Submit</button>
   </div>
 </div>
+
+{{Level}}

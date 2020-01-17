@@ -14,7 +14,7 @@ const httpOptions = {
 })
 
 export class LoginService {
-  loginUrl: string = environment.api + "/api/account/login";
+  private loginUrl: string = environment.api + "/api/account/login";
 
   constructor(private http: HttpClient) { }
 

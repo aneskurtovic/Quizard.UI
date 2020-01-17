@@ -17,11 +17,18 @@ export class QuestionsComponent implements OnInit {
   formattedMessage: string;
   submited = false;
   duplicated = true;
+  DifficultyLevels = [
+    {id: 1, name: "Easy"},
+    {id: 2, name: "Medium"},
+    {id: 3, name: "Hard"}
+  ];
+  Level = 0;
   constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit() {
     this.form = this.fb.group({
       Text: this.fb.control('', [Validators.required]),
+      DifficultyLevelId: this.fb.control,
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
@@ -51,7 +58,8 @@ export class QuestionsComponent implements OnInit {
   }
   addQuestion(form) {
     this.submited = true;
-    if(this.form.invalid || this.duplicated) {
+    console.log(this.form.value);
+    if(this.form.invalid || this.duplicated || this.Level == 0) {
       return;
     } else {
       let credentials = JSON.stringify(form.value);
@@ -86,4 +94,10 @@ export class QuestionsComponent implements OnInit {
       value: this.form.value
     };
   }  
+  get getDifficultyLevel() {
+    return this.form.get('DifficultyLevel');
+  }
+  selectChangeHandler(event) {
+    this.Level = event.target.value;
+   }
 }
