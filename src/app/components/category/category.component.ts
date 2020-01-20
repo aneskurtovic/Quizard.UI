@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
-import { ICategory } from '../../interfaces/ICategory';
+import { ICategory } from '../../_models/ICategory';
 import { CategoryService } from '../../services/category.service';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  categoryNames: string[] = [];
+  names: string[] = [];
   categoryList: ICategory[]; 
   newCategory: string;
   newCategoryId: number; 
@@ -42,13 +42,13 @@ export class CategoryComponent implements OnInit {
     })
   }
 
-  formatter = (cate: ICategory) => cate.categoryName;
+  formatter = (cate: ICategory) => cate.name;
 
   search = (text$: Observable<string>) => text$.pipe(
     debounceTime(200),
     distinctUntilChanged(),
     filter(term => term.length >= 2),
-    map(term => this.categoryList.filter(category => new RegExp(term, 'mi').test(category.categoryName.toLowerCase())).slice(0, 10))
+    map(term => this.categoryList.filter(category => new RegExp(term, 'mi').test(category.name)).slice(0, 10))
   )
 
   checkIfStringEmpty(): boolean {
@@ -59,13 +59,13 @@ export class CategoryComponent implements OnInit {
   }
 
   removeCategory(cat: any) {
-    var index = this.categoryNames.indexOf(cat);
-    this.categoryNames.splice(index, 1);
+    var index = this.names.indexOf(cat);
+    this.names.splice(index, 1);
     this.categoryIds.splice(index, 1);
   }
 
   checkIfCategoryExists(): boolean {
-    if (this.categoryList.filter(x => x.categoryName == this.form.value.Categories).length > 0) {
+    if (this.categoryList.filter(x => x.name == this.form.value.Categories).length > 0) {
         return true;
       }
     return false;
@@ -77,40 +77,40 @@ export class CategoryComponent implements OnInit {
         timeOut: 3000
       });
     }
-     else if (this.categoryNames.length > 0 && this.categoryNames.includes(this.form.value.Categories.categoryName)) {
+     else if (this.names.length > 0 && this.names.includes(this.form.value.Categories.name)) {
       this.toastr.error('This category is already assigned to question', 'Error', {
         timeOut: 3000
       });
     }
      else if (this.checkIfCategoryExists()) { //true
-      if (this.categoryNames.length > 0 && this.categoryNames.includes(this.form.value.Categories)) {
+      if (this.names.length > 0 && this.names.includes(this.form.value.Categories)) {
         this.toastr.error('This category is already assigned to question', 'Error', {
           timeOut: 3000
         });
       }
       else {
-        var existingCategory = this.categoryList.filter(x => x.categoryName == this.form.value.Categories);
+        var existingCategory = this.categoryList.filter(x => x.name == this.form.value.Categories);
         this.categoryIds.push(existingCategory[0].id);
-        this.categoryNames.push(existingCategory[0].categoryName);
+        this.names.push(existingCategory[0].name);
       }
     } 
     else {
       if (this.form.value.Categories.id == null) {
         this.newCategory = this.form.value.Categories;
         var nova = {
-          categoryName: this.newCategory
+          name: this.newCategory
         }
         var nova2 = JSON.stringify(nova);
         this.categoryService.postCategory(nova2).subscribe(response => {
           this.newCategoryId = Number.parseInt(response.toString());
           this.toastr.success('Category successfully added to database', 'Success');
           this.categoryIds.push(this.newCategoryId);
-          this.categoryNames.push(this.newCategory);
+          this.names.push(this.newCategory);
         }
         );
       }
       else {
-        this.categoryNames.push(this.form.value.Categories.categoryName);
+        this.names.push(this.form.value.Categories.name);
         this.categoryIds.push(this.form.value.Categories.id);
       }
     }

@@ -24,9 +24,9 @@ public getAll(term: string) {
       searchTerm: term
     }
   })
-}X  
-public postCategory(categoryName : string) {
-    return this.http.post(this.url,categoryName, httpOptions);
+}
+public postCategory(name : string) {
+    return this.http.post(this.url,name, httpOptions);
   }
 }
 
