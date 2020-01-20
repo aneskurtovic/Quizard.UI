@@ -1,9 +1,11 @@
 import { QuestionService } from '../../../services/question.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from '../../../services/category.service';
+import { CategoryComponent } from '../../category/category.component';
 
 @Component({
   selector: 'app-questions',
@@ -17,11 +19,16 @@ export class QuestionsComponent implements OnInit {
   formattedMessage: string;
   submited = false;
   duplicated = true;
-  constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private router: Router) { }
 
+  
+  @ViewChild(CategoryComponent, {static:false})
+  private categoryComponent: CategoryComponent;
+  constructor(private fb: FormBuilder, private questionService: QuestionService,
+    private toastr: ToastrService, private categoryService: CategoryService, private router: Router) { }
   ngOnInit() {
     this.form = this.fb.group({
       Text: this.fb.control('', [Validators.required]),
+      Categories: [],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
@@ -46,12 +53,14 @@ export class QuestionsComponent implements OnInit {
   get removeButtonDisabled(): boolean {
     return this.answersArray.length === 2;
   }
+  
   removeAnswer(i: number) {
     this.answersArray.removeAt(i);
   }
   addQuestion(form) {
     this.submited = true;
-    if(this.form.invalid || this.duplicated) {
+    this.form.value.Categories = this.categoryComponent.categoryIds;
+    if (this.form.invalid || this.duplicated || this.categoryComponent.categoryIds.length === 0 ) {
       return;
     } else {
       let credentials = JSON.stringify(form.value);

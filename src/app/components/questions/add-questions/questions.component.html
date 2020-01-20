@@ -11,6 +11,9 @@
       </div>
     </div>
     <hr>
+    <app-category></app-category>
+    <hr>
+    
     <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
       <div [formGroupName]="i" class="form-row">
         <div class="form-group col-md-8">
@@ -44,4 +47,6 @@
     <button (click)="addAnotherAnswer()" class="btn btn-primary mr-2">Add Answer</button>
     <button class="btn btn-success" (click)=addQuestion(form)>Submit</button>
   </div>
-</div>
+  <div>
+    
+  </div>
