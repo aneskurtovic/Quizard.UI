@@ -1,3 +1,4 @@
+import { PaginatedResult } from './../_models/pagination';
 import { Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionService } from './../services/question.service';
@@ -17,7 +18,6 @@ export class QuestionOverviewResolver implements Resolve<Question[]>{
         return this.questionService.getQuestions(this.pageNumber, this.pageSize).pipe(
             catchError(error => {
                 this.toastr.error('Problem retieveing data', 'Error');
-                this.router.navigate(['/questions-overview']);
                 return of(null);
             })
         )

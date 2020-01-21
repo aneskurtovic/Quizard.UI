@@ -1,0 +1,14 @@
+<label>
+  Categories:
+</label>
+<div id="listCategories" class="col-12 ">
+  <button  class="badge badge-primary" (click)=removeCategory(cat) data-toggle="tooltip"
+    title="Click to unassign category from question" *ngFor="let cat of names">{{ cat }}</button>
+</div>
+<div class="row">
+  <div class="col-12" [formGroup]="form" >
+    <input id="typeahead-basic" formControlName="Categories" type="text" class="form-control"
+      [inputFormatter]="formatter" [resultFormatter]="formatter" [ngbTypeahead]="search" />
+    <span><button class="btn btn-primary" (click)=addAnotherCategory() type="submit" >Add category</button></span>
+ </div>
+</div> 

@@ -2,9 +2,11 @@ import { DifficultyLevel } from './../../../_models/difficultyLevel';
 import { QuestionService } from './../../../services/question.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from '../../../services/category.service';
+import { CategoryComponent } from '../../category/category.component';
 
 @Component({
   selector: 'app-questions',
@@ -19,13 +21,15 @@ export class QuestionsComponent implements OnInit {
   submited: boolean = false;
   duplicated: boolean = false;
   difficultyLevels: DifficultyLevel[] = [];
-  Level: number = 0;
-  constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private router: Router) { }
-
+  Level: number = 0;  
+  @ViewChild(CategoryComponent, {static:false})
+  private categoryComponent: CategoryComponent;
+  constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private categoryService: CategoryService, private router: Router) { }
   ngOnInit() {
     this.form = this.fb.group({
       Text: ['', [Validators.required]],
       DifficultyLevelId: ['0'],
+      Categories: [],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
@@ -52,6 +56,7 @@ export class QuestionsComponent implements OnInit {
   get removeButtonDisabled(): boolean {
     return this.answersArray.length === 2;
   }
+  
   removeAnswer(i: number) {
     this.answersArray.removeAt(i);
   }
@@ -69,8 +74,8 @@ export class QuestionsComponent implements OnInit {
   addQuestion() {
    // debugger;
     this.submited = true;
-    console.log(this.form.value);
-    if(this.form.invalid || this.duplicated || this.Level == 0) {
+    this.form.value.Categories = this.categoryComponent.categoryIds;
+    if (this.form.invalid || this.duplicated || this.categoryComponent.categoryIds.length === 0 || this.Level == 0) {
       return;
     } else {
       let credentials = JSON.stringify(this.form.value);

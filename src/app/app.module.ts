@@ -1,4 +1,5 @@
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
+import { CategoryComponent } from './components/category/category.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,6 +11,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginationModule } from 'ngx-bootstrap';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { TypeaheadModule } from 'ngx-type-ahead';
+
+
 
 
 import { AppComponent } from './app.component';
@@ -18,6 +22,10 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { QuestionOverviewResolver } from './_resolver/question-overview.resolver';
+ 
+
+
+
  
 export function tokenGetter() {
    return localStorage.getItem("jwt");
@@ -30,14 +38,19 @@ export function tokenGetter() {
       HomeComponent,
       QuestionsComponent,
       NavbarComponent,
-      QuestionsOverviewComponent
+      QuestionsOverviewComponent,
+      CategoryComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      NgbModule,
       AppRoutingModule,
       ReactiveFormsModule,
+      AppRoutingModule,
+      ReactiveFormsModule,
+      TypeaheadModule,
       BrowserAnimationsModule,
       NgbModule,
       PaginationModule.forRoot(),
