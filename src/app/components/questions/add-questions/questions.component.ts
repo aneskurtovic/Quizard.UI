@@ -1,4 +1,5 @@
-import { QuestionService } from '../../../services/question.service';
+import { DifficultyLevel } from './../../../_models/difficultyLevel';
+import { QuestionService } from './../../../services/question.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -15,25 +16,23 @@ import { ToastrService } from 'ngx-toastr';
 export class QuestionsComponent implements OnInit {
   form: FormGroup;
   formattedMessage: string;
-  submited = false;
-  duplicated = true;
-  DifficultyLevels = [
-    {id: 1, name: "Easy"},
-    {id: 2, name: "Medium"},
-    {id: 3, name: "Hard"}
-  ];
-  Level = 0;
+  submited: boolean = false;
+  duplicated: boolean = false;
+  difficultyLevels: DifficultyLevel[] = [];
+  Level: number = 0;
   constructor(private fb: FormBuilder, private questionService: QuestionService, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      Text: this.fb.control('', [Validators.required]),
-      DifficultyLevelId: this.fb.control,
+      Text: ['', [Validators.required]],
+      DifficultyLevelId: ['0'],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [ CustomValidators.minLengthOfValidAnswers(1), Validators.required]
       )
     });
+    
+    this.loadDifficultyLevels();
   }
   get Text() {
     return this.form.get('Text');
@@ -56,13 +55,25 @@ export class QuestionsComponent implements OnInit {
   removeAnswer(i: number) {
     this.answersArray.removeAt(i);
   }
-  addQuestion(form) {
+  findDuplicate(Text: string) {
+    let myArray = this.answersArray.controls
+      .filter(data => data.value.Text === Text && Text !== "")
+    if (myArray.length > 1) {
+      this.duplicated = true;
+      return true;
+    } else {
+      this.duplicated = false;
+      return false;
+    }
+  }
+  addQuestion() {
+   // debugger;
     this.submited = true;
     console.log(this.form.value);
     if(this.form.invalid || this.duplicated || this.Level == 0) {
       return;
     } else {
-      let credentials = JSON.stringify(form.value);
+      let credentials = JSON.stringify(this.form.value);
       this.questionService.checkAuth(credentials).subscribe(response => {
         this.toastr.success('Inserted to database!', 'Success');
         this.submited = false;
@@ -75,17 +86,7 @@ export class QuestionsComponent implements OnInit {
       });
     } 
   }
-  findDuplicate(Text: string) {
-    let myArray = this.answersArray.controls
-      .filter(data => data.value.Text === Text && Text !== "")
-    if (myArray.length > 1) {
-      this.duplicated = true;
-      return true;
-    } else {
-      this.duplicated = false;
-      return false;
-    }
-  }
+ 
    get formStatus() {
     return {
       valid: this.form.valid,
@@ -94,10 +95,20 @@ export class QuestionsComponent implements OnInit {
       value: this.form.value
     };
   }  
-  get getDifficultyLevel() {
-    return this.form.get('DifficultyLevel');
-  }
   selectChangeHandler(event) {
     this.Level = event.target.value;
+   }
+   get getDifficultyLevel() {
+     return this.form.get('DifficultyLevelId');
+   }
+
+   loadDifficultyLevels() {
+     return this.questionService.getDifficultyLevel().subscribe((difficultyLevels: DifficultyLevel[]) => {
+       this.difficultyLevels = difficultyLevels;
+     }, error => {
+      this.toastr.error('Couldn\'t insert to database', 'Error', {
+        timeOut: 3000
+      });
+     });
    }
 }

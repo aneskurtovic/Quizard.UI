@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Question } from '../_models/question';
 import { map } from 'rxjs/operators';
+import { DifficultyLevel } from '../_models/difficultyLevel';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,6 +20,8 @@ const httpOptions = {
 export class QuestionService {
 
   private questionUrl: string = environment.api + "/api/questions";
+  private difficultyLevelUrl: string = environment.api + "/api/difficultylevels";
+
 
   constructor(private http: HttpClient) { }
 
@@ -51,6 +54,10 @@ export class QuestionService {
 
   getQuestion(id): Observable<Question> {
     return this.http.get<Question>(this.questionUrl + id);
+  }
+
+  getDifficultyLevel(): Observable<DifficultyLevel[]> {
+    return this.http.get<DifficultyLevel[]>(this.difficultyLevelUrl);
   }
 
 }
