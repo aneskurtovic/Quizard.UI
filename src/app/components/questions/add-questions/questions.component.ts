@@ -72,7 +72,6 @@ export class QuestionsComponent implements OnInit {
     }
   }
   addQuestion() {
-   // debugger;
     this.submited = true;
     this.form.value.Categories = this.categoryComponent.categoryIds;
     if (this.form.invalid || this.duplicated || this.categoryComponent.categoryIds.length === 0 || this.Level == 0) {
@@ -82,7 +81,6 @@ export class QuestionsComponent implements OnInit {
       this.questionService.checkAuth(credentials).subscribe(response => {
         this.toastr.success('Inserted to database!', 'Success');
         this.submited = false;
-        this.duplicated = true;
         this.router.navigate(["/questions-overview"]);
       }, err => {
         this.toastr.error('Couldn\'t insert to database', 'Error', {
