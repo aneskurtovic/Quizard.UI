@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Pagination } from 'src/app/_models/pagination';
-import { Question } from 'src/app/_models/question';
+import { Pagination } from 'src/app/models/pagination';
+import { Question } from 'src/app/models/question';
+import { PaginatedResult } from './../../../models/pagination';
 import { QuestionService } from './../../../services/question.service';
-import { PaginatedResult } from './../../../_models/pagination';
 
 @Component({
   selector: 'app-questions-overview',

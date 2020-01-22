@@ -16,8 +16,8 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
+import { QuestionOverviewResolver } from './resolver/question-overview.resolver';
 import { AuthGuard } from './services/guards/auth-guard.service';
-import { QuestionOverviewResolver } from './_resolver/question-overview.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');

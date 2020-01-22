@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { ICategory } from '../../models/ICategory';
 import { CategoryService } from '../../services/category.service';
-import { ICategory } from '../../_models/ICategory';
 
 @Component({
   selector: 'app-category',

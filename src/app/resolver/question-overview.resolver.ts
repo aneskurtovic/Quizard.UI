@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Question } from '../_models/question';
+import { Question } from '../models/question';
 import { QuestionService } from './../services/question.service';
 
 @Injectable()
