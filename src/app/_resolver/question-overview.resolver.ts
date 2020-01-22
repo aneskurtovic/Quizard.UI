@@ -1,26 +1,24 @@
-import { PaginatedResult } from './../_models/pagination';
-import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { QuestionService } from './../services/question.service';
-import { Injectable } from "@angular/core";
-import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Question } from '../_models/question';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Question } from '../_models/question';
+import { QuestionService } from './../services/question.service';
 
-@Injectable() 
-export class QuestionOverviewResolver implements Resolve<Question[]>{
-    pageNumber = 1;
-    pageSize = 7;
+@Injectable()
+export class QuestionOverviewResolver implements Resolve<Question[]> {
+  pageNumber = 1;
+  pageSize = 7;
 
-    constructor(private questionService: QuestionService, private router: Router, private toastr: ToastrService){}
+  constructor(private questionService: QuestionService, private toastr: ToastrService) {}
 
-    resolve(route: ActivatedRouteSnapshot): Observable<Question[]> {
-        return this.questionService.getQuestions(this.pageNumber, this.pageSize).pipe(
-            catchError(error => {
-                this.toastr.error('Problem retieveing data', 'Error');
-                return of(null);
-            })
-        )
-    }
-
+  resolve(route: ActivatedRouteSnapshot): Observable<Question[]> {
+    return this.questionService.getQuestions(this.pageNumber, this.pageSize).pipe(
+      catchError(error => {
+        this.toastr.error('Problem retieveing data', 'Error');
+        return of(null);
+      })
+    );
+  }
 }

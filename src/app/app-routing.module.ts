@@ -1,27 +1,26 @@
-import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
-
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
-import { NgModule } from '@angular/core';  
-import { Routes, RouterModule } from '@angular/router';  
-import { HomeComponent } from './components/home/home.component';  
+import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
-import { LoginComponent } from './components/login/login.component';  
 import { QuestionOverviewResolver } from './_resolver/question-overview.resolver';
 
-const routes: Routes = [  
-  {  
-    path: '',  
+const routes: Routes = [
+  {
+    path: '',
     component: HomeComponent,
-    data: {  
-      title: 'Home'   
-    }  
-  },  
-  {  
-    path: 'login',  
-    component: LoginComponent,  
-    data: {  
-      title: 'Login'  
-    }  
+    data: {
+      title: 'Home'
+    }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login'
+    }
   },
   {
     path: 'questions-overview',
@@ -29,20 +28,20 @@ const routes: Routes = [
     data: {
       title: 'Questions Overview'
     },
-    resolve: {questions: QuestionOverviewResolver},
+    resolve: { questions: QuestionOverviewResolver },
     canActivate: [AuthGuard]
-  },  
-  {  
-    path: 'add-question',  
-    component: QuestionsComponent,  
-    data: {  
-      title: 'Questions'  
+  },
+  {
+    path: 'add-question',
+    component: QuestionsComponent,
+    data: {
+      title: 'Questions'
     },
-    canActivate: [AuthGuard] 
-  }  
-];  
-@NgModule({  
-  imports: [RouterModule.forRoot(routes)],  
-  exports: [RouterModule]  
-})  
-export class AppRoutingModule { } 
+    canActivate: [AuthGuard]
+  }
+];
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

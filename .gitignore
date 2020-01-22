@@ -46,3 +46,5 @@ testem.log
 Thumbs.db
 *.json
 .vs/
+debug.log
+package-lock.json
