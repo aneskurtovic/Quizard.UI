@@ -1,20 +1,21 @@
 <app-navbar></app-navbar>
 <div class="container mt-5">
-  <button routerLink='/add-question' class="btn btn-primary">Add Question</button>
+  <button routerLink='/add-question' class="button"><span>Add new Question </span></button>
 </div>
 
-<div class="container mt-3 mx-auto">
-  <table class="table table-striped">
-    <thead>
+
+<div class="container mt-4 mx-auto">
+  <table class="table table-hover table-fixed"> 
+    <thead class="thead-dark">
     <tr>
-      <th scope="col">Questions</th>
-      <th scope="col">Categories</th>
+      <th class="w-50" scope="col">Questions</th>
+      <th class="w-50" scope="col">Categories</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let question of questions">
-      <td>{{ question.text}}</td>
-      <td><span class="badge badge-info" *ngFor="let categorie of question.categories">{{ categorie }}</span></td>
+    <td class="text-truncate" data-toggle="tooltip" title="{{question.text}}">{{ question.text}}</td>
+      <td class="text-truncate"><span class="badge badge-info" *ngFor="let categorie of question.categories">{{ categorie }}</span></td>
     </tr>
     </tbody>
   </table>

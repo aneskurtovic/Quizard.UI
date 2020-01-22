@@ -26,12 +26,14 @@ export class CategoryComponent implements OnInit {
     this.form=this.fb.group({
       Categories:[]
      });
+  
     this.form.controls['Categories'].valueChanges.subscribe(value => {
        this.filterCategories(value);
      });
     }
 
   filterCategories(searchTerm: string) {
+    if(this.form.controls['Categories'].value==="") return;
     this.categoryService.getAll(searchTerm).subscribe(result => {
       this.categoryList = [];
       const results = Array.isArray(result) ? Array.from(result) : [];
