@@ -1,19 +1,19 @@
 .container {
-    position: relative;
-    padding-top: 30px;
-  }
-  
-  #listCategories {
-    padding: 0 !important;
-    margin-bottom: 15px;
-  }
-  
-  #typeahead-basic {
-    margin-bottom: 15px;
-  }
-  
-.badge.badge-primary{
-    font-weight: 400;
-    padding: .4rem .8rem !important;
-    font-size: 1.1em !important;
+  position: relative;
+  padding-top: 30px;
+}
+
+#listCategories {
+  padding: 0 !important;
+  margin-bottom: 15px;
+}
+
+#typeahead-basic {
+  margin-bottom: 15px;
+}
+
+.badge.badge-primary {
+  font-weight: 400;
+  padding: 0.4rem 0.8rem !important;
+  font-size: 1.1em !important;
 }

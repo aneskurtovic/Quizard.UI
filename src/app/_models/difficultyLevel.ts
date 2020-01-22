@@ -1,5 +1,4 @@
 export interface DifficultyLevel {
-    id: number;
-    level: string;
-  }
-  
+  id: number;
+  level: string;
+}

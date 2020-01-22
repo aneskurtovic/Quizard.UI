@@ -1,24 +1,23 @@
-import { environment } from '../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
   })
-}
+};
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class LoginService {
-  private loginUrl: string = environment.api + "/api/account/login";
+  private loginUrl: string = environment.api + '/api/account/login';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  checkAuth(creditentials: string) : Observable<any> {
+  checkAuth(creditentials: string): Observable<any> {
     return this.http.post(this.loginUrl, creditentials, httpOptions);
   }
 }
