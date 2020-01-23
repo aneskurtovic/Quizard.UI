@@ -24,13 +24,13 @@ export class QuestionService {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  getQuestions(page?, itemsPerPage?): Observable<PaginatedResult<Question[]>> {
+  getQuestions(page?: number, itemsPerPage?: number): Observable<PaginatedResult<Question[]>> {
     const paginatedResult: PaginatedResult<Question[]> = new PaginatedResult<Question[]>();
 
     let params = new HttpParams();
     if (page != null && itemsPerPage != null) {
-      params = params.append('pageNumber', page);
-      params = params.append('pageSize', itemsPerPage);
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
     }
 
     return this.http

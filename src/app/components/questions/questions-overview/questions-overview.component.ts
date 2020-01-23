@@ -23,8 +23,8 @@ export class QuestionsOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.questions = data['questions'].result;
-      this.pagination = data['questions'].pagination;
+      this.questions = data['questions'.toString()].result;
+      this.pagination = data['questions'.toString()].pagination;
     });
   }
 
