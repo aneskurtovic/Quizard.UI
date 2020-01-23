@@ -24,7 +24,7 @@ export class QuestionService {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  getQuestions(page?: string, itemsPerPage?: string): Observable<PaginatedResult<Question[]>> {
+  getQuestions(page?, itemsPerPage?): Observable<PaginatedResult<Question[]>> {
     const paginatedResult: PaginatedResult<Question[]> = new PaginatedResult<Question[]>();
 
     let params = new HttpParams();
