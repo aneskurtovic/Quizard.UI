@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Pagination } from 'src/app/models/pagination';
 import { Question } from 'src/app/models/question';
-import { PaginatedResult } from './../../../models/pagination';
+import { PagedResult } from './../../../models/pagination';
 import { QuestionService } from './../../../services/question.service';
 
 @Component({
@@ -12,8 +11,9 @@ import { QuestionService } from './../../../services/question.service';
   styleUrls: ['./questions-overview.component.css']
 })
 export class QuestionsOverviewComponent implements OnInit {
-  questions: Question[];
-  pagination: Pagination;
+  page = 1;
+  itemsPerPage = 7;
+  pageResult: PagedResult<Question>;
 
   constructor(
     private questionService: QuestionService,
@@ -22,28 +22,19 @@ export class QuestionsOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.questions = data['questions'].result;
-      this.pagination = data['questions'].pagination;
-    });
-  }
-
-  pageChanged(event: any): void {
-    this.pagination.currentPage = event.page;
     this.loadQuestions();
   }
 
-  loadQuestions() {
+  pageChanged(event: any): void {
+    this.loadQuestions(event.page);
+  }
+
+  loadQuestions(page?: number) {
+    const pageNumber = page || 1;
     this.questionService
-      .getQuestions(this.pagination.currentPage, this.pagination.itemsPerPage)
-      .subscribe(
-        (res: PaginatedResult<Question[]>) => {
-          this.questions = res.result;
-          this.pagination = res.pagination;
-        },
-        error => {
-          this.toastr.error('Could not get questions', 'Error');
-        }
-      );
+      .getQuestions({ pageNumber, pageSize: this.itemsPerPage })
+      .subscribe(res => {
+        this.pageResult = res;
+      });
   }
 }

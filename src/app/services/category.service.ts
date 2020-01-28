@@ -22,6 +22,7 @@ export class CategoryService {
     if (term === '') {
       return;
     }
+
     return this.http.get(this.url, {
       params: {
         searchTerm: term

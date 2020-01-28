@@ -17,7 +17,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
-import { QuestionOverviewResolver } from './_resolver/question-overview.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -55,7 +54,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard, QuestionOverviewResolver],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

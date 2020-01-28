@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { DifficultyLevel } from '../models/difficultyLevel';
 import { Question } from '../models/question';
-import { PaginatedResult } from './../models/pagination';
+import { PagedResult, PaginationParams } from './../models/pagination';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,33 +25,16 @@ export class QuestionService {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  getQuestions(page?, itemsPerPage?): Observable<PaginatedResult<Question[]>> {
-    const paginatedResult: PaginatedResult<Question[]> = new PaginatedResult<Question[]>();
-
-    let params = new HttpParams();
-    if (page != null && itemsPerPage != null) {
-      params = params.append('pageNumber', page);
-      params = params.append('pageSize', itemsPerPage);
-    }
-
-    return this.http
-      .get<Question[]>(this.questionUrl, { observe: 'response', params })
-      .pipe(
-        map(response => {
-          paginatedResult.result = response.body;
-          if (response.headers.get('Pagination') != null) {
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-          }
-          return paginatedResult;
-        })
-      );
-  }
-
-  getQuestion(id): Observable<Question> {
-    return this.http.get<Question>(this.questionUrl + id);
-  }
-
   getDifficultyLevel(): Observable<DifficultyLevel[]> {
     return this.http.get<DifficultyLevel[]>(this.difficultyLevelUrl);
+  }
+  getQuestions(params: PaginationParams) {
+    let queryParams = new HttpParams();
+    const keys = Object.keys(params);
+    keys.forEach(p => {
+      queryParams = queryParams.append(p, params[p]);
+    });
+
+    return this.http.get<PagedResult<Question>>(this.questionUrl, { params: queryParams });
   }
 }

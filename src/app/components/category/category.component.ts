@@ -38,6 +38,7 @@ export class CategoryComponent implements OnInit {
     if (this.form.controls.Categories.value === '') {
       return;
     }
+
     this.categoryService.getAll(searchTerm).subscribe(result => {
       this.availableCategories = [];
       const results = Array.isArray(result) ? Array.from(result) : [];

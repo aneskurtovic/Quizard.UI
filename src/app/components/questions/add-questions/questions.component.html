@@ -1,4 +1,3 @@
-<app-navbar></app-navbar>
 <div class="container">
   <form [formGroup]="form" class="form-group">
     <div class="form-group">
@@ -28,11 +27,13 @@
     <hr />
     <app-category (categoryIDs)="onCategoriesChange($event)"></app-category>
     <hr />
+
     <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
       <div [formGroupName]="i" class="form-row">
         <div class="form-group col-md-8">
           <label> {{ i + 1 }}. Answer:</label>
           <span style="visibility: hidden;">{{ findDuplicate(item.value.Text) }}</span>
+
           <input type="text" formControlName="Text" class="form-control" />
           <div *ngIf="submited && item.invalid">
             <div *ngIf="item.invalid" class="invalid">Answer is required</div>

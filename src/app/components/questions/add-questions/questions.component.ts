@@ -61,6 +61,7 @@ export class QuestionsComponent implements OnInit {
   removeAnswer(i: number) {
     this.answersArray.removeAt(i);
   }
+
   findDuplicate(Text: string) {
     const myArray = this.answersArray.controls.filter(
       data => data.value.Text === Text && Text !== ''
@@ -98,6 +99,7 @@ export class QuestionsComponent implements OnInit {
       );
     }
   }
+
   get formStatus() {
     return {
       valid: this.form.valid,

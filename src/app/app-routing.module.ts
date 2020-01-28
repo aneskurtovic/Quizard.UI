@@ -5,7 +5,6 @@ import { LoginComponent } from './components/login/login.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
-import { QuestionOverviewResolver } from './_resolver/question-overview.resolver';
 
 const routes: Routes = [
   {
@@ -28,7 +27,6 @@ const routes: Routes = [
     data: {
       title: 'Questions Overview'
     },
-    resolve: { questions: QuestionOverviewResolver },
     canActivate: [AuthGuard]
   },
   {
