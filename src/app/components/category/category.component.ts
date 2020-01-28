@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
-import { ICategory } from '../../_models/ICategory';
 
 @Component({
   selector: 'app-category',
@@ -12,111 +12,105 @@ import { ICategory } from '../../_models/ICategory';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  names: string[] = [];
-  categoryList: ICategory[];
-  newCategory: string;
-  newCategoryId: number;
-  categoryIds: number[] = [];
   form: FormGroup;
+  selectedCategories: Category[] = [];
+  availableCategories: Category[] = [];
+  @Output() private categoryIDs = new EventEmitter<number[]>();
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private categoryService: CategoryService
-  ) {}
+  ) {
+    this.search = this.search.bind(this);
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
-      Categories: []
+      Categories: this.fb.control([], [Validators.required])
     });
-
-    this.form.controls['Categories'].valueChanges.subscribe(value => {
+    this.form.controls.Categories.valueChanges.subscribe(value => {
       this.filterCategories(value);
     });
   }
 
-  filterCategories(searchTerm: string) {
-    if (this.form.controls['Categories'].value === '') return;
+  filterCategories(searchTerm: string): void {
+    if (this.form.controls.Categories.value === '') {
+      return;
+    }
     this.categoryService.getAll(searchTerm).subscribe(result => {
-      this.categoryList = [];
+      this.availableCategories = [];
       const results = Array.isArray(result) ? Array.from(result) : [];
       if (results.length > 0) {
-        for (let obj of results) this.categoryList.push(obj);
+        for (const obj of results) {
+          this.availableCategories.push(obj);
+        }
       }
     });
   }
+  isCategorySelected(category: Category): boolean {
+    if (this.selectedCategories.filter(cat => cat.name === category.name).length > 0) {
+      return true;
+    }
+    return false;
+  }
+  selectCategory(): void {
+    if (this.form.value.Categories.id) {
+      if (this.isCategorySelected(this.form.value.Categories)) {
+        this.toastr.error('This category is already assigned to question', 'Error', {
+          timeOut: 3000
+        });
+        this.form.controls.Categories.reset();
+        return;
+      }
+      this.selectedCategories.push(this.form.value.Categories);
+      this.form.controls.Categories.reset();
+      this.emitChange();
+      return;
+    }
+    const inputText: string = this.form.value.Categories;
+    if (inputText.trim() === '') {
+      return;
+    }
+    this.addCategory();
+    this.form.controls.Categories.reset();
+  }
 
-  formatter = (cate: ICategory) => cate.name;
+  addCategory(): void {
+    const newCategoryName: string = this.form.get('Categories').value;
+    this.categoryService.postCategory(newCategoryName).subscribe(newCategory => {
+      if (this.isCategorySelected(newCategory)) {
+        this.toastr.error('This category is already assigned to question', 'Error', {
+          timeOut: 3000
+        });
+        return;
+      }
+      this.selectedCategories.push(newCategory);
+      this.toastr.success('Category successfully added to database', 'Success');
+      this.emitChange();
+    });
+  }
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
+  emitChange = () => this.categoryIDs.emit(this.selectedCategories.map(x => x.id));
+
+  removeCategory(cat: Category): void {
+    const index = this.selectedCategories.indexOf(cat);
+    this.selectedCategories.splice(index, 1);
+    this.emitChange();
+  }
+
+  formatter = (cat: Category) => cat.name;
+
+  search(text$: Observable<string>): Observable<Category[]> {
+    return text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
       filter(term => term.length >= 2),
       map(term =>
-        this.categoryList
-          .filter(category => new RegExp(term, 'mi').test(category.name))
+        this.availableCategories
+          .filter(categories => new RegExp(term, 'mi').test(categories.name))
           .slice(0, 10)
       )
     );
-
-  checkIfStringEmpty(): boolean {
-    if (this.form.value.Categories === '' || this.form.value.Categories === null) {
-      return true;
-    }
-    return false;
-  }
-
-  removeCategory(cat: any) {
-    var index = this.names.indexOf(cat);
-    this.names.splice(index, 1);
-    this.categoryIds.splice(index, 1);
-  }
-
-  checkIfCategoryExists(): boolean {
-    if (this.categoryList.filter(x => x.name == this.form.value.Categories).length > 0) {
-      return true;
-    }
-    return false;
-  }
-
-  addAnotherCategory() {
-    if (this.checkIfStringEmpty()) {
-      this.toastr.error('You cannot add empty string', 'Error', {
-        timeOut: 3000
-      });
-    } else if (this.names.length > 0 && this.names.includes(this.form.value.Categories.name)) {
-      this.toastr.error('This category is already assigned to question', 'Error', {
-        timeOut: 3000
-      });
-    } else if (this.checkIfCategoryExists()) {
-      //true
-      if (this.names.length > 0 && this.names.includes(this.form.value.Categories)) {
-        this.toastr.error('This category is already assigned to question', 'Error', {
-          timeOut: 3000
-        });
-      } else {
-        var existingCategory = this.categoryList.filter(x => x.name == this.form.value.Categories);
-        this.categoryIds.push(existingCategory[0].id);
-        this.names.push(existingCategory[0].name);
-      }
-    } else {
-      if (this.form.value.Categories.id == null) {
-        this.newCategory = this.form.value.Categories;
-        var nova = {
-          name: this.newCategory
-        };
-        var nova2 = JSON.stringify(nova);
-        this.categoryService.postCategory(nova2).subscribe(response => {
-          this.newCategoryId = Number.parseInt(response.toString());
-          this.toastr.success('Category successfully added to database', 'Success');
-          this.categoryIds.push(this.newCategoryId);
-          this.names.push(this.newCategory);
-        });
-      } else {
-        this.names.push(this.form.value.Categories.name);
-        this.categoryIds.push(this.form.value.Categories.id);
-      }
-    }
-    this.form.controls['Categories'].reset();
   }
 }

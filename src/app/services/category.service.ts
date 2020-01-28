@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Category } from '../models/category';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,7 +18,7 @@ export class CategoryService {
 
   constructor(private http: HttpClient) {}
 
-  public getAll(term: string) {
+  public getAll(term: string): Observable<any> {
     if (term === '') {
       return;
     }
@@ -26,7 +28,8 @@ export class CategoryService {
       }
     });
   }
-  public postCategory(name: string) {
-    return this.http.post(this.url, name, httpOptions);
+
+  public postCategory(name: string): Observable<Category> {
+    return this.http.post<Category>(this.url, { name }, httpOptions);
   }
 }

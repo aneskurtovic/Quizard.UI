@@ -17,9 +17,9 @@
           {{ question.text }}
         </td>
         <td class="text-truncate">
-          <span class="badge badge-info" *ngFor="let categorie of question.categories">{{
-            categorie
-          }}</span>
+          <span class="badge badge-info" *ngFor="let category of question.categories">
+            {{ category }}
+          </span>
         </td>
       </tr>
     </tbody>

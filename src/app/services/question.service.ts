@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { DifficultyLevel } from '../_models/difficultyLevel';
-import { Question } from '../_models/question';
-import { PaginatedResult } from './../_models/pagination';
+import { DifficultyLevel } from '../models/difficultyLevel';
+import { Question } from '../models/question';
+import { PaginatedResult } from './../models/pagination';
 
 const httpOptions = {
   headers: new HttpHeaders({

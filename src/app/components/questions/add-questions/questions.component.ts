@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CategoryService } from '../../../services/category.service';
+import { DifficultyLevel } from '../../../models/difficultyLevel';
+import { QuestionService } from '../../../services/question.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import { CategoryComponent } from '../../category/category.component';
-import { QuestionService } from './../../../services/question.service';
-import { DifficultyLevel } from './../../../_models/difficultyLevel';
 
 @Component({
   selector: 'app-questions',
@@ -20,20 +19,20 @@ export class QuestionsComponent implements OnInit {
   duplicated = false;
   difficultyLevels: DifficultyLevel[] = [];
   Level = 0;
-  @ViewChild(CategoryComponent, { static: false })
+  categoryIDes: number[];
+
   private categoryComponent: CategoryComponent;
   constructor(
     private fb: FormBuilder,
     private questionService: QuestionService,
     private toastr: ToastrService,
-    private categoryService: CategoryService,
     private router: Router
   ) {}
   ngOnInit() {
     this.form = this.fb.group({
       Text: ['', Validators.required],
       DifficultyLevelId: ['0'],
-      Categories: [],
+      Categories: [Validators.required],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [CustomValidators.minLengthOfValidAnswers(1), Validators.required]
@@ -74,15 +73,13 @@ export class QuestionsComponent implements OnInit {
       return false;
     }
   }
+  onCategoriesChange(categoryIds: number[]) {
+    this.categoryIDes = categoryIds;
+  }
   addQuestion() {
     this.submited = true;
-    this.form.value.Categories = this.categoryComponent.categoryIds;
-    if (
-      this.form.invalid ||
-      this.duplicated ||
-      this.categoryComponent.categoryIds.length === 0 ||
-      this.Level === 0
-    ) {
+    this.form.value.Categories = this.categoryIDes;
+    if (this.form.invalid || this.duplicated || this.Level === 0) {
       return;
     } else {
       const credentials = JSON.stringify(this.form.value);
@@ -101,7 +98,6 @@ export class QuestionsComponent implements OnInit {
       );
     }
   }
-
   get formStatus() {
     return {
       valid: this.form.valid,

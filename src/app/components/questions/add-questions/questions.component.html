@@ -26,7 +26,7 @@
       </div>
     </div>
     <hr />
-    <app-category></app-category>
+    <app-category (categoryIDs)="onCategoriesChange($event)"></app-category>
     <hr />
     <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
       <div [formGroupName]="i" class="form-row">
