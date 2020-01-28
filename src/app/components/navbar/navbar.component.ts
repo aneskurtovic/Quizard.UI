@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   public logOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('email');
-  };
+  }
 
   ngOnInit() {}
 }

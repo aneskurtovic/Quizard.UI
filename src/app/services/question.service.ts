@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Question } from '../models/question';
-import { PaginatedResult } from './../models/pagination';
+import { PagedResult, PaginationParams } from './../models/pagination';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,29 +23,13 @@ export class QuestionService {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  getQuestions(page?: number, itemsPerPage?: number): Observable<PaginatedResult<Question[]>> {
-    const paginatedResult: PaginatedResult<Question[]> = new PaginatedResult<Question[]>();
+  getQuestions(params: PaginationParams) {
+    let queryParams = new HttpParams();
+    const keys = Object.keys(params);
+    keys.forEach(p => {
+      queryParams = queryParams.append(p, params[p]);
+    });
 
-    let params = new HttpParams();
-    if (page != null && itemsPerPage != null) {
-      params = params.append('pageNumber', page.toString());
-      params = params.append('pageSize', itemsPerPage.toString());
-    }
-
-    return this.http
-      .get<Question[]>(this.questionUrl, { observe: 'response', params })
-      .pipe(
-        map(response => {
-          paginatedResult.result = response.body;
-          if (response.headers.get('Pagination') != null) {
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-          }
-          return paginatedResult;
-        })
-      );
-  }
-
-  getQuestion(id: number): Observable<Question> {
-    return this.http.get<Question>(this.questionUrl + id);
+    return this.http.get<PagedResult<Question>>(this.questionUrl, { params: queryParams });
   }
 }

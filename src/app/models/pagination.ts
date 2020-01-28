@@ -1,11 +1,15 @@
-export interface Pagination {
-  currentPage: number;
-  itemsPerPage: number;
-  totalItems: number;
-  totalPages: number;
+export interface PaginationParams {
+  pageNumber: number;
+  pageSize: number;
 }
 
-export class PaginatedResult<T> {
-  result: T;
-  pagination: Pagination;
+export interface PagedResultMetadata {
+  total: number;
+  pageNumber: number;
+  pageSize: number;
+}
+
+export interface PagedResult<T> {
+  data: T[];
+  metadata: PagedResultMetadata;
 }

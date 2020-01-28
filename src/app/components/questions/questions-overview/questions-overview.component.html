@@ -12,13 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let question of questions">
+      <tr *ngFor="let question of pageResult.data">
         <td class="text-truncate" data-toggle="tooltip" title="{{ question.text }}">
           {{ question.text }}
         </td>
         <td class="text-truncate">
-          <span class="badge badge-info" *ngFor="let categorie of question.categories">
-            {{ categorie }}
+          <span class="badge badge-info" *ngFor="let category of question.categories">
+            {{ category }}
           </span>
         </td>
       </tr>
@@ -29,9 +29,9 @@
 <div class="d-flex justify-content-center">
   <pagination
     [boundaryLinks]="true"
-    [totalItems]="pagination.totalItems"
-    [itemsPerPage]="pagination.itemsPerPage"
-    [(ngModel)]="pagination.currentPage"
+    [totalItems]="pageResult.metadata.total"
+    [itemsPerPage]="pageResult.metadata.pageSize"
+    [(ngModel)]="pageResult.metadata.pageNumber"
     (pageChanged)="pageChanged($event)"
     previousText="&lsaquo;"
     nextText="&rsaquo;"
