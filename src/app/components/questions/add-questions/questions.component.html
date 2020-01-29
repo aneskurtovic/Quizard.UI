@@ -8,6 +8,9 @@
       <div *ngIf="Text.errors">
         <div class="invalid" *ngIf="submited && Text.errors.required">Question is required</div>
       </div>
+      <div *ngIf="emptyQuestion">
+        <div class="invalid" *ngIf="submited && emptyQuestion">Question can not be empty</div>
+      </div>
     </div>
     <div class="form-group">
       <select
@@ -26,6 +29,9 @@
     </div>
     <hr />
     <app-category (categoryIDs)="onCategoriesChange($event)"></app-category>
+    <div *ngIf="this.categoryIDes.length === 0">
+      <div class="invalid" *ngIf="submited">Category is required</div>
+    </div>
     <hr />
 
     <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">

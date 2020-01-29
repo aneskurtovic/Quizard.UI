@@ -19,7 +19,8 @@ export class QuestionsComponent implements OnInit {
   duplicated = false;
   difficultyLevels: DifficultyLevel[] = [];
   Level = 0;
-  categoryIDes: number[];
+  emptyQuestion = false;
+  categoryIDes: number[] = [];
 
   private categoryComponent: CategoryComponent;
   constructor(
@@ -32,13 +33,20 @@ export class QuestionsComponent implements OnInit {
     this.form = this.fb.group({
       Text: ['', Validators.required],
       DifficultyLevelId: ['0'],
-      Categories: [Validators.required],
+      Categories: [],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
         [CustomValidators.minLengthOfValidAnswers(1), Validators.required]
       )
     });
     this.loadDifficultyLevels();
+    this.form.controls.Text.valueChanges.subscribe(value => {
+      if (value.trim() === '') {
+        this.emptyQuestion = true;
+        return;
+      }
+      this.emptyQuestion = false;
+    });
   }
   get Text() {
     return this.form.get('Text');
@@ -74,13 +82,21 @@ export class QuestionsComponent implements OnInit {
       return false;
     }
   }
+
   onCategoriesChange(categoryIds: number[]) {
     this.categoryIDes = categoryIds;
   }
   addQuestion() {
     this.submited = true;
     this.form.value.Categories = this.categoryIDes;
-    if (this.form.invalid || this.duplicated || this.Level === 0) {
+
+    if (
+      this.form.invalid ||
+      this.duplicated ||
+      this.Level === 0 ||
+      this.categoryIDes.length < 1 ||
+      this.emptyQuestion
+    ) {
       return;
     } else {
       const credentials = JSON.stringify(this.form.value);
