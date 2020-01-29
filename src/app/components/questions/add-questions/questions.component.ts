@@ -104,7 +104,7 @@ export class QuestionsComponent implements OnInit {
         response => {
           this.toastr.success('Inserted to database!', 'Success');
           this.submited = false;
-          this.router.navigate(['/questions-overview']);
+          this.router.navigate(['']);
         },
         err => {
           console.log(err);
