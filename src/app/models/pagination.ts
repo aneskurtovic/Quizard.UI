@@ -1,11 +1,11 @@
 export interface PaginationParams {
-  pageNumber: number;
+  offset: number;
   pageSize: number;
 }
 
 export interface PagedResultMetadata {
   total: number;
-  pageNumber: number;
+  offset: number;
   pageSize: number;
 }
 

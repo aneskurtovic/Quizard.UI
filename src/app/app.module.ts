@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PaginationModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { TypeaheadModule } from 'ngx-type-ahead';
@@ -44,6 +45,7 @@ export function tokenGetter() {
     TypeaheadModule,
     BrowserAnimationsModule,
     NgbModule,
+    NgxDatatableModule,
     PaginationModule.forRoot(),
     ToastrModule.forRoot(),
     JwtModule.forRoot({
