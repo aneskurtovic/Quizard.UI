@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
@@ -9,10 +8,11 @@ import { AuthGuard } from './services/guards/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: QuestionsOverviewComponent,
     data: {
       title: 'Home'
-    }
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -20,14 +20,6 @@ const routes: Routes = [
     data: {
       title: 'Login'
     }
-  },
-  {
-    path: 'questions-overview',
-    component: QuestionsOverviewComponent,
-    data: {
-      title: 'Questions Overview'
-    },
-    canActivate: [AuthGuard]
   },
   {
     path: 'add-question',
