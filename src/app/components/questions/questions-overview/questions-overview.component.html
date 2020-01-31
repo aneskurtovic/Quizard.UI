@@ -1,13 +1,45 @@
 <div class="container mt-5">
   <button routerLink="/add-question" class="button"><span>Add new Question </span></button>
+  <button
+    type="button"
+    class="btn btn-custom"
+    (click)="openModal(template)"
+    [disabled]="!isSelected"
+  >
+    <span>Add new quiz</span>
+  </button>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Creating Quiz</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group" [formGroup]="form">
+      <label for="quizName">Quiz Name</label>
+      <input class="form-control" id="quizName" type="text" formControlName="name" />
+      <div class="text-center mt-4">
+        <button class="btn btn-primary text-center" (click)="addQuizz()">
+          Create Quiz
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="selected-column modal-body">
+    <span *ngIf="quizId">Press <a href="/quiz/{{ quizId }}"> link</a> to start the quiz</span>
+    <h6>Number of selected Questions ({{ selected?.length }})</h6>
+  </div>
+</ng-template>
 
 <div class="container mt-4 mx-auto" *ngIf="pageResult">
   <ngx-datatable
     *ngIf="pageResult"
     class="material"
     [rows]="rows"
-    [columns]="columns"
     [columnMode]="ColumnMode.force"
     [headerHeight]="50"
     [footerHeight]="50"
@@ -33,19 +65,11 @@
       [checkboxable]="true"
     >
     </ngx-datatable-column>
-    <ngx-datatable-column prop="text" name="Question"></ngx-datatable-column>
-    <ngx-datatable-column prop="categories" name="Categories"></ngx-datatable-column>
+    <ngx-datatable-column [sortable]="false" prop="text" name="Question"> </ngx-datatable-column>
+    <ngx-datatable-column
+      [sortable]="false"
+      prop="categories"
+      name="Categories"
+    ></ngx-datatable-column>
   </ngx-datatable>
-
-  <div class="selected-column mt-5">
-    <h4>
-      Selections <small>({{ selected?.length }})</small>
-    </h4>
-    <ul>
-      <li *ngFor="let sel of selected">
-        {{ sel.id }}
-      </li>
-      <li *ngIf="!selected?.length">No Selections</li>
-    </ul>
-  </div>
 </div>

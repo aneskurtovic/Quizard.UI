@@ -1,13 +1,25 @@
 @import '~@swimlane/ngx-datatable/themes/material.css';
 
-span {
-  margin-right: 5px;
-  padding: 8px;
+.btn-primary {
+  border-radius: 4px;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
   background-color: #0f79a1;
 }
-
-.table {
-  table-layout: fixed;
+.btn-custom {
+  border-radius: 4px;
+  background-color: #0f79a1;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+  padding: 10px;
+  width: 250px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: -4px;
 }
 
 .button {
@@ -24,11 +36,14 @@ span {
   margin: 5px;
 }
 
-.button span {
+.button span,
+.btn-custom span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
+  margin-right: 5px;
+  padding: 8px;
 }
 
 .button span:after {
@@ -45,7 +60,8 @@ span {
   padding-right: 25px;
 }
 
-.button:hover span:after {
+.button:hover span:after,
+.btn-custom:hover span::after {
   opacity: 1;
   right: 0;
 }
