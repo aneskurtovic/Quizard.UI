@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Quiz } from './../models/quiz';
+import { QuizResponse } from './../models/quiz-response';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,7 +18,7 @@ export class QuizService {
 
   constructor(private http: HttpClient) {}
 
-  addQuiz(quiz: string): Observable<Quiz> {
-    return this.http.post<Quiz>(this.quizUrl, quiz, httpOptions);
+  addQuiz(quiz: any): Observable<QuizResponse> {
+    return this.http.post<QuizResponse>(this.quizUrl, quiz, httpOptions);
   }
 }

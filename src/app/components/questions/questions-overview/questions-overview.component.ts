@@ -4,8 +4,8 @@ import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Question } from 'src/app/models/question';
-import { Quiz } from 'src/app/models/quiz';
 import { PagedResult } from './../../../models/pagination';
+import { QuizResponse } from './../../../models/quiz-response';
 import { QuestionService } from './../../../services/question.service';
 import { QuizService } from './../../../services/quiz.service';
 
@@ -16,13 +16,15 @@ import { QuizService } from './../../../services/quiz.service';
 })
 export class QuestionsOverviewComponent implements OnInit {
   page = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 10;
   pageResult: PagedResult<Question>;
   rows: Question[];
   selected = [];
   isSelected = false;
   form: FormGroup;
-  quizId: Quiz;
+  quiz: QuizResponse;
+  emptyQuiz = false;
+  submited = false;
 
   pageNumber: number;
   ColumnMode = ColumnMode;
@@ -41,7 +43,14 @@ export class QuestionsOverviewComponent implements OnInit {
     this.loadQuestions();
     this.form = this.fb.group({
       name: ['', Validators.required],
-      questions: []
+      questionIds: []
+    });
+    this.form.controls.name.valueChanges.subscribe(value => {
+      if (value.trim() === '') {
+        this.emptyQuiz = true;
+        return;
+      }
+      this.emptyQuiz = false;
     });
   }
 
@@ -50,7 +59,6 @@ export class QuestionsOverviewComponent implements OnInit {
   }
 
   onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
     this.selected.splice(0, this.selected.length);
 
     this.selected.push(...selected);
@@ -72,19 +80,21 @@ export class QuestionsOverviewComponent implements OnInit {
   }
 
   addQuizz() {
-    const temp = [];
-    for (let i = 0; i < this.selected.length; i++) {
-      temp[i] = this.selected[i].id;
+    this.submited = true;
+    if (this.emptyQuiz) {
+      return;
     }
-    this.form.value.questions = temp;
-    console.log(this.form.value);
 
-    const quiz = JSON.stringify(this.form.value);
+    const quiz = {
+      ...this.form.value,
+      questionIds: this.selected.map(x => x.id)
+    };
+
     this.quizService.addQuiz(quiz).subscribe(response => {
       this.toastr.success('Quiz successfully created');
+      this.submited = false;
       this.form.reset();
-      this.quizId = response;
-      console.log(response);
+      this.quiz = response;
     });
   }
 
