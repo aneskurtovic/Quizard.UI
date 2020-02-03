@@ -5,7 +5,7 @@
   <button
     class="badge badge-primary"
     data-toggle="tooltip"
-    (click)="removeCategory(cat)"
+    (mousedown)="removeCategory(cat)"
     title="Click to unassign category from question"
     *ngFor="let cat of selectedCategories"
   >
