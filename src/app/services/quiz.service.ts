@@ -21,4 +21,8 @@ export class QuizService {
   addQuiz(quiz: any): Observable<QuizResponse> {
     return this.http.post<QuizResponse>(this.quizUrl, quiz, httpOptions);
   }
+
+  getQuiz(id: number): Observable<QuizResponse> {
+    return this.http.get<QuizResponse>(this.quizUrl + id);
+  }
 }

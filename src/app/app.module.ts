@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
 
 export function tokenGetter() {
@@ -32,7 +33,8 @@ export function tokenGetter() {
     QuestionsComponent,
     NavbarComponent,
     QuestionsOverviewComponent,
-    CategoryComponent
+    CategoryComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,
