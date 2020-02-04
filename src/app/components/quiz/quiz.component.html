@@ -1,4 +1,4 @@
-<div class="container mt-5" *ngIf="!quiz">
+<div class="container mt-5" *ngIf="!quiz; else quizExists">
   <div class="col-md-6 mx-auto text-center">
     <h1>
       This is Quiz Placeholder
@@ -6,32 +6,34 @@
   </div>
 </div>
 
-<div class="container mt-5" *ngIf="quiz">
-  <div class="col-sm-6 mx-auto text-center">
-    <div class="card card-1">
-      <div class="card-body">
-        <small>Quiz name:</small>
-        <h5 class="card-title">{{ quiz.name }}</h5>
-        <div class="form-group mt-4" [formGroup]="form">
-          <input
-            type="email"
-            formControlName="name"
-            class="form-control"
-            id="name"
-            placeholder="Enter your name"
-          />
-          <div class="mt-3">
-            <button
-              type="button"
-              class="btn btn-primary"
-              [disabled]="!isDisabled()"
-              routerLink="/quiz"
-            >
-              <span>Start Quiz</span>
-            </button>
+<ng-template #quizExists>
+  <div class="container mt-5">
+    <div class="col-sm-6 mx-auto text-center">
+      <div class="card card-1">
+        <div class="card-body">
+          <small>Quiz name:</small>
+          <h5 class="card-title">{{ quiz.name }}</h5>
+          <div class="form-group mt-4" [formGroup]="form">
+            <input
+              type="email"
+              formControlName="name"
+              class="form-control"
+              id="name"
+              placeholder="Enter your name"
+            />
+            <div class="mt-3">
+              <button
+                type="button"
+                class="btn btn-primary"
+                [disabled]="!isDisabled()"
+                routerLink="/quiz"
+              >
+                <span>Start Quiz</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
