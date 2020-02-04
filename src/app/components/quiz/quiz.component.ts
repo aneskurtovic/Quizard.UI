@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +11,6 @@ import { QuizService } from './../../services/quiz.service';
 })
 export class QuizComponent implements OnInit {
   constructor(
-    private http: HttpClient,
     private quizService: QuizService,
     private route: ActivatedRoute,
     private fb: FormBuilder
@@ -36,12 +34,5 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuiz(id).subscribe(res => {
       this.quiz = res;
     });
-  }
-
-  isDisabled() {
-    if (this.form.value.name !== '') {
-      return true;
-    }
-    return false;
   }
 }
