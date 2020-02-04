@@ -46,7 +46,7 @@ export class QuestionsOverviewComponent implements OnInit {
       questionIds: []
     });
     this.form.controls.name.valueChanges.subscribe(value => {
-      if (value.trim() === '') {
+      if (value === null || value.trim() === '') {
         this.emptyQuiz = true;
         return;
       }

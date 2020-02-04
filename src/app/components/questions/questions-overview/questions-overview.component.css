@@ -1,5 +1,3 @@
-@import '~@swimlane/ngx-datatable/themes/material.css';
-
 .invalid {
   font-size: 14px;
   color: red;
@@ -31,7 +29,7 @@
 
 .btn-custom {
   margin-left: 5px;
-  margin-top: -0.2px;
+  margin-top: auto;
 }
 
 .button span,

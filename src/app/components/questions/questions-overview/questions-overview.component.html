@@ -43,7 +43,10 @@
   </div>
 
   <div class="selected-column modal-body">
-    <span *ngIf="quiz">Press <a href="/quiz/{{ quiz.id }}"> link</a> to start the quiz</span>
+    <span *ngIf="quiz"
+      >Press <a routerLink="/quiz/{{ quiz.id }}" (click)="modalRef.hide()"> link</a> to start the
+      quiz</span
+    >
     <h6>Number of selected Questions ({{ selected?.length }})</h6>
   </div>
 </ng-template>
