@@ -21,6 +21,7 @@ export class QuestionsComponent implements OnInit {
   Level = 0;
   emptyQuestion = false;
   categoryIDes: number[] = [];
+  selected = -1;
 
   private categoryComponent: CategoryComponent;
   constructor(
@@ -39,6 +40,8 @@ export class QuestionsComponent implements OnInit {
         [CustomValidators.minLengthOfValidAnswers(1), Validators.required]
       )
     });
+
+    this.form.get('answers').valueChanges.subscribe(console.log);
     this.loadDifficultyLevels();
     this.form.controls.Text.valueChanges.subscribe(value => {
       if (value.trim() === '') {
@@ -52,10 +55,11 @@ export class QuestionsComponent implements OnInit {
     return this.form.get('Text');
   }
   answerGroup(): FormGroup {
-    return this.fb.group({
+    const result = this.fb.group({
       Text: this.fb.control('', Validators.required),
       IsCorrect: [false, Validators.required]
     });
+    return result;
   }
   get answersArray(): FormArray {
     return this.form.get('answers') as FormArray;
@@ -142,5 +146,14 @@ export class QuestionsComponent implements OnInit {
         });
       }
     );
+  }
+
+  unselectOtherAnswers(index: number) {
+    const fromArray = this.form.get('answers') as FormArray;
+    fromArray.controls.forEach((x, i) => {
+      if (i !== index) {
+        x.get('IsCorrect').setValue(false);
+      }
+    });
   }
 }

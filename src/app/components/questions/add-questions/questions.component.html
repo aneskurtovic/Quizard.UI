@@ -51,29 +51,12 @@
         <div class="form-group custom-control custom-checkbox col-md-3 pl-5 mt-4 pt-2">
           <input
             type="checkbox"
+            (change)="unselectOtherAnswers(i)"
             formControlName="IsCorrect"
             class="form-control custom-control-input"
             id="correct-{{ i }}"
           />
           <label class="custom-control-label" for="correct-{{ i }}">Valid</label><br />
-          <div *ngIf="answersArray.errors && this.form.touched">
-            <div
-              *ngIf="
-                answersArray.errors.minLengthOfValidAnswers.foundAnswers > 1 && item.value.IsCorrect
-              "
-              class="invalid"
-            >
-              Check only one correct answer
-            </div>
-            <div
-              *ngIf="
-                answersArray.touched && answersArray.errors.minLengthOfValidAnswers.foundAnswers < 1
-              "
-              class="invalid"
-            >
-              Check only one correct answer
-            </div>
-          </div>
         </div>
         <div class="form-group col-md-1 align-self-end mt-4 pt-2">
           <button
@@ -86,8 +69,14 @@
         </div>
       </div>
     </div>
+    <div *ngIf="this.submited && answersArray.errors">
+      <div *ngIf="answersArray.errors.minLengthOfValidAnswers" class="invalid">
+        Check only one correct answer
+      </div>
+    </div>
   </form>
   <br />
+
   <div>
     <button (click)="addAnotherAnswer()" class="btn btn-primary mr-2">Add Answer</button>
     <button class="btn btn-success" (click)="addQuestion()">Submit</button>
