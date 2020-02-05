@@ -58,6 +58,10 @@ export class QuestionsOverviewComponent implements OnInit {
     this.loadQuestions(event.offset);
   }
 
+  getId(row: any) {
+    return row.id;
+  }
+
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
 
