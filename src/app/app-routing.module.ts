@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
+import { SessionComponent } from './components/session/session.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
 
 const routes: Routes = [
@@ -42,6 +43,13 @@ const routes: Routes = [
     component: QuizComponent,
     data: {
       title: 'Start Quiz'
+    }
+  },
+  {
+    path: 'quiz/session/:id',
+    component: SessionComponent,
+    data: {
+      title: 'Quiz Session'
     }
   }
 ];

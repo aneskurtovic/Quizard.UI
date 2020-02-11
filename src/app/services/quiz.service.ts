@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { SessionResponse } from '../models/session-response';
 import { QuizResponse } from './../models/quiz-response';
 
 const httpOptions = {
@@ -15,6 +16,7 @@ const httpOptions = {
 })
 export class QuizService {
   private quizUrl: string = environment.api + '/api/quizzes/';
+  private sessionUrl: string = environment.api + '/api/sessions/';
 
   constructor(private http: HttpClient) {}
 
@@ -24,5 +26,9 @@ export class QuizService {
 
   getQuiz(id: number): Observable<QuizResponse> {
     return this.http.get<QuizResponse>(this.quizUrl + id);
+  }
+
+  startQuiz(session: any): Observable<SessionResponse> {
+    return this.http.post<SessionResponse>(this.sessionUrl, session, httpOptions);
   }
 }
