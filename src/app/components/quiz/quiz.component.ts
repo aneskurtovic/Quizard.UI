@@ -51,7 +51,7 @@ export class QuizComponent implements OnInit {
     console.log(session);
     this.quizService.startQuiz(session).subscribe(response => {
       this.toastr.success('Quiz successfully Started');
-      this.router.navigate(['/quiz/session/' + response.id]);
+      this.router.navigate(['/quiz/' + this.id + '/session/' + response.id]);
     });
   }
 }

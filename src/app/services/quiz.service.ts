@@ -27,7 +27,9 @@ export class QuizService {
   getQuiz(id: number): Observable<QuizResponse> {
     return this.http.get<QuizResponse>(this.quizUrl + id);
   }
-
+  getSession(id: number): Observable<SessionResponse> {
+    return this.http.get<SessionResponse>(this.sessionUrl + id);
+  }
   startQuiz(session: any): Observable<SessionResponse> {
     return this.http.post<SessionResponse>(this.sessionUrl, session, httpOptions);
   }
