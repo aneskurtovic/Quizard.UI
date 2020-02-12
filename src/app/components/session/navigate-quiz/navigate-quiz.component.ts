@@ -26,4 +26,8 @@ export class NavigateQuizComponent {
   next() {
     this.currentIndex++;
   }
+
+  previous() {
+    this.currentIndex--;
+  }
 }
