@@ -1,2 +1,6 @@
-<app-display-questions [quiz]="quiz"></app-display-questions>
-<app-navigate-quiz></app-navigate-quiz>
+<app-display-questions
+  *ngIf="quiz"
+  [question]="quiz.questions[currentIndex]"
+></app-display-questions>
+<app-navigate-quiz [questions]="quiz.questions" [(currentIndex)]="currentIndex">
+</app-navigate-quiz>

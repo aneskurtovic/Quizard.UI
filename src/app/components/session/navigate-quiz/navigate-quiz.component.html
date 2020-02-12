@@ -1,3 +1,10 @@
-<div class="form">
-  <h1>app-navigate-quiz</h1>
+<div class="container">
+  <div *ngFor="let quesion of questions; let i = index" (click)="currentIndex = i">
+    <div>{{ i + 1 }}</div>
+  </div>
+  <div>
+    <button (click)="next()" [disabled]="currentIndex === questions.length - 1">
+      &gt;&gt;
+    </button>
+  </div>
 </div>

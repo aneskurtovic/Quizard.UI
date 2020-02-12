@@ -46,7 +46,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'quiz/:id/session/:id',
+    path: 'quiz/:quizId/session/:id',
     component: SessionComponent,
     data: {
       title: 'Quiz Session'

@@ -1,8 +1,10 @@
-<div *ngIf="quiz">
-  <div class="form" *ngFor="let question of quiz.questions">
-    <h1>{{ question.text }}</h1>
-    <div *ngFor="let answer of question.answers">
-      <p>{{ answer.text }}</p>
+<div class="container mt-5">
+  <div class="mx-auto text-center" *ngIf="question">
+    <div class="form">
+      <h1>{{ question.text }}</h1>
+      <div *ngFor="let answer of question.answers">
+        <p>{{ answer.text }}</p>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { QuizResponse } from './../../../models/quiz-response';
+import { Question } from './../../../models/question';
 
 @Component({
   selector: 'app-display-questions',
@@ -7,7 +7,7 @@ import { QuizResponse } from './../../../models/quiz-response';
   styleUrls: ['./display-questions.component.css']
 })
 export class DisplayQuestionsComponent implements OnInit {
-  @Input() quiz: QuizResponse;
+  @Input() question: Question;
   @Output() selectedAnswers = new EventEmitter<Map<number, number>>();
 
   constructor() {}

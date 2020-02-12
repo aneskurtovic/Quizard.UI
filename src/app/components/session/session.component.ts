@@ -11,18 +11,24 @@ import { QuizResponse } from './../../models/quiz-response';
 export class SessionComponent implements OnInit {
   quiz: QuizResponse;
   id: number;
+  currentIndex = 0;
 
   constructor(private quizService: QuizService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = +params.id;
+      this.id = +params.quizId;
     });
     this.getQuiz(this.id);
   }
   getQuiz(id: number) {
+    id = this.id;
     this.quizService.getQuiz(id).subscribe(res => {
       this.quiz = res;
     });
+  }
+
+  get currentQuestion() {
+    return this.quiz.questions[this.currentIndex];
   }
 }
