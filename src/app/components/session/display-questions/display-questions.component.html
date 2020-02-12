@@ -2,8 +2,8 @@
   <div class="mx-auto text-center" *ngIf="question">
     <div class="form">
       <h1>{{ question.text }}</h1>
-      <div *ngFor="let answer of question.answers">
-        <p>{{ answer.text }}</p>
+      <div *ngFor="let answer of question.answers; let i = index">
+        <p (click)="selectAnswer(question.id, answer.id)">{{ i + 1 }}. {{ answer.text }}</p>
       </div>
     </div>
   </div>

@@ -9,8 +9,13 @@ import { Question } from './../../../models/question';
 export class DisplayQuestionsComponent implements OnInit {
   @Input() question: Question;
   @Output() selectedAnswers = new EventEmitter<Map<number, number>>();
+  answers: Map<number, number> = new Map<number, number>();
 
   constructor() {}
 
+  selectAnswer(questionId: number, answerId: number) {
+    this.answers.set(questionId, answerId);
+    this.selectedAnswers.emit(this.answers);
+  }
   ngOnInit() {}
 }

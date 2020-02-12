@@ -23,7 +23,9 @@ export class QuizService {
   addQuiz(quiz: any): Observable<QuizResponse> {
     return this.http.post<QuizResponse>(this.quizUrl, quiz, httpOptions);
   }
-
+  addSession(session: any): Observable<Map<number, number>> {
+    return this.http.post<Map<number, number>>(this.sessionUrl + session.id, session);
+  }
   getQuiz(id: number): Observable<QuizResponse> {
     return this.http.get<QuizResponse>(this.quizUrl + id);
   }
