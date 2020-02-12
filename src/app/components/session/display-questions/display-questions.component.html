@@ -1,8 +1,10 @@
 <div class="container mt-5">
-  <div class="mx-auto text-center" *ngIf="question">
-    <div class="form">
-      <h1>{{ question.text }}</h1>
-      <div *ngFor="let answer of question.answers">
+  <div class="col-sm-8 mx-auto text-center" *ngIf="question">
+    <div class="card card-1">
+      <div class="card-header">
+        <h1>{{ question.text }}</h1>
+      </div>
+      <div class="card-body" *ngFor="let answer of question.answers">
         <p>{{ answer.text }}</p>
       </div>
     </div>
