@@ -1,4 +1,4 @@
 export interface SessionResponse {
-  id: number;
+  id: string;
   quizId: number;
 }
