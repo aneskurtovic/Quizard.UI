@@ -52,7 +52,7 @@ export class SessionComponent implements OnInit {
     this.selectedAnswers.forEach((val: number, key: number) => {
       QuizResult[key] = val;
     });
-    let result: QuizResult = {
+    const result: QuizResult = {
       quizResult: QuizResult
     };
     this.quizService.addSession(result).subscribe(response => {

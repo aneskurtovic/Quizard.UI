@@ -1,14 +1,10 @@
 <div class="col-sm-8 mx-auto text-center mt-5" *ngIf="quizResults">
   <h1>Your score is: {{ this.quizResults.result }} %</h1>
 </div>
-<div
-  class="container mt-5"
-  [className]="isCorrect() ? 'bg-success' : 'bg-danger'"
-  *ngFor="let question of questions"
->
+<div class="container mt-5" *ngFor="let question of questions">
   <div class="col-sm-8 mx-auto text-center" *ngIf="question">
     <div class="card card-1">
-      <div class="card-header">
+      <div class="card-header" [className]="isCorrect(question.id) ? 'bg-success' : 'bg-danger'">
         <h1>{{ question.text }}</h1>
       </div>
 

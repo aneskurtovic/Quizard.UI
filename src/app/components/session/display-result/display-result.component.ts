@@ -12,7 +12,12 @@ export class DisplayResultComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.selectedAnswers);
+  ngOnInit() {}
+
+  isCorrect(id: number): boolean {
+    if (this.selectedAnswers.get(id) === this.quizResults.correctQuestions[id]) {
+      return true;
+    }
+    return false;
   }
 }
