@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SessionResponse } from '../models/session-response';
 import { QuizResponse } from './../models/quiz-response';
+import { QuizResult } from './../models/quiz-result';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,8 +25,8 @@ export class QuizService {
   addQuiz(quiz: any): Observable<QuizResponse> {
     return this.http.post<QuizResponse>(this.quizUrl, quiz, httpOptions);
   }
-  addSession(session: any): Observable<Map<number, number>> {
-    return this.http.post<Map<number, number>>(this.sessionUrl + session.id, session);
+  addSession(session: any): Observable<QuizResult> {
+    return this.http.post<QuizResult>(this.sessionUrl + 'finish', session);
   }
   getQuiz(id: number): Observable<QuizResponse> {
     return this.http.get<QuizResponse>(this.quizUrl + id);

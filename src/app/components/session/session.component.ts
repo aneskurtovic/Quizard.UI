@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuizService } from 'src/app/services/quiz.service';
 import { QuizResponse } from './../../models/quiz-response';
+import { QuizResult } from './../../models/quiz-result';
 
 @Component({
   selector: 'app-session',
@@ -14,11 +15,11 @@ export class SessionComponent implements OnInit {
   id: number;
   currentIndex = 0;
   selectedAnswers: Map<number, number> = new Map<number, number>();
-
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -33,8 +34,8 @@ export class SessionComponent implements OnInit {
       this.quiz = res;
     });
   }
-  getSelectedAnswers(Answers: Map<number, number>): void {
-    this.selectedAnswers = Answers;
+  getSelectedAnswers(answers: Map<number, number>): void {
+    this.selectedAnswers = answers;
   }
   get currentQuestion() {
     return this.quiz.questions[this.currentIndex];
@@ -46,9 +47,17 @@ export class SessionComponent implements OnInit {
     return true;
   }
   finishSession() {
-    console.log(this.selectedAnswers);
-    this.quizService.addSession(this.selectedAnswers).subscribe(response => {
+    const QuizResult = {};
+    this.selectedAnswers.forEach((val: number, key: number) => {
+      QuizResult[key] = val;
+    });
+    let result: QuizResult = {
+      quizResult: QuizResult
+    };
+    this.quizService.addSession(result).subscribe(response => {
       this.toastr.success('Quiz successfully finished');
+      this.router.navigate(['/quiz/' + this.quiz.id + '/session/' + 'finish']);
+      console.log(response);
     });
   }
 }
