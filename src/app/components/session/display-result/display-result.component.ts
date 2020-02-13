@@ -7,9 +7,12 @@ import { Question } from '../../../models/question';
 })
 export class DisplayResultComponent implements OnInit {
   @Input() quizResults: any;
-  @Input() question: Question;
+  @Input() questions: Question[];
+  @Input() selectedAnswers: Map<number, number>;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.selectedAnswers);
+  }
 }

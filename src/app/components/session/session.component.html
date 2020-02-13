@@ -1,7 +1,8 @@
 <app-display-result
   *ngIf="quizResults"
   [quizResults]="quizResults"
-  [question]="quiz.questions[currentIndex]"
+  [questions]="quiz.questions"
+  [selectedAnswers]="selectedAnswers"
 ></app-display-result>
 
 <app-display-questions
@@ -9,7 +10,11 @@
   [question]="quiz.questions[currentIndex]"
   (selectedAnswers)="getSelectedAnswers($event)"
 ></app-display-questions>
-<app-navigate-quiz *ngIf="quiz" [questions]="quiz.questions" [(currentIndex)]="currentIndex">
+<app-navigate-quiz
+  *ngIf="!quizResults && quiz"
+  [questions]="quiz.questions"
+  [(currentIndex)]="currentIndex"
+>
 </app-navigate-quiz>
 <button
   *ngIf="quiz && !quizResults"
