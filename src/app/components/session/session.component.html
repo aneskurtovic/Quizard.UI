@@ -3,9 +3,10 @@
   [question]="quiz.questions[currentIndex]"
   (selectedAnswers)="getSelectedAnswers($event)"
 ></app-display-questions>
-<app-navigate-quiz [questions]="quiz.questions" [(currentIndex)]="currentIndex">
+<app-navigate-quiz *ngIf="quiz" [questions]="quiz.questions" [(currentIndex)]="currentIndex">
 </app-navigate-quiz>
 <button
+  *ngIf="quiz"
   [hidden]="lastQuestion()"
   [disabled]="quiz.questions.length != selectedAnswers.size"
   type="submit"

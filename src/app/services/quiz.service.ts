@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Session } from 'protractor';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SessionResponse } from '../models/session-response';
@@ -32,7 +33,7 @@ export class QuizService {
   getSession(id: number): Observable<SessionResponse> {
     return this.http.get<SessionResponse>(this.sessionUrl + id);
   }
-  startQuiz(session: any): Observable<SessionResponse> {
+  startQuiz(session: Session): Observable<SessionResponse> {
     return this.http.post<SessionResponse>(this.sessionUrl, session, httpOptions);
   }
 }

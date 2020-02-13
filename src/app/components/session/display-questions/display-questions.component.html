@@ -4,8 +4,11 @@
       <div class="card-header">
         <h1>{{ question.text }}</h1>
       </div>
-      <div class="card-body" *ngFor="let answer of question.answers; let i = index">
-        <p (click)="selectAnswer(question.id, answer.id)">{{ i + 1 }}. {{ answer.text }}</p>
+
+      <div class="card-body">
+        <div *ngFor="let answer of question.answers; let i = index">
+          <p (click)="selectAnswer(question.id, answer.id)">{{ i + 1 }}. {{ answer.text }}</p>
+        </div>
       </div>
     </div>
   </div>

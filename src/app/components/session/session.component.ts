@@ -40,7 +40,7 @@ export class SessionComponent implements OnInit {
     return this.quiz.questions[this.currentIndex];
   }
   lastQuestion(): boolean {
-    if (this.quiz.questions.length - 1 == this.currentIndex) {
+    if (this.quiz.questions.length - 1 === this.currentIndex) {
       return false;
     }
     return true;

@@ -1,6 +1,6 @@
 <nav class="mt-4">
   <ul class="pagination justify-content-center">
-    <li class="page-item ">
+    <li class="page-item" [class.disabled]="currentIndex === 0">
       <button
         (click)="previous()"
         [disabled]="currentIndex === 0"
@@ -12,13 +12,13 @@
       </button>
     </li>
     <li
-      class="page-item"
+      class="page-item ml-1 mr-1"
       *ngFor="let question of questions; let i = index"
       (click)="currentIndex = i"
     >
       <a class="page-link">{{ i + 1 }}</a>
     </li>
-    <li class="page-item">
+    <li class="page-item" [class.disabled]="currentIndex === questions.length - 1">
       <button
         (click)="next()"
         [disabled]="currentIndex === questions.length - 1"
