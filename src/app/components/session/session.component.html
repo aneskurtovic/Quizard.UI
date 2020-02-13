@@ -1,12 +1,18 @@
+<app-display-result
+  *ngIf="quizResults"
+  [quizResults]="quizResults"
+  [question]="quiz.questions[currentIndex]"
+></app-display-result>
+
 <app-display-questions
-  *ngIf="quiz"
+  *ngIf="!quizResults && quiz"
   [question]="quiz.questions[currentIndex]"
   (selectedAnswers)="getSelectedAnswers($event)"
 ></app-display-questions>
 <app-navigate-quiz *ngIf="quiz" [questions]="quiz.questions" [(currentIndex)]="currentIndex">
 </app-navigate-quiz>
 <button
-  *ngIf="quiz"
+  *ngIf="quiz && !quizResults"
   [hidden]="lastQuestion()"
   [disabled]="quiz.questions.length != selectedAnswers.size"
   type="submit"

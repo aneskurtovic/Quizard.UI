@@ -1,0 +1,18 @@
+<div class="col-sm-8 mx-auto text-center mt-5" *ngIf="quizResults">
+  <h1>Your score is: {{ this.quizResults.result }} %</h1>
+</div>
+<div class="container mt-5">
+  <div class="col-sm-8 mx-auto text-center" *ngIf="question">
+    <div class="card card-1">
+      <div class="card-header">
+        <h1>{{ question.text }}</h1>
+      </div>
+
+      <div class="card-body">
+        <div *ngFor="let answer of question.answers; let i = index">
+          <p>{{ i + 1 }}. {{ answer.text }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
