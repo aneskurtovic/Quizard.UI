@@ -14,6 +14,7 @@
     <li
       class="page-item ml-1 mr-1"
       *ngFor="let question of questions; let i = index"
+      [class.active]="currentIndex == i"
       (click)="currentIndex = i"
     >
       <a class="page-link">{{ i + 1 }}</a>

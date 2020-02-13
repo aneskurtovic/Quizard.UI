@@ -6,8 +6,15 @@
       </div>
 
       <div class="card-body">
-        <div *ngFor="let answer of question.answers; let i = index">
-          <p (click)="selectAnswer(question.id, answer.id)">{{ i + 1 }}. {{ answer.text }}</p>
+        <div class="list-group mb-2" *ngFor="let answer of question.answers; let i = index">
+          <button
+            [class.active]="currentIndex == i"
+            (click)="selectAnswer(question.id, answer.id)"
+            type="button"
+            class="list-group-item list-group-item-action"
+          >
+            {{ answer.text }}
+          </button>
         </div>
       </div>
     </div>
