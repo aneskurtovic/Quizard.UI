@@ -14,10 +14,9 @@
     <li
       class="page-item ml-1 mr-1"
       *ngFor="let question of questions; let i = index"
-      [class.active]="currentIndex == i"
       (click)="currentIndex = i"
     >
-      <a class="page-link">{{ i + 1 }}</a>
+      <a class="page-link" [class.checkedcolor]="currentIndex == i">{{ i + 1 }}</a>
     </li>
     <li class="page-item" [class.disabled]="currentIndex === questions.length - 1">
       <button

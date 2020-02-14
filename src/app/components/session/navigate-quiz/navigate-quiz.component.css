@@ -1,3 +1,18 @@
-.paginate {
+.active,
+.btn:hover {
+  background-color: #666;
+  color: white;
+}
+
+.checkedcolor {
+  background-color: #0f79a1;
+  color: #f2f2f2;
+}
+
+.page-link {
   cursor: pointer;
+}
+
+.checkedcolor:hover {
+  color: #f2f2f2;
 }

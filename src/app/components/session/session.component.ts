@@ -51,13 +51,12 @@ export class SessionComponent implements OnInit {
     this.selectedAnswers.forEach((val: number, key: number) => {
       QuizResult[key] = val;
     });
-    let result: QuizResult = {
+    const result: QuizResult = {
       quizResult: QuizResult
     };
     this.quizService.addSession(result).subscribe(response => {
       this.toastr.success('Quiz successfully finished');
       this.router.navigate(['/quiz/' + this.quiz.id + '/session/' + 'finish']);
-      console.log(response);
     });
   }
 }

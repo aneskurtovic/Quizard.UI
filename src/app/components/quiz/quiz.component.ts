@@ -24,9 +24,6 @@ export class QuizComponent implements OnInit {
   form: FormGroup;
 
   ngOnInit() {
-    this.form = this.fb.group({
-      name: ['', Validators.required]
-    });
     this.route.params.subscribe(params => {
       this.id = +params.id;
     });
