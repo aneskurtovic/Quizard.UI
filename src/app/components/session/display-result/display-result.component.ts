@@ -14,8 +14,22 @@ export class DisplayResultComponent implements OnInit {
 
   ngOnInit() {}
 
-  isCorrect(id: number): boolean {
+  isCorrectAnswered(id: number): boolean {
     if (this.selectedAnswers.get(id) === this.quizResults.correctQuestions[id]) {
+      return true;
+    }
+    return false;
+  }
+
+  isSelected(aId: number, qId: number): boolean {
+    if (this.selectedAnswers.get(qId) === aId) {
+      return true;
+    }
+    return false;
+  }
+
+  isCorrectAnswer(aId: number, qId: number): boolean {
+    if (this.quizResults.correctQuestions[qId] === aId) {
       return true;
     }
     return false;
