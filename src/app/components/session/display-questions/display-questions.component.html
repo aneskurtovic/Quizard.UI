@@ -6,7 +6,7 @@
           <h4>{{ question.text }}</h4>
         </div>
 
-        <div class="list-group mb-2" *ngFor="let answer of question.answers; let i = index">
+        <div class="list-group mb-2" *ngFor="let answer of question.answers">
           <button
             [class.checkedcolor]="isSelectedAnswer(question.id, answer.id)"
             (click)="selectAnswer(question.id, answer.id)"

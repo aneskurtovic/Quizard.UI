@@ -10,7 +10,7 @@ export class NavigateQuizComponent {
   private _currentIndex: number;
 
   @Input() questions: Question[];
-  @Input() selectedAnswers: Map<number, number>;
+  @Input() selectedAnswers: Map<number, number[]>;
   @Input()
   set currentIndex(val: number) {
     this.currentIndexChange.emit(val);
@@ -33,9 +33,8 @@ export class NavigateQuizComponent {
   }
 
   isQuestionAnswered(question: Question): boolean {
-    if (this.selectedAnswers.has(question.id)) {
-      return true;
-    }
-    return false;
+    return this.selectedAnswers.get(question.id) && this.selectedAnswers.get(question.id).length
+      ? true
+      : false;
   }
 }
