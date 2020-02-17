@@ -1,0 +1,39 @@
+<div class="container mt-2">
+  <div class="col-sm-8 mx-auto text-left" *ngIf="question">
+    <div class="card card-1">
+      <div class="card-body">
+        <div class="mb-4">
+          <h4>{{ question.text }}</h4>
+        </div>
+
+        <div class="list-group mb-2" *ngFor="let answer of question.answers; let i = index">
+          <button
+            [class.checkedcolor]="isSelectedAnswer(question.id, answer.id)"
+            (click)="selectAnswer(question.id, answer.id)"
+            type="button"
+            class="btn list-group-item list-group-item-action"
+          >
+            {{ answer.text }}
+          </button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span
+          class="d-inline-block float-right"
+          tabindex="0"
+          data-toggle="tooltip"
+          title="Answer all questions to submit"
+        >
+          <button
+            class="btn btn-green"
+            (click)="submited()"
+            [disabled]="numberOfQuestions != answers.size"
+          >
+            Finish
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.card-1 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.checkedcolor {
+  background-color: #0f79a1;
+  color: #f2f2f2;
+}
+
+.btn-green {
+  background-color: #0b6623;
+  color: #f2f2f2;
+}
+
+.tooltip-wrapper {
+  display: inline-block;
+  margin: 50px;
+}
+
+.tooltip-wrapper .btn[disabled] {
+  pointer-events: none;
+}
+
+.tooltip-wrapper.disabled {
+  cursor: not-allowed;
+}
