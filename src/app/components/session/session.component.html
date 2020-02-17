@@ -1,3 +1,10 @@
+<app-navigate-quiz
+  *ngIf="quiz"
+  [questions]="quiz.questions"
+  [selectedAnswers]="selectedAnswers"
+  [(currentIndex)]="currentIndex"
+>
+</app-navigate-quiz>
 <app-display-questions
   *ngIf="quiz"
   (submitButton)="finishSession($event)"
@@ -5,5 +12,3 @@
   [numberOfQuestions]="quiz.questions.length"
   (selectedAnswers)="getSelectedAnswers($event)"
 ></app-display-questions>
-<app-navigate-quiz *ngIf="quiz" [questions]="quiz.questions" [(currentIndex)]="currentIndex">
-</app-navigate-quiz>

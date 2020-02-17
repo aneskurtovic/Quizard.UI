@@ -11,3 +11,16 @@
   background-color: #0b6623;
   color: #f2f2f2;
 }
+
+.tooltip-wrapper {
+  display: inline-block;
+  margin: 50px;
+}
+
+.tooltip-wrapper .btn[disabled] {
+  pointer-events: none;
+}
+
+.tooltip-wrapper.disabled {
+  cursor: not-allowed;
+}

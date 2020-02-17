@@ -46,6 +46,7 @@ export class SessionComponent implements OnInit {
     }
     return true;
   }
+
   finishSession() {
     const QuizResult = {};
     this.selectedAnswers.forEach((val: number, key: number) => {
