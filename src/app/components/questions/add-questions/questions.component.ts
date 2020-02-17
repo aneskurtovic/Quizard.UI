@@ -37,7 +37,7 @@ export class QuestionsComponent implements OnInit {
       Categories: [],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
-        [CustomValidators.minLengthOfValidAnswers(1), Validators.required]
+        [CustomValidators.minLengthOfValidAnswers(), Validators.required]
       )
     });
 
@@ -146,14 +146,5 @@ export class QuestionsComponent implements OnInit {
         });
       }
     );
-  }
-
-  unselectOtherAnswers(index: number) {
-    const fromArray = this.form.get('answers') as FormArray;
-    fromArray.controls.forEach((x, i) => {
-      if (i !== index) {
-        x.get('IsCorrect').setValue(false);
-      }
-    });
   }
 }
