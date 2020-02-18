@@ -55,6 +55,7 @@ export class SessionComponent implements OnInit {
     const result: QuizResult = {
       quizResult: QuizResult
     };
+    console.log(result);
     this.quizService.addSession(result).subscribe(response => {
       this.toastr.success('Quiz successfully finished');
       this.router.navigate(['/quiz/' + this.quiz.id + '/session/' + 'finish']);

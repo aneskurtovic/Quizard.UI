@@ -8,12 +8,35 @@ import { Question } from './../../../models/question';
 })
 export class DisplayQuestionsComponent {
   @Input() question: Question;
+  @Input() questions: Question[];
   @Input() numberOfQuestions: number;
   @Output() selectedAnswers = new EventEmitter<Map<number, number[]>>();
   @Output() submitButton = new EventEmitter<boolean>();
   answers: Map<number, number[]> = new Map<number, number[]>();
   answerIDs: number[] = [];
+  private _currentIndex: number;
+  @Input()
+  set currentIndex(val: number) {
+    this.currentIndexChange.emit(val);
+    this._currentIndex = val;
+  }
+
+  get currentIndex(): number {
+    return this._currentIndex;
+  }
+
+  @Output()
+  currentIndexChange: EventEmitter<number> = new EventEmitter();
+
   constructor() {}
+
+  next() {
+    this.currentIndex++;
+  }
+
+  previous() {
+    this.currentIndex--;
+  }
 
   submited() {
     this.submitButton.emit();
@@ -26,6 +49,10 @@ export class DisplayQuestionsComponent {
       : answers.filter(x => x !== answerId);
 
     this.answers.set(questionId, answers);
+
+    if (answers.length === 0) {
+      this.answers.delete(questionId);
+    }
     this.selectedAnswers.emit(this.answers);
   }
 
