@@ -11,6 +11,7 @@
 .red {
   color: var(--red);
   font-weight: 600;
+  text-decoration: underline;
 }
 .green-bg {
   background-color: var(--green);
