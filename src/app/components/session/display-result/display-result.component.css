@@ -1,0 +1,29 @@
+:root {
+  --green: #0b6623;
+  --red: #b40800;
+  --white: #f2f2f2;
+}
+
+.green {
+  color: var(--green) !important;
+  font-weight: 600;
+}
+.red {
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.green-bg {
+  background-color: var(--green);
+  color: var(--white);
+}
+.red-bg {
+  background-color: var(--red);
+  color: var(--white);
+}
+.card-1 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.question-box:last-child {
+  margin-bottom: 50px;
+}

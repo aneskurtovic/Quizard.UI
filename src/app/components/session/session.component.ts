@@ -15,6 +15,7 @@ export class SessionComponent implements OnInit {
   id: number;
   currentIndex = 0;
   selectedAnswers: Map<number, number> = new Map<number, number>();
+  quizResults: any;
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
@@ -46,7 +47,6 @@ export class SessionComponent implements OnInit {
     }
     return true;
   }
-
   finishSession() {
     const QuizResult = {};
     this.selectedAnswers.forEach((val: number, key: number) => {
@@ -57,7 +57,8 @@ export class SessionComponent implements OnInit {
     };
     this.quizService.addSession(result).subscribe(response => {
       this.toastr.success('Quiz successfully finished');
-      this.router.navigate(['/quiz/' + this.quiz.id + '/session/' + 'finish']);
+      this.quizResults = response;
+      this.router.navigate(['/quiz/' + this.quiz.id + '/session/finish']);
     });
   }
 }

@@ -20,6 +20,7 @@ import { QuestionsComponent } from './components/questions/add-questions/questio
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { DisplayQuestionsComponent } from './components/session/display-questions/display-questions.component';
+import { DisplayResultComponent } from './components/session/display-result/display-result.component';
 import { NavigateQuizComponent } from './components/session/navigate-quiz/navigate-quiz.component';
 import { SessionComponent } from './components/session/session.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
@@ -39,7 +40,8 @@ export function tokenGetter() {
     QuizComponent,
     SessionComponent,
     DisplayQuestionsComponent,
-    NavigateQuizComponent
+    NavigateQuizComponent,
+    DisplayResultComponent
   ],
   imports: [
     BrowserModule,
