@@ -21,11 +21,12 @@ export class DisplayQuestionsComponent {
   get currentIndex(): number {
     return this._currentIndex;
   }
+
+  constructor() {}
+
   answers: Map<number, number[]> = new Map<number, number[]>();
   answerIDs: number[] = [];
   private _currentIndex: number;
-
-  constructor() {}
 
   next() {
     this.currentIndex++;
