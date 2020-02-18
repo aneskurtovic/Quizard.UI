@@ -45,9 +45,7 @@
   <div class="selected-column modal-body">
     <span *ngIf="quiz"
       >Press link
-      <a routerLink="/quiz/{{ quiz.id }}" (click)="modalRef.hide()">
-        http://localhost:4200/quiz/{{ quiz.id }}</a
-      >
+      <a routerLink="/quiz/{{ quiz.id }}" (click)="modalRef.hide()"> {{ api + quiz.id }}</a>
       to start the quiz</span
     >
     <h6>Number of selected Questions ({{ selected?.length }})</h6>
