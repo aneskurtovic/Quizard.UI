@@ -12,21 +12,18 @@ export class DisplayQuestionsComponent {
   @Input() numberOfQuestions: number;
   @Output() selectedAnswers = new EventEmitter<Map<number, number[]>>();
   @Output() submitButton = new EventEmitter<boolean>();
-  answers: Map<number, number[]> = new Map<number, number[]>();
-  answerIDs: number[] = [];
-  private _currentIndex: number;
+  @Output() currentIndexChange: EventEmitter<number> = new EventEmitter();
   @Input()
   set currentIndex(val: number) {
     this.currentIndexChange.emit(val);
     this._currentIndex = val;
   }
-
   get currentIndex(): number {
     return this._currentIndex;
   }
-
-  @Output()
-  currentIndexChange: EventEmitter<number> = new EventEmitter();
+  answers: Map<number, number[]> = new Map<number, number[]>();
+  answerIDs: number[] = [];
+  private _currentIndex: number;
 
   constructor() {}
 
