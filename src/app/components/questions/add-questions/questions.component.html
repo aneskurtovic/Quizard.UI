@@ -44,7 +44,7 @@
           <div *ngIf="submited && item.invalid">
             <div *ngIf="item.invalid" class="invalid">Answer is required</div>
           </div>
-          <div *ngIf="submited && duplicated">
+          <div *ngIf="submited && findDuplicate(item.value.Text)">
             <div *ngIf="duplicated" class="invalid">Duplicated answer</div>
           </div>
         </div>
