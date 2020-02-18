@@ -18,6 +18,10 @@ export class DisplayResultComponent implements OnInit {
     const answers = this.selectedAnswers.get(id);
     const correctAnswers = this.quizResults.correctQuestions[id];
 
+    if (answers.length !== correctAnswers.length) {
+      return false;
+    }
+
     for (const sa of answers) {
       let incorrect = true;
       correctAnswers.forEach(ca => {
