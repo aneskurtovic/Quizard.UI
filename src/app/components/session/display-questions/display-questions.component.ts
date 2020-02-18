@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from './../../../models/question';
 
 @Component({
@@ -6,7 +6,7 @@ import { Question } from './../../../models/question';
   templateUrl: './display-questions.component.html',
   styleUrls: ['./display-questions.component.css']
 })
-export class DisplayQuestionsComponent implements OnInit {
+export class DisplayQuestionsComponent {
   @Input() question: Question;
   @Input() numberOfQuestions: number;
   @Output() selectedAnswers = new EventEmitter<Map<number, number[]>>();
@@ -19,25 +19,15 @@ export class DisplayQuestionsComponent implements OnInit {
     this.submitButton.emit();
   }
   selectAnswer(questionId: number, answerId: number) {
-    if (this.answers.has(questionId)) {
-      if (this.answers.get(questionId).includes(answerId)) {
-        const index = this.answers.get(questionId).indexOf(answerId);
-        this.answers.get(questionId).splice(index, 1);
-        if (this.answers.get(questionId).length === 0) {
-          this.answers.delete(questionId);
-        }
-        return;
-      }
-      this.answerIDs = this.answers.get(questionId);
-      this.answerIDs.push(answerId);
-    } else {
-      this.answerIDs = [];
-      this.answerIDs.push(answerId);
-    }
-    this.answers.set(questionId, this.answerIDs);
+    let answers = this.answers.has(questionId) ? this.answers.get(questionId) : [];
+
+    answers = !answers.includes(answerId)
+      ? [...answers, answerId]
+      : answers.filter(x => x !== answerId);
+
+    this.answers.set(questionId, answers);
     this.selectedAnswers.emit(this.answers);
   }
-  ngOnInit() {}
 
   hasAnswer(questionId: number): boolean {
     return this.answers.has(questionId);

@@ -51,7 +51,6 @@
         <div class="form-group custom-control custom-checkbox col-md-3 pl-5 mt-4 pt-2">
           <input
             type="checkbox"
-            (change)="unselectOtherAnswers(i)"
             formControlName="IsCorrect"
             class="form-control custom-control-input"
             id="correct-{{ i }}"
@@ -71,7 +70,7 @@
     </div>
     <div *ngIf="this.submited && answersArray.errors">
       <div *ngIf="answersArray.errors.minLengthOfValidAnswers" class="invalid">
-        Check only one correct answer
+        Select minimum one correct answer
       </div>
     </div>
   </form>

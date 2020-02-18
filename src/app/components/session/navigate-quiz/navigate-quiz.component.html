@@ -12,11 +12,16 @@
       </button>
     </li>
     <li
-      class="page-item ml-1 mr-1"
+      class="page-item "
       *ngFor="let question of questions; let i = index"
       (click)="currentIndex = i"
     >
-      <a class="page-link">{{ i + 1 }}</a>
+      <a
+        class="page-link"
+        [class.navcol]="currentIndex == i"
+        [class.ischecked]="isQuestionAnswered(question)"
+        >{{ i + 1 }}</a
+      >
     </li>
     <li class="page-item" [class.disabled]="currentIndex === questions.length - 1">
       <button
