@@ -59,7 +59,6 @@ export class SessionComponent implements OnInit {
       this.toastr.success('Quiz successfully finished');
       this.quizResults = response;
       this.router.navigate(['/quiz/' + this.quiz.id + '/session/finish']);
-      console.log(response);
     });
   }
 }

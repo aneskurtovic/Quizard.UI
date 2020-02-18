@@ -1,18 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Question } from '../../../models/question';
 @Component({
   selector: 'app-display-result',
   templateUrl: './display-result.component.html',
   styleUrls: ['./display-result.component.css']
 })
-export class DisplayResultComponent implements OnInit {
+export class DisplayResultComponent {
   @Input() quizResults: any;
   @Input() questions: Question[];
   @Input() selectedAnswers: Map<number, number[]>;
 
   constructor() {}
-
-  ngOnInit() {}
 
   isCorrectAnswered(id: number): boolean {
     const answers = this.selectedAnswers.get(id);
@@ -22,10 +20,10 @@ export class DisplayResultComponent implements OnInit {
       return false;
     }
 
-    for (const sa of answers) {
+    for (const selectedAnswer of answers) {
       let incorrect = true;
-      correctAnswers.forEach(ca => {
-        if (sa === ca) {
+      correctAnswers.forEach(correctAnswer => {
+        if (selectedAnswer === correctAnswer) {
           incorrect = false;
         }
       });
