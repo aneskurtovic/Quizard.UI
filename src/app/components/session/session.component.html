@@ -1,6 +1,6 @@
 <div class="container mt-5" *ngIf="quiz">
   <div class="col-sm-8 mx-auto text-left">
-    <span>Currently taking Quiz: </span>
+    <span *ngIf="!quizResults">Currently taking Quiz: </span>
     <h4>{{ quiz.name }}</h4>
   </div>
 </div>
