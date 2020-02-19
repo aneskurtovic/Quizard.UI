@@ -30,7 +30,7 @@ export class QuizComponent implements OnInit {
     this.getQuiz(this.id);
 
     this.form = this.fb.group({
-      contestantName: ['', Validators.required]
+      contestantName: ['', [Validators.required, Validators.maxLength(25)]]
     });
   }
 
@@ -41,6 +41,9 @@ export class QuizComponent implements OnInit {
   }
 
   startQuiz() {
+    if (this.form.controls.contestantName.errors) {
+      return;
+    }
     const session = {
       ...this.form.value,
       quizId: this.id

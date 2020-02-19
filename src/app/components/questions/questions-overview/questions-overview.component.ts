@@ -43,7 +43,7 @@ export class QuestionsOverviewComponent implements OnInit {
   ngOnInit() {
     this.loadQuestions();
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(25)]],
       questionIds: []
     });
     this.form.controls.name.valueChanges.subscribe(value => {
@@ -86,7 +86,7 @@ export class QuestionsOverviewComponent implements OnInit {
 
   addQuizz() {
     this.submited = true;
-    if (this.emptyQuiz) {
+    if (this.emptyQuiz || this.form.controls.name.errors) {
       return;
     }
 

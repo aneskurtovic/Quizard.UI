@@ -30,6 +30,9 @@
         <div class="invalid" *ngIf="submited && form.controls.name.errors.required">
           Quiz name is required
         </div>
+        <div class="invalid" *ngIf="form.controls.name.errors.maxlength">
+          Quiz name is too long!
+        </div>
       </div>
       <div *ngIf="emptyQuiz">
         <div class="invalid" *ngIf="submited && emptyQuiz">Quiz can not be empty</div>
