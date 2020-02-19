@@ -4,7 +4,6 @@ import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Question } from 'src/app/models/question';
-import { environment } from './../../../../environments/environment';
 import { PagedResult } from './../../../models/pagination';
 import { QuizResponse } from './../../../models/quiz-response';
 import { QuestionService } from './../../../services/question.service';
@@ -26,7 +25,7 @@ export class QuestionsOverviewComponent implements OnInit {
   quiz: QuizResponse;
   emptyQuiz = false;
   submited = false;
-  api = environment.api + '/quiz/';
+  api = location.origin + '/quiz/';
 
   pageNumber: number;
   ColumnMode = ColumnMode;
