@@ -41,7 +41,6 @@ export class QuestionsComponent implements OnInit {
       )
     });
 
-    this.form.get('answers').valueChanges.subscribe(console.log);
     this.loadDifficultyLevels();
     this.form.controls.Text.valueChanges.subscribe(value => {
       if (value.trim() === '') {
@@ -111,7 +110,6 @@ export class QuestionsComponent implements OnInit {
           this.router.navigate(['']);
         },
         err => {
-          console.log(err);
           this.toastr.error('Could not insert to database', 'Error', {
             timeOut: 3000
           });
