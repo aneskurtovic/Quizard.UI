@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {}
 
   isNavHidden(): boolean {
-    let url = this.router.url;
+    const url = this.router.url;
     return url.includes('session') || url.includes('login') ? true : false;
   }
 }
