@@ -45,7 +45,6 @@ export class QuizComponent implements OnInit {
       ...this.form.value,
       quizId: this.id
     };
-    console.log(session);
     this.quizService.startQuiz(session).subscribe(response => {
       this.toastr.success('Quiz successfully Started');
       this.router.navigate(['/quiz/' + this.id + '/session/' + response.id]);
