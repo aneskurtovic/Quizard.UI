@@ -1,5 +1,5 @@
 <div class="container ">
-  <div class="col-sm-8 mx-auto text-left" *ngIf="question">
+  <div class="col-md-8 mx-auto text-left" *ngIf="question">
     <div class="card card-1">
       <div class="card-body">
         <div class="mb-4">
@@ -30,7 +30,7 @@
             title="Answer all questions to submit"
           >
             <button
-              class="btn btn-green mx-auto"
+              class="btn btn-finish mx-auto"
               (click)="submited()"
               [hidden]="numberOfQuestions != answers.size"
             >
