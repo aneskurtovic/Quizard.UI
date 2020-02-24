@@ -21,7 +21,7 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  addQuestion(creditentials: string): Observable<any> {
+  checkAuth(creditentials: string): Observable<any> {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 

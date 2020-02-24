@@ -1,0 +1,25 @@
+<div class="container mt-3">
+  <label for="cars"><h3>Choose a Quiz:</h3></label>
+  <select id="quizzes" class="form-control ml-3" [(ngModel)]="selectedQuiz" (change)="selectedOption($event.target.value)">
+  <option [value]="quiz.id" *ngFor="let quiz of quizzes" >{{quiz.name}}</option>
+</select>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Contestant</th>
+      <th scope="col">Date</th>
+      <th scope="col">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let session of leaderboardSessions ; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ session.contestantName }}</td>
+      <td>{{ session.startedAt | date:'dd/MM/yyyy HH:mm'}}</td>
+      <td>{{ session.result }}</td>
+    </tr>
+</table>
+</div>
+

@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SessionResponse } from '../models/session-response';
 import { QuizResponse } from './../models/quiz-response';
-import { QuizResult } from './../models/quiz-result';
+import { FinishQuiz } from './../models/FinishQuiz';
+import { ResultQuiz } from '../models/ResultQuiz';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,13 +21,17 @@ export class QuizService {
   private quizUrl: string = environment.api + '/api/quizzes/';
   private sessionUrl: string = environment.api + '/api/sessions/';
 
+
   constructor(private http: HttpClient) {}
 
   addQuiz(quiz: any): Observable<QuizResponse> {
     return this.http.post<QuizResponse>(this.quizUrl, quiz, httpOptions);
   }
-  addSession(session: any): Observable<QuizResult> {
-    return this.http.post<QuizResult>(this.sessionUrl + 'finish', session);
+  addSession(session: any): Observable<ResultQuiz> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    return this.http.post<ResultQuiz>(this.sessionUrl + 'finish', session, httpOptions);
   }
   getQuiz(id: number): Observable<QuizResponse> {
     return this.http.get<QuizResponse>(this.quizUrl + id);

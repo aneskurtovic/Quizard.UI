@@ -41,19 +41,20 @@ export class CategoryComponent implements OnInit {
 
     this.categoryService.getAll(searchTerm).subscribe(result => {
       this.availableCategories = [];
-      const categories = Array.isArray(result) ? Array.from(result) : [];
-      categories.length > 0
-        ? categories.forEach(x => this.availableCategories.push(x))
-        : (this.availableCategories = []);
+      const results = Array.isArray(result) ? Array.from(result) : [];
+      if (results.length > 0) {
+        for (const obj of results) {
+          this.availableCategories.push(obj);
+        }
+      }
     });
   }
-
-  isCategorySelected = (category: Category) => {
-    return this.selectedCategories.filter(cat => cat.name === category.name).length > 0
-      ? true
-      : false;
-  };
-
+  isCategorySelected(category: Category): boolean {
+    if (this.selectedCategories.filter(cat => cat.name === category.name).length > 0) {
+      return true;
+    }
+    return false;
+  }
   selectCategory(): void {
     if (this.form.value.Categories.id) {
       if (this.isCategorySelected(this.form.value.Categories)) {
@@ -68,10 +69,8 @@ export class CategoryComponent implements OnInit {
       this.emitChange();
       return;
     }
-    if (this.form.value.Categories.trim() === '') {
-      this.toastr.error('You can not assign empty category to question', 'Error', {
-        timeOut: 3000
-      });
+    const inputText: string = this.form.value.Categories;
+    if (inputText.trim() === '') {
       return;
     }
     this.addCategory();

@@ -44,7 +44,8 @@ export class QuestionsOverviewComponent implements OnInit {
     this.loadQuestions();
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(25)]],
-      questionIds: []
+      questionIds: [],
+      timer: []
     });
     this.form.controls.name.valueChanges.subscribe(value => {
       if (value === null || value.trim() === '') {
@@ -94,6 +95,7 @@ export class QuestionsOverviewComponent implements OnInit {
       ...this.form.value,
       questionIds: this.selected.map(x => x.id)
     };
+
 
     this.quizService.addQuiz(quiz).subscribe(response => {
       this.toastr.success('Quiz successfully created');

@@ -30,7 +30,6 @@ export class QuestionsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router
   ) {}
-
   ngOnInit() {
     this.form = this.fb.group({
       Text: ['', Validators.required],
@@ -54,32 +53,42 @@ export class QuestionsComponent implements OnInit {
   get Text() {
     return this.form.get('Text');
   }
-  answerGroup = () =>
-    this.fb.group({
+  answerGroup(): FormGroup {
+    const result = this.fb.group({
       Text: this.fb.control('', Validators.required),
       IsCorrect: [false, Validators.required]
-    }) as FormGroup;
-
+    });
+    return result;
+  }
   get answersArray(): FormArray {
     return this.form.get('answers') as FormArray;
   }
-  addAnotherAnswer = () => this.answersArray.push(this.answerGroup());
-
+  addAnotherAnswer() {
+    this.answersArray.push(this.answerGroup());
+  }
   get removeButtonDisabled(): boolean {
     return this.answersArray.length === 2;
   }
-  removeAnswer = (i: number) => this.answersArray.removeAt(i);
-
-  findDuplicate(Text: string) {
-    const questionArray = this.answersArray.controls.filter(
-      data => data.value.Text === Text && Text !== ''
-    );
-    questionArray.length > 1 ? (this.duplicated = true) : (this.duplicated = false);
-    return questionArray.length > 1 ? true : false;
+  removeAnswer(i: number) {
+    this.answersArray.removeAt(i);
   }
 
-  onCategoriesChange = (categoryIds: number[]) => (this.categoryIDes = categoryIds);
+  findDuplicate(Text: string) {
+    const myArray = this.answersArray.controls.filter(
+      data => data.value.Text === Text && Text !== ''
+    );
+    if (myArray.length > 1) {
+      this.duplicated = true;
+      return true;
+    } else {
+      this.duplicated = false;
+      return false;
+    }
+  }
 
+  onCategoriesChange(categoryIds: number[]) {
+    this.categoryIDes = categoryIds;
+  }
   addQuestion() {
     this.submited = true;
     this.form.value.Categories = this.categoryIDes;
@@ -94,7 +103,7 @@ export class QuestionsComponent implements OnInit {
       return;
     } else {
       const credentials = JSON.stringify(this.form.value);
-      this.questionService.addQuestion(credentials).subscribe(
+      this.questionService.checkAuth(credentials).subscribe(
         response => {
           this.toastr.success('Inserted to database!', 'Success');
           this.submited = false;
@@ -109,14 +118,23 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
-  selectChangeHandler = event => (this.Level = event.target.value);
-
+  get formStatus() {
+    return {
+      valid: this.form.valid,
+      dirty: this.form.dirty,
+      touched: this.form.touched,
+      value: this.form.value
+    };
+  }
+  selectChangeHandler(event) {
+    this.Level = event.target.value;
+  }
   get getDifficultyLevel() {
     return this.form.get('DifficultyLevelId');
   }
 
   loadDifficultyLevels() {
-    this.questionService.getDifficultyLevel().subscribe(
+    return this.questionService.getDifficultyLevel().subscribe(
       (difficultyLevels: DifficultyLevel[]) => {
         this.difficultyLevels = difficultyLevels;
       },
