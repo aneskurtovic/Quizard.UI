@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { DifficultyLevel } from '../models/difficultyLevel';
 import { Question } from '../models/question';
 import { PagedResult, PaginationParams } from './../models/pagination';
 
@@ -17,7 +16,7 @@ const httpOptions = {
 })
 export class QuestionService {
   private questionUrl: string = environment.api + '/api/questions';
-  private difficultyLevelUrl: string = environment.api + '/api/difficultylevels';
+  //private difficultyLevelUrl: string = environment.api + '/api/difficultylevels';
 
   constructor(private http: HttpClient) {}
 
@@ -25,9 +24,9 @@ export class QuestionService {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  getDifficultyLevel(): Observable<DifficultyLevel[]> {
+  /*getDifficultyLevel(): Observable<DifficultyLevel[]> {
     return this.http.get<DifficultyLevel[]>(this.difficultyLevelUrl);
-  }
+  }*/
   getQuestions(params: PaginationParams) {
     let queryParams = new HttpParams();
     const keys = Object.keys(params);

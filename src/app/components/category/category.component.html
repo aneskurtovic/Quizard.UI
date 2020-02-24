@@ -1,9 +1,6 @@
-<label>
-  Categories:
-</label>
-<div id="listCategories" class="col-12 ">
+<div id="listCategories" class="col-12">
   <button
-    class="badge badge-primary"
+    class="badge badge-primary tacta-blue-bg"
     data-toggle="tooltip"
     (mousedown)="removeCategory(cat)"
     title="Click to unassign category from question"
@@ -12,23 +9,20 @@
     {{ cat.name }}
   </button>
 </div>
-<form [formGroup]="form">
-  <div class="row">
-    <div class="col-12">
-      <input
-        id="typeahead-basic"
-        formControlName="Categories"
-        type="text"
-        class="form-control"
-        [inputFormatter]="formatter"
-        [resultFormatter]="formatter"
-        [ngbTypeahead]="search"
-      />
-      <span
-        ><button class="btn btn-primary" (click)="selectCategory()" type="submit">
-          Select category
-        </button></span
-      >
-    </div>
+<form [formGroup]="form" class="form-row mb-0">
+  <div class="form-group col-md-10">
+    <input
+      id="typeahead-basic"
+      formControlName="Categories"
+      type="text"
+      class="form-control"
+      [inputFormatter]="formatter"
+      [resultFormatter]="formatter"
+      [ngbTypeahead]="search"
+      placeholder="Category"
+    />
   </div>
+  <button class="btn tacta-blue-bg form-control col-md-2" (click)="selectCategory()" type="submit">
+    Select category
+  </button>
 </form>

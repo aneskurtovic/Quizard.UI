@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DifficultyLevel } from '../../../models/difficultyLevel';
+//import { DifficultyLevel } from '../../../models/difficultyLevel';
 import { QuestionService } from '../../../services/question.service';
 import { CustomValidators } from '../../../validators/custom-validators';
 import { CategoryComponent } from '../../category/category.component';
@@ -17,8 +17,8 @@ export class QuestionsComponent implements OnInit {
   formattedMessage: string;
   submited = false;
   duplicated = false;
-  difficultyLevels: DifficultyLevel[] = [];
-  Level = 0;
+  //difficultyLevels: DifficultyLevel[] = [];
+  // Level = 0;
   emptyQuestion = false;
   categoryIDes: number[] = [];
   selected = -1;
@@ -34,7 +34,7 @@ export class QuestionsComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       Text: ['', Validators.required],
-      DifficultyLevelId: ['0'],
+      // DifficultyLevelId: ['0'],
       Categories: [],
       answers: this.fb.array(
         [this.answerGroup(), this.answerGroup()],
@@ -42,7 +42,7 @@ export class QuestionsComponent implements OnInit {
       )
     });
 
-    this.loadDifficultyLevels();
+    // this.loadDifficultyLevels();
     this.form.controls.Text.valueChanges.subscribe(value => {
       if (value.trim() === '') {
         this.emptyQuestion = true;
@@ -87,7 +87,7 @@ export class QuestionsComponent implements OnInit {
     if (
       this.form.invalid ||
       this.duplicated ||
-      this.Level === 0 ||
+      //   this.Level === 0 ||
       this.categoryIDes.length < 1 ||
       this.emptyQuestion
     ) {
@@ -109,9 +109,9 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
-  selectChangeHandler = event => (this.Level = event.target.value);
+  //  selectChangeHandler = event => (this.Level = event.target.value);
 
-  get getDifficultyLevel() {
+  /*get getDifficultyLevel() {
     return this.form.get('DifficultyLevelId');
   }
 
@@ -126,5 +126,5 @@ export class QuestionsComponent implements OnInit {
         });
       }
     );
-  }
+  }*/
 }

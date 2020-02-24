@@ -86,7 +86,7 @@ export class QuestionsOverviewComponent implements OnInit {
 
   addQuizz() {
     this.submited = true;
-    if (this.emptyQuiz || this.form.controls.name.errors) {
+    if (this.emptyQuiz || this.form.controls.name.errors || this.selected.length === 0) {
       return;
     }
 
