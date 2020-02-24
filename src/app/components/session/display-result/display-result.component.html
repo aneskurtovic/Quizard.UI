@@ -1,0 +1,26 @@
+
+<div class="col-sm-8 mx-auto text-center mt-5" *ngIf="quizResults">
+  <h1>Your score is: {{ this.quizResults.result }} %</h1>
+</div>
+<div class="container question-box mt-5" *ngFor="let question of questions; let i = index">
+  <div class="col-sm-8 mx-auto">
+    <div class="card card-1">
+      <div class="card-header" [className]="isCorrectAnswered(question.id) ? 'green-bg' : 'red-bg'">
+        <h4 class="p-3">{{ i + 1 }}. {{ question.text }}</h4>
+      </div>
+
+      <div class="card-body">
+        <div *ngFor="let answer of question.answers; let i = index">
+          <p
+            [ngClass]="{
+              red: isSelected(answer.id, question.id),
+              green: isCorrectAnswer(answer.id, question.id)
+            }"
+          >
+            {{ i + 1 }}. {{ answer.text }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

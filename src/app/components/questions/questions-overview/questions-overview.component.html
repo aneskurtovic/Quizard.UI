@@ -1,0 +1,98 @@
+<div class="container mt-5">
+  <button routerLink="/add-question" class="button"><span>Add new Question </span></button>
+  <button
+    type="button"
+    class="btn btn-custom"
+    (click)="openModal(template)"
+    [disabled]="!isSelected"
+  >
+    <span>Add new quiz</span>
+  </button>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Creating Quiz</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide(); form.reset(); submited = false"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group" [formGroup]="form">
+      <label for="quizName">Quiz Name</label>
+      <input class="form-control" id="quizName" type="text" formControlName="name" />
+      <div *ngIf="form.controls.name.errors">
+        <div class="invalid" *ngIf="submited && form.controls.name.errors.required">
+          Quiz name is required
+        </div>
+        <div class="invalid" *ngIf="form.controls.name.errors.maxlength">
+          Quiz name is too long!
+        </div>
+      </div>
+      <div *ngIf="emptyQuiz">
+        <div class="invalid" *ngIf="submited && emptyQuiz">Quiz can not be empty</div>
+      </div>
+      <label>Set up timer (mins): </label>
+      <input id="timer" class="form-control" formControlName="timer" type="number" min="1" max="60"/>
+      <div class="text-center mt-4">
+        <button class="btn btn-modal text-center" (click)="addQuizz()">
+          Create Quiz
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="selected-column modal-body">
+    <span *ngIf="quiz"
+      >Press link
+      <a routerLink="/quiz/{{ quiz.id }}" (click)="modalRef.hide()"> {{ api + quiz.id }}</a>
+      to start the quiz</span
+    >
+    <h6>Number of selected Questions ({{ selected?.length }})</h6>
+  </div>
+</ng-template>
+
+<div class="container mt-4 mx-auto" *ngIf="pageResult">
+  <ngx-datatable
+    *ngIf="pageResult"
+    class="material"
+    [rows]="rows"
+    [rowIdentity]="getId"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [externalPaging]="true"
+    [count]="pageResult.metadata.total"
+    [offset]="pageResult.metadata.offset"
+    [limit]="pageResult.metadata.pageSize"
+    (page)="pageChanged($event)"
+    [limit]="5"
+    [selected]="selected"
+    [selectionType]="SelectionType.checkbox"
+    [selectAllRowsOnPage]="false"
+    (select)="onSelect($event)"
+  >
+    <ngx-datatable-column
+      [width]="30"
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+      [headerCheckboxable]="false"
+      [checkboxable]="true"
+    >
+    </ngx-datatable-column>
+    <ngx-datatable-column [sortable]="false" prop="text" name="Question"> </ngx-datatable-column>
+    <ngx-datatable-column
+      [sortable]="false"
+      prop="categories"
+      name="Categories"
+    ></ngx-datatable-column>
+  </ngx-datatable>
+</div>

@@ -1,0 +1,51 @@
+<div class="container ">
+  <div class="col-md-8 mx-auto text-left" *ngIf="question">
+    <div class="card card-1">
+      <div class="card-body">
+        <div class="mb-4">
+          <h4>{{ question.text }}</h4>
+        </div>
+
+        <div class="list-group mb-2" *ngFor="let answer of question.answers">
+          <button
+            [class.checkedcolor]="isSelectedAnswer(question.id, answer.id)"
+            (click)="selectAnswer(question.id, answer.id)"
+            type="button"
+            class="btn list-group-item list-group-item-action"
+          >
+            {{ answer.text }}
+          </button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-custom" (click)="previous()" [disabled]="currentIndex === 0">
+            Previous
+          </button>
+          <span
+            class="d-inline-block mx-auto"
+            tabindex="0"
+            data-toggle="tooltip"
+            title="Answer all questions to submit"
+          >
+            <button
+              class="btn btn-finish mx-auto"
+              (click)="submited()"
+              [hidden]="numberOfQuestions != answers.size"
+            >
+              Finish
+            </button>
+          </span>
+          <button
+            class="btn btn-custom"
+            (click)="next()"
+            [disabled]="currentIndex === questions.length - 1"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

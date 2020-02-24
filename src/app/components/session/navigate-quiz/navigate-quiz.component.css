@@ -1,0 +1,25 @@
+.active,
+.btn:hover {
+  background-color: #666;
+  color: white;
+}
+
+.navcol {
+  background-color: #60a5bf !important;
+  color: #f2f2f2;
+}
+
+.ischecked {
+  background-color: #0f79a1;
+  color: #f2f2f2;
+}
+
+.page-link {
+  cursor: pointer;
+}
+
+.navcol:hover,
+.ischecked:hover {
+  background-color: #0f79a1;
+  color: #f2f2f2;
+}
