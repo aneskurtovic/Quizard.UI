@@ -16,6 +16,8 @@ export class SessionComponent implements OnInit {
   currentIndex = 0;
   selectedAnswers: Map<number, number> = new Map<number, number>();
   quizResults: any;
+  interval;
+  timeLeft: number;
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
