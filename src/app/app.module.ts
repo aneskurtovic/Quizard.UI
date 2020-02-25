@@ -24,6 +24,7 @@ import { DisplayResultComponent } from './components/session/display-result/disp
 import { NavigateQuizComponent } from './components/session/navigate-quiz/navigate-quiz.component';
 import { SessionComponent } from './components/session/session.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
+import { QuizOverviewComponent } from './components/quiz/quiz-overview/quiz-overview.component';
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
@@ -41,7 +42,8 @@ export function tokenGetter() {
     SessionComponent,
     DisplayQuestionsComponent,
     NavigateQuizComponent,
-    DisplayResultComponent
+    DisplayResultComponent,
+    QuizOverviewComponent
   ],
   imports: [
     BrowserModule,

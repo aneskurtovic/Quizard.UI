@@ -1,8 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Session } from 'protractor';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PagedResult, PaginationParams } from '../models/pagination';
+import { Quiz } from '../models/quiz';
 import { SessionResponse } from '../models/session-response';
 import { QuizResponse } from './../models/quiz-response';
 import { QuizResult } from './../models/quiz-result';
@@ -36,5 +38,14 @@ export class QuizService {
   }
   startQuiz(session: Session): Observable<SessionResponse> {
     return this.http.post<SessionResponse>(this.sessionUrl, session, httpOptions);
+  }
+  getQuizzes(params: PaginationParams) {
+    let queryParams = new HttpParams();
+    const keys = Object.keys(params);
+    keys.forEach(p => {
+      queryParams = queryParams.append(p, params[p]);
+    });
+
+    return this.http.get<PagedResult<Quiz>>(this.quizUrl, { params: queryParams });
   }
 }
