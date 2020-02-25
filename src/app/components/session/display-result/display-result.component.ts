@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Question } from '../../../models/question';
 import { ResultQuiz } from '../../../models/ResultQuiz';
 @Component({
@@ -6,12 +6,10 @@ import { ResultQuiz } from '../../../models/ResultQuiz';
   templateUrl: './display-result.component.html',
   styleUrls: ['./display-result.component.css']
 })
-export class DisplayResultComponent implements OnInit {
+export class DisplayResultComponent {
   @Input() quizResults: ResultQuiz;
   @Input() questions: Question[];
   @Input() selectedAnswers: Map<number, number[]>;
-
-  ngOnInit() {}
 
   constructor() {}
 

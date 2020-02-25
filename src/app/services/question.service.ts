@@ -20,13 +20,10 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  checkAuth(creditentials: string): Observable<any> {
+  addQuestion(creditentials: string): Observable<any> {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  /*getDifficultyLevel(): Observable<DifficultyLevel[]> {
-    return this.http.get<DifficultyLevel[]>(this.difficultyLevelUrl);
-  }*/
   getQuestions(params: PaginationParams) {
     let queryParams = new HttpParams();
     const keys = Object.keys(params);

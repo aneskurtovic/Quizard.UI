@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { SessionComponent } from './components/session/session.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
-import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 const routes: Routes = [
   {
@@ -57,10 +57,9 @@ const routes: Routes = [
     path: 'leaderboard',
     component: LeaderboardComponent,
     data: {
-      title: 'Leaderboard bitches'
+      title: 'Leaderboard'
     }
-  }
-  ,
+  },
   {
     path: 'leaderboard/:id',
     component: LeaderboardComponent,

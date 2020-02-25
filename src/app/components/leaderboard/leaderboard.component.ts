@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizLeaderboard } from '../../models/quiz-leaderboard';
-import { LeaderboardService } from '../../services/leaderboard.service';
 import { SessionLeaderboard } from '../../models/session-leaderboard';
-import { HostListener } from '@angular/core';
+import { LeaderboardService } from '../../services/leaderboard.service';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -14,39 +13,24 @@ export enum KEY_CODE {
   templateUrl: './leaderboard.component.html',
   styleUrls: ['./leaderboard.component.css']
 })
-
-
-
 export class LeaderboardComponent implements OnInit {
+  constructor(private leaderboardService: LeaderboardService) {}
 
-  constructor(private leaderboardService : LeaderboardService) { }
-
-  quizzes : QuizLeaderboard[];
+  quizzes: QuizLeaderboard[];
   selectedQuiz: QuizLeaderboard;
   leaderboardSessions: SessionLeaderboard[];
 
   ngOnInit() {
     this.loadQuizzes();
   }
-  @HostListener('window:keyup', ['$event'])
-  keyEvent(event: KeyboardEvent) {
-    console.log(event);
-
-    if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
-      this.selectedQuiz.id++;
-    }
-
-    if (event.keyCode === KEY_CODE.LEFT_ARROW) {
-      this.selectedQuiz.id--;
-    }
-  }
 
   loadQuizzes() {
-    return this.leaderboardService.getQuizzes().subscribe(response => this.quizzes = response);
-   }
+    return this.leaderboardService.getQuizzes().subscribe(response => (this.quizzes = response));
+  }
 
-   selectedOption(quiz){
-    return this.leaderboardService.getLeaderboard(quiz).subscribe(response => this.leaderboardSessions = response);
-   }
-
+  selectedOption(quiz) {
+    return this.leaderboardService
+      .getLeaderboard(quiz)
+      .subscribe(response => (this.leaderboardSessions = response));
+  }
 }
