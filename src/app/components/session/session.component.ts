@@ -35,7 +35,7 @@ export class SessionComponent implements OnInit {
   }
 
   startTimer() {
-    this.timeLeft = this.quiz.timer * 5;
+    this.timeLeft = this.quiz.timer * 60;
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
@@ -51,7 +51,7 @@ export class SessionComponent implements OnInit {
       this.quizService.getQuiz(this.quizId).subscribe(res => {
         this.quiz = res;
         resolve(res);
-        //this.shuffleQuestion();
+        this.shuffleQuestion();
       });
     });
   }
