@@ -56,6 +56,12 @@
 </ng-template>
 
 <div class="container mt-4 mx-auto" *ngIf="pageResult">
+  <input
+    type="name"
+    style="padding:8px;margin:15px auto;width:30%;"
+    placeholder="Type to search questions..."
+    (input)="updateFilter($event, datatable)"
+  />
   <ngx-datatable
     *ngIf="pageResult"
     class="material"
@@ -75,6 +81,7 @@
     [selectionType]="SelectionType.checkbox"
     [selectAllRowsOnPage]="false"
     (select)="onSelect($event)"
+    #datatable
   >
     <ngx-datatable-column
       [width]="30"

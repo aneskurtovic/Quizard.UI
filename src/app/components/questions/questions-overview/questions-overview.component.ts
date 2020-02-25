@@ -1,8 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
+import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Question } from 'src/app/models/question';
 import { PagedResult } from './../../../models/pagination';
 import { QuizResponse } from './../../../models/quiz-response';
@@ -14,11 +16,12 @@ import { QuizService } from './../../../services/quiz.service';
   templateUrl: './questions-overview.component.html',
   styleUrls: ['./questions-overview.component.css']
 })
-export class QuestionsOverviewComponent implements OnInit {
+export class QuestionsOverviewComponent implements OnInit, OnDestroy {
   page = 1;
   itemsPerPage = 10;
   pageResult: PagedResult<Question>;
   rows: Question[];
+  temp = [];
   selected = [];
   isSelected = false;
   form: FormGroup;
@@ -31,6 +34,9 @@ export class QuestionsOverviewComponent implements OnInit {
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
   modalRef: BsModalRef;
+
+  private searchTermObservable$: BehaviorSubject<string> = new BehaviorSubject(null);
+  componentDestroyed$: Subject<void> = new Subject();
 
   constructor(
     private questionService: QuestionService,
@@ -53,6 +59,10 @@ export class QuestionsOverviewComponent implements OnInit {
       }
       this.emptyQuiz = false;
     });
+
+    this.searchTermObservable$
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.componentDestroyed$))
+      .subscribe(term => this.handleTermChanged(term));
   }
 
   pageChanged(event: any): void {
@@ -74,13 +84,16 @@ export class QuestionsOverviewComponent implements OnInit {
     }
   }
 
-  loadQuestions(offset?: number) {
+  loadQuestions(offset?: number, name?: string) {
     const pageNumber = offset || 0;
+
     this.questionService
-      .getQuestions({ offset: pageNumber, pageSize: this.itemsPerPage })
+      .getQuestions({ offset: pageNumber, pageSize: this.itemsPerPage, name })
       .subscribe(res => {
         this.rows = res.data;
         this.pageResult = res;
+        this.temp = [...res.data];
+        this.pageNumber = res.metadata.offset;
       });
   }
 
@@ -105,5 +118,17 @@ export class QuestionsOverviewComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  updateFilter(event, datatable: DatatableComponent) {
+    this.searchTermObservable$.next(event.target.value.toLowerCase());
+  }
+
+  handleTermChanged(term: string) {
+    this.loadQuestions(0, term);
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next();
   }
 }
