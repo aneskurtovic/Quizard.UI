@@ -28,17 +28,12 @@ export class DisplayQuestionsComponent {
   answerIDs: number[] = [];
   private _currentIndex: number;
 
-  next() {
-    this.currentIndex++;
-  }
+  next = () => this.currentIndex++;
 
-  previous() {
-    this.currentIndex--;
-  }
+  previous = () => this.currentIndex--;
 
-  submited() {
-    this.submitButton.emit();
-  }
+  submited = () => this.submitButton.emit();
+
   selectAnswer(questionId: number, answerId: number) {
     let answers = this.answers.has(questionId) ? this.answers.get(questionId) : [];
 
@@ -54,11 +49,8 @@ export class DisplayQuestionsComponent {
     this.selectedAnswers.emit(this.answers);
   }
 
-  hasAnswer(questionId: number): boolean {
-    return this.answers.has(questionId);
-  }
+  hasAnswer = (questionId: number) => this.answers.has(questionId);
 
-  isSelectedAnswer(questionId: number, answerId: number) {
-    return this.hasAnswer(questionId) && this.answers.get(questionId).includes(answerId);
-  }
+  isSelectedAnswer = (questionId: number, answerId: number) =>
+    this.hasAnswer(questionId) && this.answers.get(questionId).includes(answerId);
 }

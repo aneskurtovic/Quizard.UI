@@ -18,7 +18,7 @@
         (change)="selectChangeHandler($event)"
         class="custom-select col-md-2"
       >
-        <option disabled [value]="0">Difficulty Level</option>
+        <option disabled selected="selected" [value]="0">Difficulty Level</option>
         <option *ngFor="let difficulty of difficultyLevels" [value]="difficulty.id">
           {{ difficulty.level }}</option
         >

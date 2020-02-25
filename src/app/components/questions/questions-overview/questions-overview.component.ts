@@ -56,13 +56,9 @@ export class QuestionsOverviewComponent implements OnInit {
     });
   }
 
-  pageChanged(event: any): void {
-    this.loadQuestions(event.offset);
-  }
+  pageChanged = (event: any) => this.loadQuestions(event.offset);
 
-  getId(row: any) {
-    return row.id;
-  }
+  getId = (row: any) => row.id;
 
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
@@ -96,7 +92,6 @@ export class QuestionsOverviewComponent implements OnInit {
       questionIds: this.selected.map(x => x.id)
     };
 
-
     this.quizService.addQuiz(quiz).subscribe(response => {
       this.toastr.success('Quiz successfully created');
       this.submited = false;
@@ -105,7 +100,5 @@ export class QuestionsOverviewComponent implements OnInit {
     });
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
+  openModal = (template: TemplateRef<any>) => (this.modalRef = this.modalService.show(template));
 }

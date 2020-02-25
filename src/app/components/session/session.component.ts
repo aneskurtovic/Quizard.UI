@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuizService } from 'src/app/services/quiz.service';
-import { QuizResponse } from './../../models/quiz-response';
 import { FinishQuiz } from './../../models/FinishQuiz';
-
+import { QuizResponse } from './../../models/quiz-response';
 
 @Component({
   selector: 'app-session',
@@ -14,11 +13,11 @@ import { FinishQuiz } from './../../models/FinishQuiz';
 export class SessionComponent implements OnInit {
   quiz: QuizResponse;
   quizId: number;
-  sessionId;
+  sessionId: any;
   currentIndex = 0;
   selectedAnswers: Map<number, number> = new Map<number, number>();
   quizResults: any;
-  interval;
+  interval: NodeJS.Timer;
   timeLeft: number;
   constructor(
     private quizService: QuizService,
@@ -31,25 +30,20 @@ export class SessionComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.quizId = +params.quizId;
       this.sessionId = params.id;
-
     });
     this.getQuiz(this.quizId).then(success => this.startTimer());
   }
 
   startTimer() {
-    this.timeLeft = this.quiz.timer * 60;
-    console.log(this.quiz.timer);
-    console.log(this.timeLeft);
+    this.timeLeft = this.quiz.timer * 5;
     this.interval = setInterval(() => {
-      if(this.timeLeft > 0) {
+      if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-
         this.finishSession();
         this.toastr.error('You ran out of time !');
-        clearInterval(this.interval);
       }
-    },1000)
+    }, 1000);
   }
 
   getQuiz(id: number): Promise<any> {
@@ -57,24 +51,20 @@ export class SessionComponent implements OnInit {
       this.quizService.getQuiz(this.quizId).subscribe(res => {
         this.quiz = res;
         resolve(res);
-      })
+      });
     });
   }
 
-  getSelectedAnswers(answers: Map<number, number>): void {
-    this.selectedAnswers = answers;
-  }
+  getSelectedAnswers = (answers: Map<number, number>) => (this.selectedAnswers = answers);
+
   get currentQuestion() {
     return this.quiz.questions[this.currentIndex];
   }
-  lastQuestion(): boolean {
-    if (this.quiz.questions.length - 1 === this.currentIndex) {
-      return false;
-    }
-    return true;
-  }
+
+  lastQuestion = () => (this.quiz.questions.length - 1 === this.currentIndex ? false : true);
+
   finishSession() {
-    console.log(this.sessionId);
+    clearInterval(this.interval);
     const QuizResult = {};
     this.selectedAnswers.forEach((val: number, key: number) => {
       QuizResult[key] = val;
@@ -84,10 +74,9 @@ export class SessionComponent implements OnInit {
       quizId: this.quizId,
       sessionId: this.sessionId
     };
-    console.log(result);
     this.quizService.addSession(JSON.stringify(result)).subscribe(response => {
       this.quizResults = response;
-      this.router.navigate(['/quiz/' + this.quiz.id + '/session/finish'], )
+      this.router.navigate(['/quiz/' + this.quiz.id + '/session/finish']);
     });
   }
 }
