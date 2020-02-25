@@ -4,5 +4,13 @@
 }
 .invalid {
   font-size: 14px;
-  color: red;
+  color: #b40800;
+}
+.green-bg {
+  background-color: #0b6623;
+  color: #f2f2f2;
+}
+.red-bg {
+  background-color: #b40800;
+  color: #f2f2f2;
 }
