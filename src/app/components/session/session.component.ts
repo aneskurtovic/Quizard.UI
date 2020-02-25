@@ -51,8 +51,34 @@ export class SessionComponent implements OnInit {
       this.quizService.getQuiz(this.quizId).subscribe(res => {
         this.quiz = res;
         resolve(res);
+        //this.shuffleQuestion();
       });
     });
+  }
+
+  shuffleQuestion() {
+    let m = this.quiz.questions.length;
+    let t, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = this.quiz.questions[m];
+      this.quiz.questions[m] = this.quiz.questions[i];
+      this.quiz.questions[i] = t;
+    }
+    this.shuffleAnswers();
+  }
+
+  shuffleAnswers() {
+    for (let index = 0; index < this.quiz.questions.length; index++) {
+      let m = this.quiz.questions[index].answers.length;
+      let t, i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = this.quiz.questions[index].answers[m];
+        this.quiz.questions[index].answers[m] = this.quiz.questions[index].answers[i];
+        this.quiz.questions[index].answers[i] = t;
+      }
+    }
   }
 
   getSelectedAnswers = (answers: Map<number, number>) => (this.selectedAnswers = answers);
