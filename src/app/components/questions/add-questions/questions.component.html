@@ -1,18 +1,16 @@
-<div class="container">
-  <form [formGroup]="form" class="form-group">
-    <div class="form-group">
-      <label>
-        Question:
-      </label>
-      <input type="text" formControlName="Text" class="form-control" />
-      <div *ngIf="Text.errors">
-        <div class="invalid" *ngIf="submited && Text.errors.required">Question is required</div>
+<div class="container mt-5">
+  <div class="col-10 mx-auto">
+    <form [formGroup]="form" class="form-group p-4">
+      <div class="form-group mb-4">
+        <input type="text" formControlName="Text" class="form-control" placeholder="Question" />
+        <div *ngIf="Text.errors">
+          <div class="invalid" *ngIf="submited && Text.errors.required">Question is required</div>
+        </div>
+        <div *ngIf="emptyQuestion">
+          <div class="invalid" *ngIf="submited && emptyQuestion">Question can not be empty</div>
+        </div>
       </div>
-      <div *ngIf="emptyQuestion">
-        <div class="invalid" *ngIf="submited && emptyQuestion">Question can not be empty</div>
-      </div>
-    </div>
-    <div class="form-group">
+      <!--<div class="form-group">
       <select
         formControlName="DifficultyLevelId"
         (change)="selectChangeHandler($event)"
@@ -26,58 +24,70 @@
       <div *ngIf="Level == 0">
         <div class="invalid" *ngIf="submited && Level == 0">Difficulty Level is required</div>
       </div>
-    </div>
-    <hr />
-    <app-category (categoryIDs)="onCategoriesChange($event)"></app-category>
-    <div *ngIf="this.categoryIDes.length === 0">
-      <div class="invalid" *ngIf="submited">Category is required</div>
-    </div>
-    <hr />
+    </div>-->
 
-    <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
-      <div [formGroupName]="i" class="form-row">
-        <div class="form-group col-md-8">
-          <label> {{ i + 1 }}. Answer:</label>
-          <span style="visibility: hidden;">{{ findDuplicate(item.value.Text) }}</span>
+      <app-category (categoryIDs)="onCategoriesChange($event)"></app-category>
+      <div *ngIf="this.categoryIDes.length === 0" class="mb-4">
+        <div class="invalid" *ngIf="submited">Category is required</div>
+      </div>
+      <hr />
+      <div class="mt-5">
+        <div formArrayName="answers" *ngFor="let item of answersArray.controls; let i = index">
+          <div [formGroupName]="i" class="form-row">
+            <div class="form-group col-md-10">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  formControlName="Text"
+                  class="form-control"
+                  placeholder="Answer {{ i + 1 }}"
+                />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <input
+                      type="checkbox"
+                      formControlName="IsCorrect"
+                      class="input-group-append"
+                      id="correct-{{ i }}"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="submited && item.invalid">
+                <div *ngIf="item.invalid" class="invalid">Answer is required</div>
+              </div>
+              <div *ngIf="submited && findDuplicate(item.value.Text)">
+                <div *ngIf="duplicated" class="invalid">Duplicated answer</div>
+              </div>
+            </div>
 
-          <input type="text" formControlName="Text" class="form-control" />
-          <div *ngIf="submited && item.invalid">
-            <div *ngIf="item.invalid" class="invalid">Answer is required</div>
-          </div>
-          <div *ngIf="submited && findDuplicate(item.value.Text)">
-            <div *ngIf="duplicated" class="invalid">Duplicated answer</div>
+            <div class="form-group col-md-2">
+              <button
+                (click)="removeAnswer(i)"
+                [disabled]="removeButtonDisabled"
+                class="form-control btn red-bg"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         </div>
-        <div class="form-group custom-control custom-checkbox col-md-3 pl-5 mt-4 pt-2">
-          <input
-            type="checkbox"
-            formControlName="IsCorrect"
-            class="form-control custom-control-input"
-            id="correct-{{ i }}"
-          />
-          <label class="custom-control-label" for="correct-{{ i }}">Valid</label><br />
+      </div>
+      <div *ngIf="this.submited && answersArray.errors">
+        <div *ngIf="answersArray.errors.minLengthOfValidAnswers" class="invalid">
+          Select minimum one correct answer
         </div>
-        <div class="form-group col-md-1 align-self-end mt-4 pt-2">
-          <button
-            (click)="removeAnswer(i)"
-            [disabled]="removeButtonDisabled"
-            class="form-control btn btn-danger"
-          >
-            Remove
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <button (click)="addAnotherAnswer()" class="btn btn-light mr-2 form-control">
+            + Add new answer
           </button>
         </div>
       </div>
+    </form>
+    <div class="d-flex justify-content-end col-md-12">
+      <button class="btn green-bg col-md-3 mx-auto" (click)="addQuestion()">Submit</button>
     </div>
-    <div *ngIf="this.submited && answersArray.errors">
-      <div *ngIf="answersArray.errors.minLengthOfValidAnswers" class="invalid">
-        Select minimum one correct answer
-      </div>
-    </div>
-  </form>
-  <br />
-
-  <div>
-    <button (click)="addAnotherAnswer()" class="btn btn-primary mr-2">Add Answer</button>
-    <button class="btn btn-success" (click)="addQuestion()">Submit</button>
   </div>
 </div>
