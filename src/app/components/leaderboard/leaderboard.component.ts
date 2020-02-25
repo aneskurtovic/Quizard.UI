@@ -3,11 +3,6 @@ import { QuizLeaderboard } from '../../models/quiz-leaderboard';
 import { SessionLeaderboard } from '../../models/session-leaderboard';
 import { LeaderboardService } from '../../services/leaderboard.service';
 
-export enum KEY_CODE {
-  RIGHT_ARROW = 39,
-  LEFT_ARROW = 37
-}
-
 @Component({
   selector: 'app-leaderboard',
   templateUrl: './leaderboard.component.html',
