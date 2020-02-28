@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { QuizLeaderboard } from '../../models/quiz-leaderboard';
 import { SessionLeaderboard } from '../../models/session-leaderboard';
 import { LeaderboardService } from '../../services/leaderboard.service';
@@ -9,7 +10,7 @@ import { LeaderboardService } from '../../services/leaderboard.service';
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
-  constructor(private leaderboardService: LeaderboardService) {}
+  constructor(private leaderboardService: LeaderboardService, private router: Router) {}
 
   quizzes: QuizLeaderboard[];
   selectedQuiz: QuizLeaderboard;
@@ -24,8 +25,9 @@ export class LeaderboardComponent implements OnInit {
   }
 
   selectedOption(quiz) {
-    return this.leaderboardService
+    this.leaderboardService
       .getLeaderboard(quiz)
       .subscribe(response => (this.leaderboardSessions = response));
+    this.router.navigate(['leaderboard/' + quiz]);
   }
 }
