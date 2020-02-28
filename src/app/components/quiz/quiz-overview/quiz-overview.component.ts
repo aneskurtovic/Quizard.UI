@@ -6,11 +6,12 @@ import { Quiz } from './../../../models/quiz';
 
 @Component({
   selector: 'app-quiz-overview',
-  templateUrl: './quiz-overview.component.html'
+  templateUrl: './quiz-overview.component.html',
+  styleUrls: ['./quiz-overview.component.css']
 })
 export class QuizOverviewComponent implements OnInit {
   page = 1;
-  itemsPerPage = 6;
+  itemsPerPage = 10;
   pageResult: PagedResult<Quiz>;
   rows: Quiz[];
   ColumnMode = ColumnMode;

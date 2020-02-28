@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   isNavHidden(): boolean {
     const url = this.router.url;
-    return url.includes('session') || url.includes('login') || url.includes('quiz-start')
+    return url.includes('session') || url.includes('login') || url.includes('start-quiz')
       ? true
       : false;
   }

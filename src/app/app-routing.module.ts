@@ -33,7 +33,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'quiz-start',
+    path: 'start-quiz',
     component: QuizComponent,
     data: {
       title: 'Quiz'
@@ -48,14 +48,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'quiz/:id',
+    path: 'start-quiz/:id',
     component: QuizComponent,
     data: {
       title: 'Start Quiz'
     }
   },
   {
-    path: 'quiz/:quizId/session/:id',
+    path: 'start-quiz/:quizId/session/:id',
     component: SessionComponent,
     data: {
       title: 'Quiz Session'
