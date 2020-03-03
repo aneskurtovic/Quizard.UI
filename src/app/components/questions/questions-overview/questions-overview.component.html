@@ -55,13 +55,32 @@
   </div>
 </ng-template>
 
-<div class="container mt-4 mx-auto" *ngIf="pageResult">
+<div class="container mt-2 input-group mx-auto">
   <input
     type="name"
     style="padding:8px;margin:15px auto;width:30%;"
     placeholder="Type to search questions..."
     (input)="updateFilter($event, datatable)"
   />
+  <span class="input-group-btn" style="width:0px;"></span>
+  <ng-select
+    class="col-md-4 mx-auto"
+    [items]="category$ | async"
+    bindLabel="name"
+    [addTag]="false"
+    [multiple]="true"
+    [hideSelected]="true"
+    [trackByFn]="trackByFn"
+    [minTermLength]="2"
+    [loading]="categoryLoading"
+    typeToSearchText="Please enter 2 or more characters"
+    [typeahead]="categoryInput$"
+    [(ngModel)]="selectedCategory"
+  >
+  </ng-select>
+</div>
+
+<div class="container mt-4 mx-auto" *ngIf="pageResult">
   <ngx-datatable
     *ngIf="pageResult"
     class="material"

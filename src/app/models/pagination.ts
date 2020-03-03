@@ -2,6 +2,7 @@ export interface PaginationParams {
   offset: number;
   pageSize: number;
   name?: string;
+  category?: number[];
 }
 
 export interface PagedResultMetadata {

@@ -3,11 +3,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, concat, Observable, of, Subject } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
+import { Category } from 'src/app/models/category';
 import { Question } from 'src/app/models/question';
 import { PagedResult } from './../../../models/pagination';
 import { QuizResponse } from './../../../models/quiz-response';
+import { CategoryService } from './../../../services/category.service';
 import { QuestionService } from './../../../services/question.service';
 import { QuizService } from './../../../services/quiz.service';
 
@@ -21,7 +30,6 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
   itemsPerPage = 10;
   pageResult: PagedResult<Question>;
   rows: Question[];
-  temp = [];
   selected = [];
   isSelected = false;
   form: FormGroup;
@@ -36,18 +44,34 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
 
   private searchTermObservable$: BehaviorSubject<string> = new BehaviorSubject(null);
+  private searchByCategoryObservable$: BehaviorSubject<number[]> = new BehaviorSubject(null);
   componentDestroyed$: Subject<void> = new Subject();
+
+  category$: Observable<Category[]>;
+  categoryLoading = false;
+  categoryInput$ = new Subject<string>();
+  _selectedCategory: Category[] = [];
+
+  set selectedCategory(selectedCategories: Category[]) {
+    this._selectedCategory = selectedCategories;
+    this.handleCategoryChanged(selectedCategories.map(x => x.id));
+  }
+  get selectedCategory() {
+    return this._selectedCategory;
+  }
 
   constructor(
     private questionService: QuestionService,
     private fb: FormBuilder,
     private quizService: QuizService,
     private toastr: ToastrService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
     this.loadQuestions();
+    this.loadCategories();
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(25)]],
       questionIds: []
@@ -61,8 +85,12 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     });
 
     this.searchTermObservable$
-      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.componentDestroyed$))
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.componentDestroyed$))
       .subscribe(term => this.handleTermChanged(term));
+
+    this.searchByCategoryObservable$
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.componentDestroyed$))
+      .subscribe(term => this.handleCategoryChanged(term));
   }
 
   pageChanged(event: any): void {
@@ -84,17 +112,36 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadQuestions(offset?: number, name?: string) {
+  loadQuestions(offset?: number, name?: string, category?: number[]) {
     const pageNumber = offset || 0;
 
     this.questionService
-      .getQuestions({ offset: pageNumber, pageSize: this.itemsPerPage, name })
+      .getQuestions({ offset: pageNumber, pageSize: this.itemsPerPage, name, category })
       .subscribe(res => {
         this.rows = res.data;
         this.pageResult = res;
-        this.temp = [...res.data];
         this.pageNumber = res.metadata.offset;
       });
+  }
+
+  loadCategories() {
+    this.category$ = concat(
+      of([]),
+      this.categoryInput$.pipe(
+        distinctUntilChanged(),
+        tap(() => (this.categoryLoading = true)),
+        switchMap(term =>
+          this.categoryService.getAll(term).pipe(
+            catchError(() => of([])),
+            tap(() => (this.categoryLoading = false))
+          )
+        )
+      )
+    );
+  }
+
+  trackByFn(item: Category) {
+    return item.id;
   }
 
   addQuizz() {
@@ -124,8 +171,16 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     this.searchTermObservable$.next(event.target.value.toLowerCase());
   }
 
+  updateCategory(event, datatable: DatatableComponent) {
+    this.searchByCategoryObservable$.next(event.target.value);
+  }
+
   handleTermChanged(term: string) {
     this.loadQuestions(0, term);
+  }
+
+  handleCategoryChanged(category: number[]) {
+    this.loadQuestions(0, null, category);
   }
 
   ngOnDestroy() {

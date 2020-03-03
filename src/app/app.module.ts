@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PaginationModule } from 'ngx-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -24,6 +25,7 @@ import { DisplayResultComponent } from './components/session/display-result/disp
 import { NavigateQuizComponent } from './components/session/navigate-quiz/navigate-quiz.component';
 import { SessionComponent } from './components/session/session.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
+
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
@@ -56,6 +58,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     NgbModule,
     NgxDatatableModule,
+    NgSelectModule,
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
     ToastrModule.forRoot(),
