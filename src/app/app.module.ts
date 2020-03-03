@@ -24,6 +24,8 @@ import { DisplayResultComponent } from './components/session/display-result/disp
 import { NavigateQuizComponent } from './components/session/navigate-quiz/navigate-quiz.component';
 import { SessionComponent } from './components/session/session.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
+
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
@@ -41,7 +43,8 @@ export function tokenGetter() {
     SessionComponent,
     DisplayQuestionsComponent,
     NavigateQuizComponent,
-    DisplayResultComponent
+    DisplayResultComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,

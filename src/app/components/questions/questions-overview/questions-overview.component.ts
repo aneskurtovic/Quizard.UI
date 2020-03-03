@@ -44,7 +44,8 @@ export class QuestionsOverviewComponent implements OnInit {
     this.loadQuestions();
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(25)]],
-      questionIds: []
+      questionIds: [],
+      timer: []
     });
     this.form.controls.name.valueChanges.subscribe(value => {
       if (value === null || value.trim() === '') {
@@ -55,13 +56,9 @@ export class QuestionsOverviewComponent implements OnInit {
     });
   }
 
-  pageChanged(event: any): void {
-    this.loadQuestions(event.offset);
-  }
+  pageChanged = (event: any) => this.loadQuestions(event.offset);
 
-  getId(row: any) {
-    return row.id;
-  }
+  getId = (row: any) => row.id;
 
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
@@ -103,7 +100,5 @@ export class QuestionsOverviewComponent implements OnInit {
     });
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
+  openModal = (template: TemplateRef<any>) => (this.modalRef = this.modalService.show(template));
 }

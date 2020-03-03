@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
@@ -50,6 +51,20 @@ const routes: Routes = [
     component: SessionComponent,
     data: {
       title: 'Quiz Session'
+    }
+  },
+  {
+    path: 'leaderboard',
+    component: LeaderboardComponent,
+    data: {
+      title: 'Leaderboard'
+    }
+  },
+  {
+    path: 'leaderboard/:id',
+    component: LeaderboardComponent,
+    data: {
+      title: 'Leaderboard'
     }
   }
 ];
