@@ -1,0 +1,40 @@
+<div class="container mt-4 mx-auto">
+  <button routerLink="/" class="button"><span>Make New Quiz</span></button>
+</div>
+<div class="container mt-4 mx-auto">
+  <ngx-datatable
+    *ngIf="pageResult"
+    class="material"
+    [rows]="rows"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [rowIdentity]="getId"
+    [externalPaging]="true"
+    [count]="pageResult.metadata.total"
+    [offset]="pageResult.metadata.offset"
+    [limit]="pageResult.metadata.pageSize"
+    [columnMode]="ColumnMode.force"
+    (page)="pageChanged($event)"
+  >
+    <ngx-datatable-column [sortable]="false" prop="name" name="Quiz Name"> </ngx-datatable-column>
+    <ngx-datatable-column [sortable]="false" prop="numberOfQuestions" name="Number of Questions">
+    </ngx-datatable-column>
+    <ngx-datatable-column [sortable]="false" prop="timer" name="Duration(mins)">
+    </ngx-datatable-column>
+    <ngx-datatable-column [sortable]="false" prop="action" name="Action"
+      ><ng-template let-value="value" let-row="row" ngx-datatable-cell-template class="text-center">
+        <span class="mr-2">
+          <button class="btn btn-tacta-blue" routerLink="/leaderboard/{{ getId(row) }}">
+            Leaderboard
+          </button>
+        </span>
+        <span>
+          <button class="btn btn-tacta-blue" routerLink="/start-quiz/{{ getId(row) }}">
+            Start Quiz
+          </button>
+        </span>
+      </ng-template></ngx-datatable-column
+    >
+  </ngx-datatable>
+</div>
