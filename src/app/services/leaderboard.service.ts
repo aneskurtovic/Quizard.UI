@@ -16,7 +16,7 @@ export class LeaderboardService {
   constructor(private http: HttpClient) {}
 
   private getQuizzes(): Observable<QuizLeaderboard[]> {
-    return this.http.get<QuizLeaderboard[]>(this.getQuizzesUrl);
+    return this.http.get<QuizLeaderboard[]>(this.getQuizzesUrl + '/leaderboard');
   }
 
   private getLeaderboard(id: number): Observable<SessionLeaderboardResponse> {
