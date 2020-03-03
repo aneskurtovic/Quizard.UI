@@ -1,17 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Session } from 'protractor';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FinishQuiz } from '../models/FinishQuiz';
 import { ResultQuiz } from '../models/ResultQuiz';
 import { SessionResponse } from '../models/session-response';
 import { QuizResponse } from './../models/quiz-response';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +18,10 @@ export class QuizService {
   constructor(private http: HttpClient) {}
 
   addQuiz(quiz: any): Observable<QuizResponse> {
-    return this.http.post<QuizResponse>(this.quizUrl, quiz, httpOptions);
+    return this.http.post<QuizResponse>(this.quizUrl, quiz);
   }
-  addSession(session: any): Observable<ResultQuiz> {
-    return this.http.post<ResultQuiz>(this.sessionUrl + 'finish', session, httpOptions);
+  addSession(session: FinishQuiz): Observable<ResultQuiz> {
+    return this.http.post<ResultQuiz>(this.sessionUrl + 'finish', session);
   }
   getQuiz(id: number): Observable<QuizResponse> {
     return this.http.get<QuizResponse>(this.quizUrl + id);
@@ -35,6 +30,6 @@ export class QuizService {
     return this.http.get<SessionResponse>(this.sessionUrl + id);
   }
   startQuiz(session: Session): Observable<SessionResponse> {
-    return this.http.post<SessionResponse>(this.sessionUrl, session, httpOptions);
+    return this.http.post<SessionResponse>(this.sessionUrl, session);
   }
 }

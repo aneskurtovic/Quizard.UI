@@ -51,12 +51,12 @@ export class SessionComponent implements OnInit {
       this.quizService.getQuiz(this.quizId).subscribe(res => {
         this.quiz = res;
         resolve(res);
-        this.shuffleQuestion();
+        this.shuffleQuestions();
       });
     });
   }
 
-  shuffleQuestion() {
+  shuffleQuestions() {
     let m = this.quiz.questions.length;
     let t, i;
     while (m) {
@@ -100,7 +100,7 @@ export class SessionComponent implements OnInit {
       quizId: this.quizId,
       sessionId: this.sessionId
     };
-    this.quizService.addSession(JSON.stringify(result)).subscribe(response => {
+    this.quizService.addSession(result).subscribe(response => {
       this.quizResults = response;
       this.router.navigate(['/quiz/' + this.quiz.id + '/session/finish']);
     });

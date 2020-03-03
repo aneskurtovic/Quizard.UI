@@ -38,7 +38,14 @@
         <div class="invalid" *ngIf="submited && emptyQuiz">Quiz can not be empty</div>
       </div>
       <label>Set up timer (mins): </label>
-      <input id="timer" class="form-control" formControlName="timer" type="number" min="1" max="60"/>
+      <input
+        id="timer"
+        class="form-control"
+        formControlName="timer"
+        type="number"
+        min="1"
+        max="60"
+      />
       <div class="text-center mt-4">
         <button class="btn btn-modal text-center" (click)="addQuizz()">
           Create Quiz
