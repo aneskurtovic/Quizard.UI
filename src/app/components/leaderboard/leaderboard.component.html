@@ -5,7 +5,7 @@
       id="quizzes"
       class="form-control ml-3"
       [(ngModel)]="selectedQuiz"
-      (change)="selectedOption($event.target.value)"
+      (change)="selectedOption(selectedQuiz)"
     >
       <option [value]="quiz.id" *ngFor="let quiz of quizzes">{{ quiz.name }}</option>
     </select>
