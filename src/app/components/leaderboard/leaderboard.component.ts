@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { QuizLeaderboard } from '../../models/quiz-leaderboard';
 import { SessionLeaderboard } from '../../models/session-leaderboard';
 import { LeaderboardService } from '../../services/leaderboard.service';
@@ -10,24 +11,27 @@ import { LeaderboardService } from '../../services/leaderboard.service';
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
-  constructor(private leaderboardService: LeaderboardService, private router: Router) {}
+  constructor(
+    private leaderboardService: LeaderboardService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   quizzes: QuizLeaderboard[];
-  selectedQuiz: QuizLeaderboard;
+  selectedQuiz: number;
   leaderboardSessions: SessionLeaderboard[];
 
   ngOnInit() {
-    this.loadQuizzes();
+    this.route.params
+      .pipe(switchMap(params => this.leaderboardService.fetchLeaderboardData(+params.id)))
+      .subscribe(responses => {
+        this.leaderboardSessions = responses.leaderboard.leaderboards;
+        this.quizzes = responses.quizzes;
+        this.selectedQuiz = responses.leaderboard.id;
+      });
   }
 
-  loadQuizzes() {
-    return this.leaderboardService.getQuizzes().subscribe(response => (this.quizzes = response));
-  }
-
-  selectedOption(quiz) {
-    this.leaderboardService
-      .getLeaderboard(quiz)
-      .subscribe(response => (this.leaderboardSessions = response));
+  selectedOption(quiz: number) {
     this.router.navigate(['leaderboard/' + quiz]);
   }
 }

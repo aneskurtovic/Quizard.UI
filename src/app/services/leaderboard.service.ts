@@ -1,27 +1,45 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { forkJoin, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { QuizLeaderboard } from '../models/quiz-leaderboard';
-import { SessionLeaderboard } from '../models/session-leaderboard'
-
+import { SessionLeaderboard, SessionLeaderboardResponse } from '../models/session-leaderboard';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaderboardService {
+  getQuizzesUrl = environment.api + '/api/Quizzes';
+  getLeaderboardUrl = environment.api + '/api/Sessions/';
 
- getQuizzesUrl = environment.api + '/api/Quizzes';
- getLeaderboardUrl = environment.api + '/api/Sessions/'
+  constructor(private http: HttpClient) {}
 
-constructor(private http: HttpClient) { }
+  private getQuizzes(): Observable<QuizLeaderboard[]> {
+    return this.http.get<QuizLeaderboard[]>(this.getQuizzesUrl);
+  }
 
-getQuizzes() : Observable<QuizLeaderboard[]> {
-  return this.http.get<QuizLeaderboard[]>(this.getQuizzesUrl);
-}
+  private getLeaderboard(id: number): Observable<SessionLeaderboardResponse> {
+    if (isNaN(id)) {
+      return of({
+        id: 0,
+        leaderboards: []
+      });
+    }
+    return this.http.get<SessionLeaderboard[]>(this.getLeaderboardUrl + id).pipe(
+      map(leaderboards => {
+        return {
+          id,
+          leaderboards
+        };
+      })
+    );
+  }
 
-getLeaderboard(id: number) : Observable<SessionLeaderboard[]> {
-  return this.http.get<SessionLeaderboard[]>(this.getLeaderboardUrl+id);
-}
-
+  fetchLeaderboardData(id: number) {
+    return forkJoin({
+      leaderboard: this.getLeaderboard(id),
+      quizzes: this.getQuizzes()
+    });
+  }
 }
