@@ -1,9 +1,7 @@
 <div class="container mt-4 mx-auto">
-  <h3>
-    <a type="button" id="QuizNew" class="btn btn-custom btn-lg btn-block" routerLink="/"
-      >Make new quiz</a
-    >
-  </h3>
+  <button routerLink="/" class="button"><span>Make New Quiz</span></button>
+</div>
+<div class="container mt-4 mx-auto">
   <ngx-datatable
     *ngIf="pageResult"
     class="material"
@@ -19,23 +17,19 @@
     [columnMode]="ColumnMode.force"
     (page)="pageChanged($event)"
   >
-    <ngx-datatable-column [sortable]="false" prop="name" name="Quizzes"> </ngx-datatable-column>
+    <ngx-datatable-column [sortable]="false" prop="name" name="Quiz Name"> </ngx-datatable-column>
     <ngx-datatable-column [sortable]="false" prop="numberOfQuestions" name="Number of Questions">
     </ngx-datatable-column>
 
-    <ngx-datatable-column
-      ><ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-        <span>
-          <button class="btn btn-custom" routerLink="/leaderboard/{{ getId(row) }}">
+    <ngx-datatable-column [sortable]="false" prop="action" name="Action"
+      ><ng-template let-value="value" let-row="row" ngx-datatable-cell-template class="text-center">
+        <span class="mr-2">
+          <button class="btn btn-tacta-blue" routerLink="/leaderboard/{{ getId(row) }}">
             Leaderboard
           </button>
         </span>
-      </ng-template></ngx-datatable-column
-    >
-    <ngx-datatable-column
-      ><ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
         <span>
-          <button class="btn btn-custom" routerLink="/start-quiz/{{ getId(row) }}">
+          <button class="btn btn-tacta-blue" routerLink="/start-quiz/{{ getId(row) }}">
             Start Quiz
           </button>
         </span>
