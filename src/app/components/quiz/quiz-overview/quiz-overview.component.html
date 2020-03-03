@@ -20,7 +20,8 @@
     <ngx-datatable-column [sortable]="false" prop="name" name="Quiz Name"> </ngx-datatable-column>
     <ngx-datatable-column [sortable]="false" prop="numberOfQuestions" name="Number of Questions">
     </ngx-datatable-column>
-
+    <ngx-datatable-column [sortable]="false" prop="timer" name="Duration(mins)">
+    </ngx-datatable-column>
     <ngx-datatable-column [sortable]="false" prop="action" name="Action"
       ><ng-template let-value="value" let-row="row" ngx-datatable-cell-template class="text-center">
         <span class="mr-2">
