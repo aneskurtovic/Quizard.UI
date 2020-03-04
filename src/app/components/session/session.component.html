@@ -1,37 +1,38 @@
 <div class="container col-sm-8 mt-5 header" *ngIf="quiz">
-  <div class="col-sm-12">
-    <div class="col-sm-6 ml-4  text-left headerSession">
-      <span *ngIf="!quizResults">Currently taking Quiz: </span>
-      <h4>{{ quiz.name }}</h4>
+  <div *ngIf="quiz.timeLeft > 0">
+    <div class="col-sm-12">
+      <div class="col-sm-6 ml-4  text-left headerSession">
+        <span *ngIf="!quizResults">Currently taking Quiz: </span>
+        <h4>{{ quiz.name }}</h4>
+      </div>
+      <div class="col-sm-5  text-right headerSession">
+        <span *ngIf="!quizResults">Time left: </span>
+        <h4 *ngIf="!quizResults">{{ quiz.timeLeft }}</h4>
+      </div>
     </div>
-    <div class="col-sm-5  text-right headerSession">
-      <span *ngIf="!quizResults">Time left: </span>
-      <h4 *ngIf="!quizResults">{{ timeLeft }}</h4>
-    </div>
+
+    <app-navigate-quiz
+      *ngIf="!quizResults && quiz"
+      [questions]="quiz.questions"
+      [selectedAnswers]="selectedAnswers"
+      [(currentIndex)]="currentIndex"
+    >
+    </app-navigate-quiz>
+
+    <app-display-questions
+      *ngIf="!quizResults && quiz"
+      (submitButton)="finishSession()"
+      [question]="quiz.questions[currentIndex]"
+      [questions]="quiz.questions"
+      [numberOfQuestions]="quiz.questions.length"
+      (selectedAnswers)="getSelectedAnswers($event)"
+      [(currentIndex)]="currentIndex"
+    ></app-display-questions>
   </div>
-
-  <app-navigate-quiz
-    *ngIf="!quizResults && quiz"
-    [questions]="quiz.questions"
-    [selectedAnswers]="selectedAnswers"
-    [(currentIndex)]="currentIndex"
-  >
-  </app-navigate-quiz>
-
   <app-display-result
     *ngIf="quizResults"
     [quizResults]="quizResults"
     [questions]="quiz.questions"
     [selectedAnswers]="selectedAnswers"
   ></app-display-result>
-
-  <app-display-questions
-    *ngIf="!quizResults && quiz"
-    (submitButton)="finishSession()"
-    [question]="quiz.questions[currentIndex]"
-    [questions]="quiz.questions"
-    [numberOfQuestions]="quiz.questions.length"
-    (selectedAnswers)="getSelectedAnswers($event)"
-    [(currentIndex)]="currentIndex"
-  ></app-display-questions>
 </div>

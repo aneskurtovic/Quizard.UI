@@ -45,7 +45,7 @@ export class QuestionsOverviewComponent implements OnInit {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(25)]],
       questionIds: [],
-      timer: []
+      timer: [1, [Validators.required, Validators.min(1)]]
     });
     this.form.controls.name.valueChanges.subscribe(value => {
       if (value === null || value.trim() === '') {
@@ -83,7 +83,12 @@ export class QuestionsOverviewComponent implements OnInit {
 
   addQuizz() {
     this.submited = true;
-    if (this.emptyQuiz || this.form.controls.name.errors || this.selected.length === 0) {
+    if (
+      this.emptyQuiz ||
+      this.form.controls.name.errors ||
+      this.selected.length === 0 ||
+      this.form.controls.timer.errors
+    ) {
       return;
     }
 

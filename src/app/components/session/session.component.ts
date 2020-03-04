@@ -18,7 +18,6 @@ export class SessionComponent implements OnInit {
   selectedAnswers: Map<number, number> = new Map<number, number>();
   quizResults: any;
   interval: NodeJS.Timer;
-  timeLeft: number;
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
@@ -35,21 +34,22 @@ export class SessionComponent implements OnInit {
   }
 
   startTimer() {
-    this.timeLeft = this.quiz.timer * 60;
     this.interval = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
+      if (this.quiz.timeLeft > 0) {
+        this.quiz.timeLeft--;
       } else {
         this.finishSession();
         this.toastr.error('You ran out of time !');
+        clearInterval(this.interval);
       }
     }, 1000);
   }
 
   getQuiz(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.quizService.getQuiz(this.quizId).subscribe(res => {
+      this.quizService.getSession(this.sessionId).subscribe(res => {
         this.quiz = res;
+        console.log(res);
         resolve(res);
         this.shuffleQuestions();
       });
