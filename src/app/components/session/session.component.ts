@@ -49,7 +49,6 @@ export class SessionComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.quizService.getSession(this.sessionId).subscribe(res => {
         this.quiz = res;
-        console.log(res);
         resolve(res);
         this.shuffleQuestions();
       });
