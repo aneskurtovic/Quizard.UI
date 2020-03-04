@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuizService } from 'src/app/services/quiz.service';
+import { FinishQuiz } from './../../models/FinishQuiz';
 import { QuizResponse } from './../../models/quiz-response';
-import { QuizResult } from './../../models/quiz-result';
 
 @Component({
   selector: 'app-session',
@@ -12,10 +12,12 @@ import { QuizResult } from './../../models/quiz-result';
 })
 export class SessionComponent implements OnInit {
   quiz: QuizResponse;
-  id: number;
+  quizId: number;
+  sessionId: any;
   currentIndex = 0;
   selectedAnswers: Map<number, number> = new Map<number, number>();
   quizResults: any;
+  interval: NodeJS.Timer;
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
@@ -25,38 +27,79 @@ export class SessionComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = +params.quizId;
+      this.quizId = +params.quizId;
+      this.sessionId = params.id;
     });
-    this.getQuiz(this.id);
+    this.getSession(this.quizId).then(success => this.startTimer());
   }
-  getQuiz(id: number): void {
-    id = this.id;
-    this.quizService.getQuiz(id).subscribe(res => {
-      this.quiz = res;
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.quiz.timeLeft > 0) {
+        this.quiz.timeLeft--;
+      } else {
+        this.finishSession();
+        this.toastr.error('You ran out of time !');
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  }
+
+  getSession(id: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.quizService.getSession(this.sessionId).subscribe(res => {
+        this.quiz = res;
+        resolve(res);
+        this.shuffleQuestions();
+      });
     });
   }
-  getSelectedAnswers(answers: Map<number, number>): void {
-    this.selectedAnswers = answers;
+
+  shuffleQuestions() {
+    let m = this.quiz.questions.length;
+    let t, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = this.quiz.questions[m];
+      this.quiz.questions[m] = this.quiz.questions[i];
+      this.quiz.questions[i] = t;
+    }
+    this.shuffleAnswers();
   }
+
+  shuffleAnswers() {
+    for (let index = 0; index < this.quiz.questions.length; index++) {
+      let m = this.quiz.questions[index].answers.length;
+      let t, i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = this.quiz.questions[index].answers[m];
+        this.quiz.questions[index].answers[m] = this.quiz.questions[index].answers[i];
+        this.quiz.questions[index].answers[i] = t;
+      }
+    }
+  }
+
+  getSelectedAnswers = (answers: Map<number, number>) => (this.selectedAnswers = answers);
+
   get currentQuestion() {
     return this.quiz.questions[this.currentIndex];
   }
-  lastQuestion(): boolean {
-    if (this.quiz.questions.length - 1 === this.currentIndex) {
-      return false;
-    }
-    return true;
-  }
+
+  lastQuestion = () => (this.quiz.questions.length - 1 === this.currentIndex ? false : true);
+
   finishSession() {
+    clearInterval(this.interval);
     const QuizResult = {};
     this.selectedAnswers.forEach((val: number, key: number) => {
       QuizResult[key] = val;
     });
-    const result: QuizResult = {
-      quizResult: QuizResult
+    const result: FinishQuiz = {
+      quizResult: QuizResult,
+      quizId: this.quizId,
+      sessionId: this.sessionId
     };
     this.quizService.addSession(result).subscribe(response => {
-      this.toastr.success('Quiz successfully finished');
       this.quizResults = response;
       this.router.navigate(['/quiz/' + this.quiz.id + '/session/finish']);
     });

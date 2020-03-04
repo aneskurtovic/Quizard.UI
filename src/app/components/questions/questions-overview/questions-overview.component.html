@@ -37,6 +37,13 @@
       <div *ngIf="emptyQuiz">
         <div class="invalid" *ngIf="submited && emptyQuiz">Quiz can not be empty</div>
       </div>
+      <label>Set up timer (mins): </label>
+      <input id="timer" class="form-control" formControlName="timer" type="number" />
+      <div *ngIf="form.controls.timer.errors">
+        <div class="invalid" *ngIf="submited && form.controls.timer.errors.min">
+          Timer can not be set to less than one minute
+        </div>
+      </div>
       <div class="text-center mt-4">
         <button class="btn btn-modal text-center" (click)="addQuizz()">
           Create Quiz
@@ -48,7 +55,7 @@
   <div class="selected-column modal-body">
     <span *ngIf="quiz"
       >Press link
-      <a routerLink="/quiz/{{ quiz.id }}" (click)="modalRef.hide()"> {{ api + quiz.id }}</a>
+      <a routerLink="/start-quiz/{{ quiz.id }}" (click)="modalRef.hide()"> {{ api + quiz.id }}</a>
       to start the quiz</span
     >
     <h6>Number of selected Questions ({{ selected?.length }})</h6>

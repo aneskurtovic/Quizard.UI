@@ -76,7 +76,8 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     this.loadCategories();
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(25)]],
-      questionIds: []
+      questionIds: [],
+      timer: [1, [Validators.required, Validators.min(1)]]
     });
     this.form.controls.name.valueChanges.subscribe(value => {
       if (value === null || value.trim() === '') {
@@ -105,13 +106,9 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  pageChanged(event: any): void {
-    this.loadQuestions(event.offset);
-  }
+  pageChanged = (event: any) => this.loadQuestions(event.offset);
 
-  getId(row: any) {
-    return row.id;
-  }
+  getId = (row: any) => row.id;
 
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
@@ -164,7 +161,12 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
 
   addQuizz() {
     this.submited = true;
-    if (this.emptyQuiz || this.form.controls.name.errors || this.selected.length === 0) {
+    if (
+      this.emptyQuiz ||
+      this.form.controls.name.errors ||
+      this.selected.length === 0 ||
+      this.form.controls.timer.errors
+    ) {
       return;
     }
 
@@ -179,10 +181,6 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
       this.form.reset();
       this.quiz = response;
     });
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
   }
 
   updateFilter(event, datatable: DatatableComponent) {
@@ -204,4 +202,6 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.componentDestroyed$.next();
   }
+
+  openModal = (template: TemplateRef<any>) => (this.modalRef = this.modalService.show(template));
 }

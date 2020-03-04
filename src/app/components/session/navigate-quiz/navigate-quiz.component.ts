@@ -24,17 +24,11 @@ export class NavigateQuizComponent {
   @Output()
   currentIndexChange: EventEmitter<number> = new EventEmitter();
 
-  next() {
-    this.currentIndex++;
-  }
+  next = () => this.currentIndex++;
+  previous = () => this.currentIndex--;
 
-  previous() {
-    this.currentIndex--;
-  }
-
-  isQuestionAnswered(question: Question): boolean {
-    return this.selectedAnswers.get(question.id) && this.selectedAnswers.get(question.id).length
+  isQuestionAnswered = (question: Question) =>
+    this.selectedAnswers.get(question.id) && this.selectedAnswers.get(question.id).length
       ? true
       : false;
-  }
 }

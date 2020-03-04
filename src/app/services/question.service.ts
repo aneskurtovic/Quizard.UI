@@ -24,9 +24,6 @@ export class QuestionService {
     return this.http.post(this.questionUrl, creditentials, httpOptions);
   }
 
-  /*getDifficultyLevel(): Observable<DifficultyLevel[]> {
-    return this.http.get<DifficultyLevel[]>(this.difficultyLevelUrl);
-  }*/
   getQuestions(params: PaginationParams) {
     let queryParams = new HttpParams();
 

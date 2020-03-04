@@ -15,10 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/category/category.component';
 import { HomeComponent } from './components/home/home.component';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { QuestionsComponent } from './components/questions/add-questions/questions.component';
 import { QuestionsOverviewComponent } from './components/questions/questions-overview/questions-overview.component';
+import { QuizOverviewComponent } from './components/quiz/quiz-overview/quiz-overview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { DisplayQuestionsComponent } from './components/session/display-questions/display-questions.component';
 import { DisplayResultComponent } from './components/session/display-result/display-result.component';
@@ -43,7 +45,9 @@ export function tokenGetter() {
     SessionComponent,
     DisplayQuestionsComponent,
     NavigateQuizComponent,
-    DisplayResultComponent
+    DisplayResultComponent,
+    QuizOverviewComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
