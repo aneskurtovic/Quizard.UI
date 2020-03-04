@@ -30,7 +30,7 @@ export class SessionComponent implements OnInit {
       this.quizId = +params.quizId;
       this.sessionId = params.id;
     });
-    this.getQuiz(this.quizId).then(success => this.startTimer());
+    this.getSession(this.quizId).then(success => this.startTimer());
   }
 
   startTimer() {
@@ -45,7 +45,7 @@ export class SessionComponent implements OnInit {
     }, 1000);
   }
 
-  getQuiz(id: number): Promise<any> {
+  getSession(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
       this.quizService.getSession(this.sessionId).subscribe(res => {
         this.quiz = res;
