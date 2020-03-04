@@ -27,6 +27,12 @@
   margin: 5px;
 }
 
+.btn-andor {
+  border-radius: 4px;
+  color: #ffffff;
+  background-color: #0f79a1;
+}
+
 .btn-custom {
   margin-left: 5px;
   margin-top: auto;
@@ -62,114 +68,97 @@
   right: 0;
 }
 
-input {
-  font-size: 18px;
-  padding: 10px 10px 10px 5px;
-  display: block;
-  width: 300px;
-  border: none;
-  border-bottom: 1px solid #757575;
-}
-input:focus {
-  outline: none;
+.ng-select.custom {
+  padding: 4px 12px 10px 12px;
+  margin: 15px 15px 15px 170px;
+  width: 30%;
 }
 
-/* LABEL ======================================= */
-label {
-  color: #999;
-  font-size: 18px;
+.form-field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.form-field__label {
+  font-size: 0.75rem;
+  -webkit-transform: translateY(-14px);
+  transform: translateY(-14px);
+  display: block;
   font-weight: normal;
-  position: absolute;
-  pointer-events: none;
-  left: 5px;
-  top: 10px;
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
-}
-
-/* active state */
-input:focus ~ label,
-input:valid ~ label {
-  top: -20px;
-  font-size: 14px;
-  color: #5264ae;
-}
-
-/* BOTTOM BARS ================================= */
-.bar {
-  position: relative;
-  display: block;
-  width: 300px;
-}
-.bar:before,
-.bar:after {
-  content: '';
-  height: 2px;
-  width: 0;
-  bottom: 1px;
-  position: absolute;
-  background: #5264ae;
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
-}
-.bar:before {
-  left: 50%;
-}
-.bar:after {
-  right: 50%;
-}
-
-/* active state */
-input:focus ~ .bar:before,
-input:focus ~ .bar:after {
-  width: 50%;
-}
-
-/* HIGHLIGHTER ================================== */
-.highlight {
-  position: absolute;
-  height: 60%;
-  width: 100px;
-  top: 25%;
   left: 0;
-  pointer-events: none;
-  opacity: 0.5;
+  margin: 0;
+  padding: 18px 12px 0;
+  position: absolute;
+  top: 0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  width: 100%;
 }
 
-/* active state */
-input:focus ~ .highlight {
-  -webkit-animation: inputHighlighter 0.3s ease;
-  -moz-animation: inputHighlighter 0.3s ease;
-  animation: inputHighlighter 0.3s ease;
+.form-field__control {
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
-/* ANIMATIONS ================ */
-@-webkit-keyframes inputHighlighter {
-  from {
-    background: #5264ae;
-  }
-  to {
-    width: 0;
-    background: transparent;
-  }
+.form-field__bar {
+  border-bottom: 2px solid #b11adc;
+  bottom: 0;
+  content: '';
+  display: block;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  width: 1%;
 }
-@-moz-keyframes inputHighlighter {
-  from {
-    background: #5264ae;
-  }
-  to {
-    width: 0;
-    background: transparent;
-  }
+
+.form-field__input,
+.form-field__textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #999;
+  color: #333;
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 24px;
+  outline: 0;
+  padding: 0 12px 10px 12px;
+  width: 400px;
 }
-@keyframes inputHighlighter {
-  from {
-    background: #5264ae;
-  }
-  to {
-    width: 0;
-    background: transparent;
-  }
+.form-field__input:-ms-input-placeholder ~ .form-field__label,
+.form-field__textarea:-ms-input-placeholder ~ .form-field__label {
+  font-size: 1rem;
+  transform: translateY(0);
+}
+.form-field__input:placeholder-shown ~ .form-field__label,
+.form-field__textarea:placeholder-shown ~ .form-field__label {
+  font-size: 1rem;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+.form-field__input:focus ~ .form-field__label,
+.form-field__textarea:focus ~ .form-field__label {
+  color: #b11adc;
+  font-size: 0.75rem;
+  -webkit-transform: translateY(-14px);
+  transform: translateY(-14px);
+}
+.form-field__input:focus ~ .form-field__bar,
+.form-field__textarea:focus ~ .form-field__bar {
+  border-bottom: 2px solid #b11adc;
+  -webkit-transform: scaleX(150);
+  transform: scaleX(150);
+}
+
+.form-field__textarea {
+  height: 150px;
 }

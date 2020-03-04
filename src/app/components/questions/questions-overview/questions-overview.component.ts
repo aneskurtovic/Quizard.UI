@@ -51,6 +51,8 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
   categoryLoading = false;
   categoryInput$ = new Subject<string>();
   _selectedCategory: Category[] = [];
+  selectedOperand: number;
+  btnText = 'OR';
 
   set selectedCategory(selectedCategories: Category[]) {
     this._selectedCategory = selectedCategories;
@@ -93,6 +95,16 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
       .subscribe(term => this.handleCategoryChanged(term));
   }
 
+  toggle(): number {
+    if (this.btnText === 'OR') {
+      this.btnText = 'AND';
+      return (this.selectedOperand = 2);
+    } else {
+      this.btnText = 'OR';
+      return (this.selectedOperand = 1);
+    }
+  }
+
   pageChanged(event: any): void {
     this.loadQuestions(event.offset);
   }
@@ -112,11 +124,17 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadQuestions(offset?: number, name?: string, category?: number[]) {
+  loadQuestions(offset?: number, name?: string, category?: number[], operand?: number) {
     const pageNumber = offset || 0;
-
+    operand = this.selectedOperand || 1;
     this.questionService
-      .getQuestions({ offset: pageNumber, pageSize: this.itemsPerPage, name, category })
+      .getQuestions({
+        offset: pageNumber,
+        pageSize: this.itemsPerPage,
+        name,
+        category,
+        operand
+      })
       .subscribe(res => {
         this.rows = res.data;
         this.pageResult = res;
