@@ -100,15 +100,6 @@
   </div>
 </div>
 
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary active">
-    <input type="radio" name="options" id="option1" autocomplete="off" checked /> OR
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option2" autocomplete="off" /> AND
-  </label>
-</div>
-
 <div class="container mt-4 mx-auto" *ngIf="pageResult">
   <ngx-datatable
     *ngIf="pageResult"
@@ -129,6 +120,7 @@
     [selectionType]="SelectionType.checkbox"
     [selectAllRowsOnPage]="false"
     (select)="onSelect($event)"
+    #datatable
   >
     <ngx-datatable-column
       [width]="30"

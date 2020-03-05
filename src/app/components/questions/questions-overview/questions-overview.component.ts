@@ -188,7 +188,7 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateCategory(event) {
-    this.searchByCategoryObservable$.next(event.target.value);
+    this.searchTermObservable$.next(event.target.value.toLowerCase());
   }
 
   handleTermChanged(term: string) {
