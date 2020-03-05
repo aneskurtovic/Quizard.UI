@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, concat, Observable, of, Subject } from 'rxjs';
@@ -183,11 +183,11 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateFilter(event, datatable: DatatableComponent) {
+  updateFilter(event) {
     this.searchTermObservable$.next(event.target.value.toLowerCase());
   }
 
-  updateCategory(event, datatable: DatatableComponent) {
+  updateCategory(event) {
     this.searchByCategoryObservable$.next(event.target.value);
   }
 
