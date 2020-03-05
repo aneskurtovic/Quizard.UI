@@ -62,6 +62,44 @@
   </div>
 </ng-template>
 
+<div class="container mt-2 input-group">
+  <div class="form-field mt-2">
+    <div class="form-field__control">
+      <input
+        id="exampleField"
+        type="text"
+        class="form-field__input"
+        value=""
+        placeholder=" "
+        (input)="updateFilter($event, datatable)"
+      />
+      <label for="exampleField" class="form-field__label">Type to search questions...</label>
+      <div class="form-field__bar"></div>
+    </div>
+  </div>
+
+  <ng-select
+    class="custom"
+    placeholder="Type to filter categories..."
+    [items]="category$ | async"
+    bindLabel="name"
+    [addTag]="false"
+    [multiple]="true"
+    [hideSelected]="true"
+    [trackByFn]="trackByFn"
+    [minTermLength]="2"
+    [loading]="categoryLoading"
+    typeToSearchText="Please enter 2 or more characters"
+    [typeahead]="categoryInput$"
+    [(ngModel)]="selectedCategory"
+  >
+  </ng-select>
+
+  <div class="mt-5">
+    <button (click)="toggle()" class="btn btn-andor">{{ btnText }}</button>
+  </div>
+</div>
+
 <div class="container mt-4 mx-auto" *ngIf="pageResult">
   <ngx-datatable
     *ngIf="pageResult"
@@ -82,6 +120,7 @@
     [selectionType]="SelectionType.checkbox"
     [selectAllRowsOnPage]="false"
     (select)="onSelect($event)"
+    #datatable
   >
     <ngx-datatable-column
       [width]="30"

@@ -26,9 +26,18 @@ export class QuestionService {
 
   getQuestions(params: PaginationParams) {
     let queryParams = new HttpParams();
+
+    if (params.category) {
+      params.category.forEach(x => {
+        queryParams = queryParams.append('category', x.toString());
+      });
+    }
+
     const keys = Object.keys(params);
     keys.forEach(p => {
-      queryParams = queryParams.append(p, params[p]);
+      if (!!params[p] && !!String(params[p]).trim() && p !== 'category') {
+        queryParams = queryParams.append(p, params[p]);
+      }
     });
 
     return this.http.get<PagedResult<Question>>(this.questionUrl, { params: queryParams });

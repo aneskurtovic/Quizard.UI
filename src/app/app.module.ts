@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PaginationModule } from 'ngx-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -61,6 +62,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     NgbModule,
     NgxDatatableModule,
+    NgSelectModule,
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
     ToastrModule.forRoot(),
