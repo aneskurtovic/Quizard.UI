@@ -12,7 +12,7 @@
   background-color: #0f79a1;
 }
 
-#timer{
+#timer {
   width: 25% !important;
 }
 
@@ -29,6 +29,12 @@
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
+}
+
+.btn-andor {
+  border-radius: 4px;
+  color: #ffffff;
+  background-color: #0f79a1;
 }
 
 .btn-custom {
@@ -64,4 +70,99 @@
 .btn-custom:hover span::after {
   opacity: 1;
   right: 0;
+}
+
+.ng-select.custom {
+  padding: 4px 12px 10px 12px;
+  margin: 15px 15px 15px 170px;
+  width: 30%;
+}
+
+.form-field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.form-field__label {
+  font-size: 0.75rem;
+  -webkit-transform: translateY(-14px);
+  transform: translateY(-14px);
+  display: block;
+  font-weight: normal;
+  left: 0;
+  margin: 0;
+  padding: 18px 12px 0;
+  position: absolute;
+  top: 0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  width: 100%;
+}
+
+.form-field__control {
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.form-field__bar {
+  border-bottom: 2px solid #b11adc;
+  bottom: 0;
+  content: '';
+  display: block;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  width: 1%;
+}
+
+.form-field__input,
+.form-field__textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #999;
+  color: #333;
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 24px;
+  outline: 0;
+  padding: 0 12px 10px 12px;
+  width: 400px;
+}
+.form-field__input:-ms-input-placeholder ~ .form-field__label,
+.form-field__textarea:-ms-input-placeholder ~ .form-field__label {
+  font-size: 1rem;
+  transform: translateY(0);
+}
+.form-field__input:placeholder-shown ~ .form-field__label,
+.form-field__textarea:placeholder-shown ~ .form-field__label {
+  font-size: 1rem;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+.form-field__input:focus ~ .form-field__label,
+.form-field__textarea:focus ~ .form-field__label {
+  color: #b11adc;
+  font-size: 0.75rem;
+  -webkit-transform: translateY(-14px);
+  transform: translateY(-14px);
+}
+.form-field__input:focus ~ .form-field__bar,
+.form-field__textarea:focus ~ .form-field__bar {
+  border-bottom: 2px solid #b11adc;
+  -webkit-transform: scaleX(150);
+  transform: scaleX(150);
+}
+
+.form-field__textarea {
+  height: 150px;
 }

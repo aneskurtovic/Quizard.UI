@@ -24,7 +24,9 @@
           <a class="nav-link" routerLink="/login"><span class="fas fa-sign-in-alt"></span> Login</a>
         </li>
         <li class="nav-item pr-2">
-          <a class="nav-link" *ngIf="isUserAuthenticated()" routerLink="/leaderboard">Leaderboard</a>
+          <a class="nav-link" *ngIf="isUserAuthenticated()" routerLink="/leaderboard"
+            >Leaderboard</a
+          >
         </li>
         <li class="nav-item dropdown" *ngIf="isUserAuthenticated()">
           <a
