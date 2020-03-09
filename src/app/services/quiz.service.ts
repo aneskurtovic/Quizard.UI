@@ -29,7 +29,7 @@ export class QuizService {
     return this.http.get<QuizResponse>(this.quizUrl + id);
   }
   getSession(id: string): Observable<QuizResponse> {
-    return this.http.get<QuizResponse>(this.sessionUrl + 'GetSession/' + id);
+    return this.http.get<QuizResponse>(this.sessionUrl + id);
   }
   startQuiz(session: Session): Observable<SessionResponse> {
     return this.http.post<SessionResponse>(this.sessionUrl, session);
