@@ -26,7 +26,7 @@ export class LeaderboardService {
         leaderboards: []
       });
     }
-    return this.http.get<SessionLeaderboard[]>(this.getLeaderboardUrl + 'GetTop10/' + id).pipe(
+    return this.http.get<SessionLeaderboard[]>(this.getLeaderboardUrl + id + '/leaderboard').pipe(
       map(leaderboards => {
         return {
           id,
