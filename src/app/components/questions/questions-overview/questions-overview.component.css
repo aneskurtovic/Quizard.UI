@@ -31,12 +31,6 @@
   margin: 5px;
 }
 
-.btn-andor {
-  border-radius: 4px;
-  color: #ffffff;
-  background-color: #0f79a1;
-}
-
 .btn-custom {
   margin-left: 5px;
   margin-top: auto;
@@ -107,7 +101,7 @@
 }
 
 .form-field__bar {
-  border-bottom: 2px solid #b11adc;
+  border-bottom: 2px solid #0f79a1;
   bottom: 0;
   content: '';
   display: block;
@@ -132,8 +126,7 @@
   border-bottom: 1px solid #999;
   color: #333;
   display: block;
-  font-size: 1.2rem;
-  margin-top: 24px;
+  margin-top: 28px;
   outline: 0;
   padding: 0 12px 10px 12px;
   width: 400px;
@@ -151,14 +144,14 @@
 }
 .form-field__input:focus ~ .form-field__label,
 .form-field__textarea:focus ~ .form-field__label {
-  color: #b11adc;
+  color: #0f79a1;
   font-size: 0.75rem;
   -webkit-transform: translateY(-14px);
   transform: translateY(-14px);
 }
 .form-field__input:focus ~ .form-field__bar,
 .form-field__textarea:focus ~ .form-field__bar {
-  border-bottom: 2px solid #b11adc;
+  border-bottom: 2px solid #0f79a1;
   -webkit-transform: scaleX(150);
   transform: scaleX(150);
 }
