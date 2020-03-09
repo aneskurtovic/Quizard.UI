@@ -70,10 +70,9 @@
         type="text"
         class="form-field__input"
         value=""
-        placeholder=" "
+        placeholder="Type to search questions..."
         (input)="updateFilter($event)"
       />
-      <label for="exampleField" class="form-field__label">Type to search questions...</label>
       <div class="form-field__bar"></div>
     </div>
   </div>
@@ -95,8 +94,25 @@
   >
   </ng-select>
 
-  <div class="mt-5">
-    <button (click)="toggle()" class="btn btn-andor">{{ btnText }}</button>
+  <div class="mt-4">
+    <!-- <button (click)="toggle()" class="btn btn-andor">{{ btnText }}</button> -->
+    <div class="btn-group btn-group-toggle mt-2" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input
+          (click)="emitOr()"
+          type="radio"
+          name="options"
+          id="option1"
+          autocomplete="off"
+          checked
+        />
+        OR
+      </label>
+      <label class="btn btn-secondary">
+        <input (click)="emitAnd()" type="radio" name="options" id="option2" autocomplete="off" />
+        AND
+      </label>
+    </div>
   </div>
 </div>
 

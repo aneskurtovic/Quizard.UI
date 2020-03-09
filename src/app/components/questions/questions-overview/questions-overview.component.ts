@@ -96,14 +96,12 @@ export class QuestionsOverviewComponent implements OnInit, OnDestroy {
       .subscribe(term => this.handleCategoryChanged(term));
   }
 
-  toggle(): number {
-    if (this.btnText === 'OR') {
-      this.btnText = 'AND';
-      return (this.selectedOperand = 2);
-    } else {
-      this.btnText = 'OR';
-      return (this.selectedOperand = 1);
-    }
+  emitOr(): number {
+    return (this.selectedOperand = 1);
+  }
+
+  emitAnd(): number {
+    return (this.selectedOperand = 2);
   }
 
   pageChanged = (event: any) => this.loadQuestions(event.offset);
